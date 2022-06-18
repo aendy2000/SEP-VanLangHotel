@@ -31,7 +31,7 @@ namespace SEP_VanLangHotel.Controllers
                         Session["user-fullname"] = user.Ho_Va_Ten;
                         Session["user-id"] = user.Ten_Dang_Nhap;
                         Session["user-role"] = user.Quyen.Ten_Quyen;
-                        return RedirectToAction("Index", "DashboardAdmin");
+                        return RedirectToAction("IndexAdmin", "Home");
                     }
                     else
                     {

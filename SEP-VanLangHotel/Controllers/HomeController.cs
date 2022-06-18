@@ -17,19 +17,5 @@ namespace SEP_VanLangHotel.Controllers
             var doanhthu = model.TT_Dat_Phong.Sum(s => s.Phong.Loai_Phong.Gia);
             return View(doanhthu);
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html style="display: table; margin: auto; height: 100%; ">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="display: table-cell; vertical-align: middle; height: 100%;">
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </section>
+            <div>
+                <form action="~/Auth/Logout">
+                    <input type="submit" value="Logout" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

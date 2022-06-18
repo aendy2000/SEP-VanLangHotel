@@ -11,7 +11,7 @@ namespace SEP_VanLangHotel.Middleware
         {
             if (filterContext.HttpContext.Session["user-id"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Admin/Auth/Login");
+                filterContext.Result = new RedirectResult("~/Auth/Login");
                 return;
             }
         }
