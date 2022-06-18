@@ -1,0 +1,31 @@
+﻿@model SEP_VanLangHotel.Models.Tai_Khoan
+
+@{
+    ViewBag.Title = "VerifyEmail";
+    Layout = null;
+}
+
+<html style="display: table; margin: auto; height: 100%;" lang="vi">
+<body style="display: table-cell; vertical-align: middle; height: 100%;">
+    <div>
+        <p style="font-size: 20px;">Mã xác thực đã được gửi đến Email: @Model.Email</p>
+        <br />
+        <p>Nhập mã xác nhận gồm 6 chữ số:</p>
+        <form action="@Url.Action("VerifyEmail")" method="post">
+            <input class="hidden" type="hidden" name="idtaikhoan" value="@Model.Ma_Tai_Khoan" />
+            <input class="input100" type="text" name="maxacnhan" />
+            <br />
+            @if (Convert.ToBoolean(Session["thongbao-maxacnhan-null"]) == true)
+            {
+                <p style="color:red">Bạn chưa nhập mã xác nhận.</p>
+            }
+            @if (Convert.ToBoolean(Session["thongbao-maxacnhan-incorrect"]) == true)
+            {
+                <p style="color:red">Mã xác nhận không đúng.</p>
+            }
+            <button type="submit"> Tiếp tục </button>
+        </form>
+    </div>
+</body>
+</html>
+

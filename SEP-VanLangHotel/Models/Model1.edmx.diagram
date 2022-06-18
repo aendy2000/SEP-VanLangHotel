@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="843dbc040c5b43619b436190a4ed2944" Name="Diagram1" ZoomLevel="73">
+      <Diagram DiagramId="b1ea0750cb7244c7aa673096f7185aa5" Name="Diagram1">
         <EntityTypeShape EntityType="VanLangHotelModel.DS_Tien_Ich" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Khach_San" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Loai_Phong" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Phong" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Quyen" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VanLangHotelModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VanLangHotelModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Tai_Khoan" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Tien_Ich" Width="1.5" PointX="3.75" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Trang_Thai" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />

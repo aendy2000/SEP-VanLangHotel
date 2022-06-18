@@ -80,6 +80,7 @@
           <Property Name="Gioi_Tinh" Type="int" Nullable="false" />
           <Property Name="Dia_Chi" Type="nvarchar" MaxLength="255" />
           <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Verify_Password" Type="varchar" MaxLength="6" />
         </EntityType>
         <EntityType Name="Tien_Ich">
           <Key>
@@ -389,6 +390,7 @@
           <Property Name="Gioi_Tinh" Type="Int32" Nullable="false" />
           <Property Name="Dia_Chi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Verify_Password" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Khach_San" Relationship="Self.fk_TaiKhoan_KhachSan" FromRole="Tai_Khoan" ToRole="Khach_San" />
           <NavigationProperty Name="Quyen" Relationship="Self.fk_TaiKhoan_Quyen" FromRole="Tai_Khoan" ToRole="Quyen" />
         </EntityType>
@@ -700,6 +702,7 @@
                 <ScalarProperty Name="Gioi_Tinh" ColumnName="Gioi_Tinh" />
                 <ScalarProperty Name="Dia_Chi" ColumnName="Dia_Chi" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Verify_Password" ColumnName="Verify_Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

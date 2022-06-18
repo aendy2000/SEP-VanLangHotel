@@ -13,13 +13,13 @@ namespace SEP_VanLangHotel.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Dashboard()
+        public void Home()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.IndexAdmin() as ViewResult;
+            ViewResult result = controller.Homepage() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
