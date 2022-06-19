@@ -129,7 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AcountManagementController.cs" />
+    <Compile Include="Controllers\AccountManagementController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\AuthoritiesManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -201,9 +201,6 @@
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <Content Include="Views\Auth\VerifyEmail.cshtml" />
     <Content Include="Views\Auth\NewPassword.cshtml" />
-    <Content Include="Views\AcountManagement\Home.cshtml" />
-    <Content Include="Views\AcountManagement\AddNewAccount.cshtml" />
-    <Content Include="Views\AcountManagement\UpdateAccount.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -211,9 +208,13 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\AcountManagement\DetailtAccount.cshtml" />
     <Content Include="Views\AuthoritiesManagement\Home.cshtml" />
     <Content Include="Views\AuthoritiesManagement\AddAuthorities.cshtml" />
+    <Content Include="Views\AccountManagement\AddNewAccount.cshtml" />
+    <Content Include="Views\AccountManagement\UpdateAccount.cshtml" />
+    <Content Include="Views\AccountManagement\DetailtAccount.cshtml" />
+    <Content Include="Views\AccountManagement\Information.cshtml" />
+    <Content Include="Views\AccountManagement\Home.cshtml" />
     <None Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

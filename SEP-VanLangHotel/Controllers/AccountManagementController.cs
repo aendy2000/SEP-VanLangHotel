@@ -11,7 +11,7 @@ using System.Data.Entity;
 namespace SEP_VanLangHotel.Controllers
 {
     [LoginVerification]
-    public class AcountManagementController : Controller
+    public class AccountManagementController : Controller
     {
         // GET: AcountManagement
         VanLangHotelEntities model = new VanLangHotelEntities();
@@ -113,10 +113,11 @@ namespace SEP_VanLangHotel.Controllers
                         throw;
                     }
                 }
+                ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
+                ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
+                return View(taikhoan);
             }
-            ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
-            ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
-            return View(taikhoan);
+            return RedirectToAction("Homepage", "Home");
         }
         public ActionResult DetailtAccount(string id) //Xem thông tin chi tiết của các tài khoản trên hệ thống - Admin
         {
