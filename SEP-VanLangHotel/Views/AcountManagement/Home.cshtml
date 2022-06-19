@@ -1,0 +1,111 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.Tai_Khoan>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h2>Home</h2>
+
+<p>
+    @Html.ActionLink("Thêm tài khoản", "AddNewAccount")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ten_Dang_Nhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mat_Khau)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CMND_CCCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ho_Va_Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sinh_Nhat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gioi_Tinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dia_Chi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Verify_Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Khach_San.Ten_Khach_San)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quyen.Ten_Quyen)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten_Dang_Nhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mat_Khau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CMND_CCCD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ho_Va_Ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sinh_Nhat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gioi_Tinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dia_Chi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verify_Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Khach_San.Ten_Khach_San)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quyen.Ten_Quyen)
+            </td>
+            <td>
+                @Html.ActionLink("Sua", "UpdateAccount", new { id = item.Ma_Tai_Khoan }) |
+                @Html.ActionLink("...", "DetailtAccount", new { id = item.Ma_Tai_Khoan })
+                @if (item.Quyen.Ten_Quyen.Equals("Admin") && item.Quyen.Ma_Quyen.Equals("TK202206170001"))
+                {
+
+                    @Html.ActionLink("| Xoa", "Delete", new { id = item.Ma_Tai_Khoan })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

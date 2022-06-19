@@ -77,14 +77,18 @@ namespace SEP_VanLangHotel.Controllers
                         range -= 1;
                     }
                     taikhoan.Verify_Password = code;
+                    string outoffdate = (ulong.Parse(DateTime.Now.ToString("yyyyMMddHHmmss")) + 1000).ToString();
+                    taikhoan.OutOfDate_Code = outoffdate;
                     model.SaveChanges();
 
                     //Khởi tạo gửi mail
                     MailMessage mailmea = new MailMessage();
                     mailmea.To.Add(taikhoan.Email);
                     mailmea.From = new MailAddress(@"vanlanghotel@gmail.com");
-                    mailmea.Subject = "Mã xác nhận tài khoản - Văn Lang Hotel";
-                    mailmea.Body = "Mã xác nhận đặt lại mật khẩu của bạn là:\n\n" + code;
+                    mailmea.Subject = "Đặt lại mật khẩu - Văn Lang Hotel";
+                    mailmea.IsBodyHtml = true;
+                    mailmea.Body = "<font size=5>Mã xác nhận của bạn là: </font><br>" + "<font size=20><b>   " + code + "</b></font>";
+
                     SmtpClient smtp = new SmtpClient("smtp.gmail.com");
                     smtp.UseDefaultCredentials = true;
                     smtp.EnableSsl = true;
@@ -121,25 +125,43 @@ namespace SEP_VanLangHotel.Controllers
         [HttpPost]
         public ActionResult VerifyEmail(string idtaikhoan, string maxacnhan = null)
         {
+            Session["thongbao-outoffdate"] = null;
             Session["thongbao-maxacnhan-null"] = null;
             Session["thongbao-maxacnhan-incorrect"] = null;
             var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(idtaikhoan));
-            if (!maxacnhan.Equals(""))
+
+            if (taikhoan.OutOfDate_Code != null && !taikhoan.OutOfDate_Code.Equals(""))
             {
-                if(taikhoan.Verify_Password.Equals(maxacnhan.Trim()))
+                ulong tgianhethan = ulong.Parse(taikhoan.OutOfDate_Code);
+                if (tgianhethan >= ulong.Parse(DateTime.Now.ToString("yyyyMMddHHmmss")))
                 {
-                    taikhoan.Verify_Password = null;
-                    model.SaveChanges();
-                    return RedirectToAction("NewPassword", new { id = taikhoan.Ma_Tai_Khoan});
-                } else
-                {
-                    Session["thongbao-maxacnhan-incorrect"] = true;
+                    if (!maxacnhan.Equals(""))
+                    {
+                        if (taikhoan.Verify_Password.Equals(maxacnhan.Trim()))
+                        {
+                            taikhoan.Verify_Password = null;
+                            model.SaveChanges();
+                            return RedirectToAction("NewPassword", new { id = taikhoan.Ma_Tai_Khoan });
+                        }
+                        else
+                        {
+                            Session["thongbao-maxacnhan-incorrect"] = true;
+                            return View(taikhoan);
+                        }
+                    }
+                    Session["thongbao-maxacnhan-null"] = true;
                     return View(taikhoan);
                 }
+                Session["thongbao-outoffdate"] = true; //Ma da het han
+                taikhoan.Verify_Password = null;
+                taikhoan.OutOfDate_Code = null;
+                model.SaveChanges();
             }
-            Session["thongbao-maxacnhan-null"] = true;
-            return View();
+            return RedirectToAction("ForgotPassword");
         }
+
+
+
         public ActionResult NewPassword(string id)
         {
             var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));

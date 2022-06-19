@@ -17,7 +17,7 @@ namespace SEP_VanLangHotel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Trang_Thai()
         {
-            this.Phongs = new HashSet<Phong>();
+            this.Phong = new HashSet<Phong>();
         }
     
         public string Ma_Trang_Thai { get; set; }
@@ -25,6 +25,6 @@ namespace SEP_VanLangHotel.Models
         public string Mo_Ta_Trang_Thai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phong> Phongs { get; set; }
+        public virtual ICollection<Phong> Phong { get; set; }
     }
 }

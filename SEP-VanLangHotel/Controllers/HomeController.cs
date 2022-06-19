@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using SEP_VanLangHotel.Models;
 using SEP_VanLangHotel.Middleware;
+
 namespace SEP_VanLangHotel.Controllers
 {
     [LoginVerification]

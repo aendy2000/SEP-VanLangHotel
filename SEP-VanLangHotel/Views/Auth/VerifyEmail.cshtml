@@ -15,6 +15,7 @@
             <input class="hidden" type="hidden" name="idtaikhoan" value="@Model.Ma_Tai_Khoan" />
             <input class="input100" type="text" name="maxacnhan" />
             <br />
+            <p>Mã xác nhận sẽ hết hạn sau 10 phút.</p>
             @if (Convert.ToBoolean(Session["thongbao-maxacnhan-null"]) == true)
             {
                 <p style="color:red">Bạn chưa nhập mã xác nhận.</p>

@@ -28,6 +28,7 @@ namespace SEP_VanLangHotel.Models
         public string Dia_Chi { get; set; }
         public string Email { get; set; }
         public string Verify_Password { get; set; }
+        public string OutOfDate_Code { get; set; }
     
         public virtual Khach_San Khach_San { get; set; }
         public virtual Quyen Quyen { get; set; }

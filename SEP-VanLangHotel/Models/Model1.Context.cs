@@ -28,13 +28,13 @@ namespace SEP_VanLangHotel.Models
         public virtual DbSet<DS_Tien_Ich> DS_Tien_Ich { get; set; }
         public virtual DbSet<Khach_San> Khach_San { get; set; }
         public virtual DbSet<Loai_Phong> Loai_Phong { get; set; }
-        public virtual DbSet<Phong> Phongs { get; set; }
-        public virtual DbSet<Quyen> Quyens { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Phong> Phong { get; set; }
+        public virtual DbSet<Quyen> Quyen { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tai_Khoan> Tai_Khoan { get; set; }
         public virtual DbSet<Tien_Ich> Tien_Ich { get; set; }
-        public virtual DbSet<Trang_Thai> Trang_Thai { get; set; }
         public virtual DbSet<TT_Dat_Phong> TT_Dat_Phong { get; set; }
         public virtual DbSet<TT_Doi_Phong> TT_Doi_Phong { get; set; }
+        public virtual DbSet<Trang_Thai> Trang_Thai { get; set; }
     }
 }

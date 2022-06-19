@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b1ea0750cb7244c7aa673096f7185aa5" Name="Diagram1">
+      <Diagram DiagramId="2394dd7c96ef4885a2f5ab71a743eb99" Name="Diagram1">
         <EntityTypeShape EntityType="VanLangHotelModel.DS_Tien_Ich" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Khach_San" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Loai_Phong" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Phong" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Quyen" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VanLangHotelModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VanLangHotelModel.Tai_Khoan" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="VanLangHotelModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VanLangHotelModel.Tai_Khoan" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.Tien_Ich" Width="1.5" PointX="3.75" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VanLangHotelModel.Trang_Thai" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.TT_Dat_Phong" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VanLangHotelModel.TT_Doi_Phong" Width="1.5" PointX="8.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VanLangHotelModel.Trang_Thai" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
         <AssociationConnector Association="VanLangHotelModel.fk_DSTienIch_LoaiPhong" ManuallyRouted="false" />
         <AssociationConnector Association="VanLangHotelModel.fk_DSTienIch_TienIch" ManuallyRouted="false" />
         <AssociationConnector Association="VanLangHotelModel.fk_Phong_KhachSan" ManuallyRouted="false" />
