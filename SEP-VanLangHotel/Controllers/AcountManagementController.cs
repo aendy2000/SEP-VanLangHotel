@@ -129,16 +129,40 @@ namespace SEP_VanLangHotel.Controllers
                 if (taikhoan != null)
                     return View(taikhoan);
             }
-            return RedirectToAction("Home");
+            return RedirectToAction("Homepage", "Home");
         }
         public ActionResult Information()
         {
-            if (Session["user-role"].Equals("Staff"))
+            string id = Session["user-id"].ToString();
+            var taikhoan = model.Tai_Khoan.Find(id);
+            if (taikhoan != null)
+                return View(taikhoan);
+            return RedirectToAction("Home");
+        }
+        public ActionResult RemoveAccount(string id)
+        {
+            Session["taikhoan-user-deleted"] = null;
+            Session["taikhoan-admintop1-deleted"] = null;
+            if (Session["user-role"].ToString().Equals("Admin"))
             {
-                string id = Session["user-id"].ToString();
-                var taikhoan = model.Tai_Khoan.Find(id);
-                if (taikhoan != null)
-                    return View(taikhoan);
+                var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
+                if(taikhoan != null)
+                {
+                    if(taikhoan.Quyen.Ten_Quyen.Equals("Admin") && !taikhoan.Ten_Dang_Nhap.Equals("admin"))
+                    {
+                        model.Tai_Khoan.Remove(taikhoan);
+                        model.SaveChanges();
+                        return View("Home");
+                    }
+                    else if (taikhoan.Ten_Dang_Nhap.Equals("admin"))
+                    {
+                        //Khong duoc phep xoa tk chu khach san
+                        Session["taikhoan-admintop1-deleted"] = true;
+                        return View("Home");
+                    }
+                    //Khong duoc phep xoa tk user
+                    Session["taikhoan-user-deleted"] = true;
+                }
             }
             return RedirectToAction("Homepage", "Home");
         }

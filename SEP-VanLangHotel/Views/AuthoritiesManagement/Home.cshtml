@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.Quyen>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h2>Home</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ten_Quyen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mo_Ta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ten_Quyen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mo_Ta)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Ma_Quyen }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Ma_Quyen }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Ma_Quyen })
+        </td>
+    </tr>
+}
+
+</table>

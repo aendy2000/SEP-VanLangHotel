@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AcountManagementController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\AuthoritiesManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -211,6 +212,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Views\AcountManagement\DetailtAccount.cshtml" />
+    <Content Include="Views\AuthoritiesManagement\Home.cshtml" />
+    <Content Include="Views\AuthoritiesManagement\AddAuthorities.cshtml" />
     <None Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

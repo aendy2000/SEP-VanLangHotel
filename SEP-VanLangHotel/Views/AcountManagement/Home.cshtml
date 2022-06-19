@@ -99,10 +99,9 @@
             <td>
                 @Html.ActionLink("Sua", "UpdateAccount", new { id = item.Ma_Tai_Khoan }) |
                 @Html.ActionLink("...", "DetailtAccount", new { id = item.Ma_Tai_Khoan })
-                @if (item.Quyen.Ten_Quyen.Equals("Admin") && item.Quyen.Ma_Quyen.Equals("TK202206170001"))
+                @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
                 {
-
-                    @Html.ActionLink("| Xoa", "Delete", new { id = item.Ma_Tai_Khoan })
+                    @Html.ActionLink("| Xoa", "RemoveAccount", new { id = item.Ma_Tai_Khoan })
                 }
             </td>
         </tr>
