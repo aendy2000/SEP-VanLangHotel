@@ -24,6 +24,16 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+        public ActionResult SearchAuthorities(string keyword) //Tìm kiếm quyền
+        {
+            if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
+            {
+                var quyen = model.Quyen.Where(t => t.Ten_Quyen.ToUpper().Contains(keyword.ToUpper())).ToList();
+                ViewBag.Keywork = keyword;
+                return View("Home", quyen);
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
         public ActionResult AddAuthorities() //Thêm quyền
         {
             if (Session["user-role"].ToString().Equals("Admin")) //Tài khoản thuộc quyền Admin
@@ -38,7 +48,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].ToString().Equals("Admin"))//Tài khoản thuộc quyền Admin
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     try
                     {
@@ -99,7 +109,7 @@ namespace SEP_VanLangHotel.Controllers
                     foreach (var item in taikhoan)
                     {
                         if (item.Quyen.Ten_Quyen.Equals(quyen.Ten_Quyen)) //Nếu Quyền đã được áp dụng cho tài khoản bất kỳ
-                            Session["try-taikhoan-dadungquyen"] = true; 
+                            Session["try-taikhoan-dadungquyen"] = true;
                     }
                     if (Session["try-taikhoan-dadungquyen"] == null) //Nếu quyền chưa được áp dụng cho bất kỳ tài khoản nào
                     {

@@ -24,6 +24,17 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+        public ActionResult SearchAccount(string keyword) //Tìm kiếm tài khoản
+        {
+            if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
+            {
+                var taikhoan = model.Tai_Khoan.Where(t => t.Ten_Dang_Nhap.ToUpper().Contains(keyword.ToUpper())).ToList();
+                ViewBag.Keywork = keyword;
+                return View("Home", taikhoan);
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
+
         public ActionResult AddNewAccount() //Thêm mới 1 tài khoản - Admin
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
