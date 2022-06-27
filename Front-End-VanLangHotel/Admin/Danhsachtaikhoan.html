@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="../asset/css/bootstrap.css">
+    <link rel="stylesheet" href="../asset/styleAdmin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <title>Danh sách tài khoản</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="../Admin/HomepageAdmin.html">
+                <img src="../img/logo/VanLangHotel.png" alt="" class="header__img">
+            </a>
+            <!-- <div class="header__search">
+                <input type="search" placeholder="Tìm kiếm" class="header__input">
+                <i class='bx bx-search header__icon'></i>
+            </div> -->
+
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
+        </div>
+    </header>
+    <div class="nav" id="navbar">
+            <nav class="nav__container">
+                <div>
+                    <a href="#" class="nav__link nav__logo">
+                        <i class='bx bx-image-alt nav__icon'></i>
+                        <span class="nav__logo-name">UserName</span>
+                    </a>
+
+                    <div class="nav__list">
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Danh mục</h3>
+
+                            <a href="../Admin/HomepageAdmin.html" class="nav__link">
+                                <i class='bx bx-home-alt nav__icon'></i>
+                                <span class="nav__name">Trang chủ</span>
+                            </a>
+
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-user nav__icon' ></i>
+                                <span class="nav__name">Thông tin tài khoản</span>
+                            </a>
+                            
+                            <div class="nav__dropdown">
+                                <a href="#" class="nav__link active">
+                                    <i class='bx bxs-user-account nav__icon' ></i>
+                                    <span class="nav__name">Quản lý tài khoản</span>
+                                    <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                </a>
+
+                                <div class="nav__dropdown-collapse">
+                                    <div class="nav__dropdown-content">
+                                        <a href="../Admin/Danhsachtaikhoan.html" class="nav__dropdown-item">Danh sách tài khoản</a>
+                                        <a href="../Admin/Themtaikhoan.html" class="nav__dropdown-item">Thêm tài khoản</a>
+                                        <a href="../Admin/Danhsachquyen.html" class="nav__dropdown-item">Danh sách quyền</a>
+                                        <a href="../Admin/Themquyen.html" class="nav__dropdown-item">Thêm quyền</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nav__dropdown">
+                                <a href="#" class="nav__link">
+                                    <i class='bx bx-hotel nav__icon'></i>
+                                    <span class="nav__name">Quản lý phòng</span>
+                                    <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                </a>
+
+                                <div class="nav__dropdown-collapse">
+                                    <div class="nav__dropdown-content">
+                                        <a href="#" class="nav__dropdown-item">Danh sách phòng</a>
+                                        <a href="#" class="nav__dropdown-item">Thêm phòng</a>
+                                        <a href="#" class="nav__dropdown-item">Danh sách loại phòng</a>
+                                        <a href="#" class="nav__dropdown-item">Thêm loại phòng</a>
+                                        <a href="#" class="nav__dropdown-item">Thêm tiện ích</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-history nav__icon' ></i>
+                                <span class="nav__name">Lịch sử đặt phòng</span>
+                            </a>
+
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-stats nav__icon'></i>
+                                <span class="nav__name">Thống kê doanh thu</span>
+                            </a>
+                        </div>
+
+                        <div class="nav__items">
+                            <h3 class="nav__subtitle">Khác</h3>
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-bell nav__icon' ></i>
+                                <span class="nav__name">Cài đặt</span>
+                            </a>
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-compass nav__icon' ></i>
+                                <span class="nav__name">Tiện ích</span>
+                            </a>
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-bookmark nav__icon' ></i>
+                                <span class="nav__name">Ghi nhớ</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="../Logout.html" class="nav__link nav__logout">
+                    <i class='bx bx-log-out nav__icon' ></i>
+                    <span class="nav__name">Đăng xuất</span>
+                </a>
+            </nav>
+    </div>
+    
+   
+<!---------------------------------------------BANNER--------------------------------------------------------->
+  <!-- <div class="banner">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="../img/banner/Banner1.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="../img/banner/Banner2.png" class="d-block w-100" alt="...">
+        </div>
+        </div>
+    </div>
+  </div> -->
+
+<!-------------------------------------------CONTAINER-------------------------------------------------------->       
+
+<h2>danh sách tài khoản</h2>
+    <div class="contanier-list">
+                <div class="search-account">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm tài khoản" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+
+
+                <div class="content-list-account">
+                    <a class="btn-add-list btn-add-list__success" role="button" href="../Admin/Themtaikhoan.html">Thêm tài khoản</a>
+
+                    <div class="table-account">
+                        <div class="table-background">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Họ và tên</th>
+                                    <th scope="col">Giới tính</th>
+                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Quyền</th>
+                                    <th scope="col">Khác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>@Name</td>
+                                    <td>@Gioitinh</td>
+                                    <td>@Sodienthoai</td>
+                                    <td>@Diachi</td>
+                                    <td>@Quyen</td>
+                                    <td>
+                                        <a class="icon icon-edit" role="button" href="../Admin/Chinhsuataikhoan.html" target="blank">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="icon icon-detail" role="button" href="../Admin/Taikhoanchitiet.html">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>@Name</td>
+                                    <td>@Gioitinh</td>
+                                    <td>@Sodienthoai</td>
+                                    <td>@Diachi</td>
+                                    <td>@Quyen</td>
+                                    <td>
+                                        <a class="icon icon-edit" role="button" href="#" target="blank">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="icon icon-detail" role="button" href="#">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>@Name</td>
+                                    <td>@Gioitinh</td>
+                                    <td>@Sodienthoai</td>
+                                    <td>@Diachi</td>
+                                    <td>@Quyen</td>
+                                    <td>
+                                        <a class="icon icon-edit" role="button" href="#" target="blank">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="icon icon-detail" role="button" href="#">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>@Name</td>
+                                    <td>@Gioitinh</td>
+                                    <td>@Sodienthoai</td>
+                                    <td>@Diachi</td>
+                                    <td>@Quyen</td>
+                                    <td>
+                                        <a class="icon icon-edit" role="button" href="#" target="blank">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="icon icon-detail" role="button" href="#">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>@Name</td>
+                                    <td>@Gioitinh</td>
+                                    <td>@Sodienthoai</td>
+                                    <td>@Diachi</td>
+                                    <td>@Quyen</td>
+                                    <td>
+                                        <a class="icon icon-edit" role="button" href="#" target="blank">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="icon icon-detail" role="button" href="#">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="number-list">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+<!-------------------------------------------FOOTER----------------------------------------------------------->
+
+  <footer class="footer">
+    <div class="footer__contanier">
+        <div class="footer__title">
+            <h2>Khách sạn văn lang</h2>
+        </div>
+        <div class="footer__contact nav__line">
+            <nav class="contact flex-column">
+                <a class="contact_item" href="#">Liên hệ</a>
+                <a class="contact_item" href="#">Chính sách riêng tư</a>
+                <a class="contact_item" href="#">Điều khoản và điều kiện</a>
+                <a class="contact_item" href="#">Cẩm nang du lịch</a>
+            </nav>
+        </div>
+    </div>
+    <div class="footer__img">
+        <img src="../img/logo/VanLangHotel.png" alt="" class="header__img">
+    </div>
+  </footer>
+</body>
+    <script src="../jsAdmin/barsMenu.js"></script>
+</html>

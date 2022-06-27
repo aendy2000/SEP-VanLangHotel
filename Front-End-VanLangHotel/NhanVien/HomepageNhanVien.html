@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../VanLangHotel/asset/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="../VanLangHotel/asset/css/bootstrap.css">
+
+    <title>Van Lang Hotel</title>
+</head>
+<body>
+    <div class="main">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                  <img class="navbar-logo" href="#" src="../VanLangHotel/img/logo/VanLangHotel.png"></img>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Đặt phòng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Quản lý phòng</a>
+                            <ul class="subnav">
+                                <li><a href="">Phòng đang thuê</a></li>
+                                <li><a href="">Phòng đến ngày trả</a></li>
+                                <li><a href="">Phòng trống</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Lịch sử đặt phòng</a>
+                        </li>
+                    </ul>
+                    <a class="btn-signin" role="button" href="../VanLangHotel/Logout.html">Đăng nhập</a>
+                  </div>
+                </div>
+              </nav>
+        </header>
+        <div class="banner">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="../VanLangHotel/img/banner/Banner1.jpg" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="../VanLangHotel/img/banner/Banner2.png" class="d-block w-100" alt="...">
+                  </div>
+                  <!-- <div class="carousel-item">
+                    <img src="../VanLangHotel/img/banner/Banner3.png" class="d-block w-100" alt="...">
+                  </div> -->
+                </div>
+              </div>
+        </div>
+        <div class="contanier">
+            <div class="content">
+                <div class="row row-cols-4">
+                    <div class="col col-hotel">
+                        <i class="fa-solid fa-hotel"></i>
+                        Phòng khách sạn
+                    </div>
+                    <div class="col col-import">
+                        <i class="fa-solid fa-file-import"></i>   
+                        Import File
+                    </div>
+                </div>
+                <div class="content-info">
+                  <form action="" method="get">
+                    <div class="content__date-in-out">
+                      <div class="col-sm-3">
+                        <label class="check-in">Ngày đặt</label>
+                        <input type="datetime-local" class="form-control" id="specificSizeCheckIn" required>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="check-out">Ngày trả</label>
+                        <input type="datetime-local" class="form-control" id="specificSizeCheckOut" required>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="numUser" for="specificSizeSelect">Số người, số giường</label>
+                        <select class="form-select" id="specificSizeSelect">
+                          <option selected>...</option>
+                          <option value="2">1 - 2 người (1 giường)</option>
+                          <option value="3">2 - 3 người (2 giường)</option>
+                          <option value="4">4 người trở lên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <h2>Các tiện ích</h2>
+                    <div class="content__item-utility">
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
+                        <label class="label-check-input" for="flexCheck1">
+                          Thiết bị sạc các loại
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck2">
+                        <label class="label-check-input" for="flexCheck2">
+                          Phòng có tivi
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck3">
+                        <label class="label-check-input" for="flexCheck3">
+                          Máy tính, máy chiếu
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck4">
+                        <label class="label-check-input" for="flexCheck4">
+                          Giặt ủi quần áo
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck5">
+                        <label class="label-check-input" for="flexCheck5">
+                          Phòng hát riêng
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck6">
+                        <label class="label-check-input" for="flexCheck6">
+                          Phòng hút thuốc
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck7">
+                        <label class="label-check-input" for="flexCheck7">
+                          Phòng họp riêng
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck8">
+                        <label class="label-check-input" for="flexCheck8">
+                          Phòng có cửa sổ
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck9">
+                        <label class="label-check-input" for="flexCheck9">
+                          Phòng tập thể hình
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck10">
+                        <label class="label-check-input" for="flexCheck10">
+                          Hồ bơi riêng
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck11">
+                        <label class="label-check-input" for="flexCheck11">
+                          Nhà bếp
+                        </label>
+                      </div>
+                      <div class="item-utility--check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheck12">
+                        <label class="label-check-input" for="flexCheck12">
+                          Phòng massage
+                        </label>
+                      </div>
+                    </div>
+                    <h2>khoảng mức giá</h2>
+                    <div class="content_item-money">
+                      <div class="row-money">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="floatingInputNumber" placeholder="VND" min="0" max="100000000" maxlength="9" required>
+                          <label for="floatingInputNumber">VND</label>
+                        </div>
+                        <label>ĐẾN</label>
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="floatingInputNumber" placeholder="VND" min="0" max="100000000" maxlength="9" required>
+                          <label for="floatingInputNumber">VND</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="button">
+                      <button type="submit" class="btn-login">
+                        Tìm ngay
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-contact">
+            <h2>Khách sạn văn lang</h2>
+            <div class="footer-contact__item nav-line">
+              <nav class="nav flex-column">
+                <a class="nav-link" href="#">Liên hệ</a>
+                <a class="nav-link" href="#">Chính sách riêng tư</a>
+                <a class="nav-link" href="#">Điều khoản và điều kiện</a>
+                <a class="nav-link" href="#">Cẩm nang du lịch</a>
+              </nav>
+            </div>
+          </div>
+          <div class="footer-logo">
+            <img class="navbar-logo" href="#" src="../VanLangHotel/img/logo/VanLangHotel.png"></img>
+          </div>
+        </footer>
+    </div>
+    
+</body>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
+</html>
