@@ -74,7 +74,7 @@ img {
 
 /*========== HEADER ==========*/
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -130,6 +130,10 @@ img {
 .header__toggle {
   color: var(--title-color);
   cursor: pointer;
+}
+
+.bx-menu{
+  color: #fff;
 }
 
 /*========== NAV ==========*/
@@ -348,10 +352,6 @@ h2{
   text-align: right;
 }
 
-.content{
-  height: 100vh;
-}
-
 .top-page-account{
   display: flex;
   align-items: center;
@@ -529,11 +529,13 @@ th{
   color: #000;
 }
 
-.form-control-addaccount{
+.form-control-addaccount,
+.form-control-addroom{
   width: 450px;
 }
 
-.form-select-addaccount{
+.form-select-addaccount,
+.form-select-addroom{
   font-size: 0.8rem;
 }
 
@@ -648,6 +650,81 @@ th{
 .button-edit__role{
   text-align: center;
   margin: 30px 0 30px 120px;
+}
+
+/*====================================================THÊM PHÒNG KHÁCH SẠN ========================================= */
+.contanier-add-room{
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-info-room{
+  margin: 10px 30px;
+}
+
+.room{
+  margin: 15px !important;
+}
+
+.input-image{
+  width: 450px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ababab;
+  border-radius: 10px;
+  /* margin: 0 12px; */
+}
+
+.preview-image{
+  text-align: center;
+}
+
+.input-image img{
+  width: 50%;
+  display: none;
+  margin-bottom: 30px;
+}
+
+.input-image input{
+  display: none;
+}
+
+.input-image label{
+  display:block;
+  width:48px;
+  height:48px;
+  margin-left: 44%;
+  line-height:50px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.input-image > label > .bx-cloud-upload{
+  font-size: 3rem;
+}
+
+.input-image label i:hover{
+  color: var(--primary-color);
+}
+
+.info-level-room{
+  border: 2px solid #ababab;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.info-level-room__left,
+.info-level-room__right{
+  margin: 0 12px;
+}
+
+.fix{
+  width: 250px;
 }
 
 /*-------------------------------------------------------------------FOOTER------------------------------------------------- */

@@ -1,7 +1,7 @@
 let btnEditFunc = document.querySelector(".btn-edit__func");
 let btnLock = document.querySelector(".button-lock");
 let btnUnlock = document.querySelector(".button-unlock");
-var iconLock = document.getElementById(".icon-lock")
+var iconLock = document.getElementById(".icon-lock");
 // var btnFunc = document.querySelector(".")
 // let searchBtn = document.querySelector(".bx-search");
 
@@ -40,29 +40,43 @@ for (let i = 0; i < navDropdown.length; i++) {
 }
 
 
-    btnUnlock.style.display = "none"
-    btnLock.addEventListener('click', function(){
-            btnLock.style.display = "none"
-            btnUnlock.style.display = "inline-block"
-            document.addEventListener('click', function (e) {
-                if (e.target.id === btnEditFunc.id) {
-                    e.preventDefault();
-                }
-            });
-            document.addEventListener('click', function (e){
-                if(e.target.id === iconLock.id){
-                    e.preventDefault();
-                }
-            })
+    // btnUnlock.style.display = "none"
+    // btnLock.addEventListener('click', function(){
+    //         btnLock.style.display = "none"
+    //         btnUnlock.style.display = "inline-block"
+    //         document.addEventListener('click', function (e) {
+    //             if (e.target.id === btnEditFunc.id) {
+    //                 e.preventDefault();
+    //             }
+    //         });
+    //         document.addEventListener('click', function (e){
+    //             if(e.target.id === iconLock.id){
+    //                 e.preventDefault();
+    //             }
+    //         })
             
-    })
+    // })
 
-    btnUnlock.addEventListener('click', function(){
-            btnUnlock.style.display = "none"
-            btnLock.style.display = "inline-block"
-            // document.addEventListener('click', function (e) {
-            //     if (e.target.id !== btnEditFunc.id) {
-            //         e.preventDefault();
-            //     }
-            // });
-    }) 
+    // btnUnlock.addEventListener('click', function(){
+    //         btnUnlock.style.display = "none"
+    //         btnLock.style.display = "inline-block"
+    //         // document.addEventListener('click', function (e) {
+    //         //     if (e.target.id !== btnEditFunc.id) {
+    //         //         e.preventDefault();
+    //         //     }
+    //         // });
+    // }) 
+
+
+function showPreview(event){
+        var file = event.target.files;
+        // var src = URL.createObjectURL(event.target.files[1]);
+        var preview = document.getElementById("upload-image");
+        // preview.file = file;
+        preview.style.display = "block";
+        console.log('files',file);
+
+        var feedback = document.getElementById('feedback');
+        var msg = `${file.length} file(s) tải lên thành công !`;
+        feedback.innerHTML = msg;
+}

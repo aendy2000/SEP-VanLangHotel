@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../asset/styleAdmin.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
-    <title>Danh sách tài khoản</title>
+    <title>Admin Van Lang Hotel</title>
 </head>
 <body>
     <header class="header">
@@ -141,112 +141,114 @@
 <!-------------------------------------------CONTAINER-------------------------------------------------------->       
 
   <div class="top-page-account">
-    <a class="btn-back" role="button" href="../Admin/Danhsachtaikhoan.html">
+    <a class="btn-back" role="button" href="../Admin/Danhsachphongkhachsan.html">
         <i class='bx bx-arrow-back' ></i>
     </a>
-    <h2>Thông tin tài khoản</h2>
+    <h2>Thêm phòng khách sạn</h2>
   </div>
-  <div class="contanier-add-account">
-
-    <div class="div-left">
-      <div class="img-account-detail">
-        <img class="profile-pic" src="" />
-        <div class="upload-button-detail">
-            <i class='bx bx-upload' aria-hidden="true"></i>
-        </div>
-        <!-- <input class="file-upload" type="file" accept="image/*"/> -->
-      </div>
-      <div class="lock-account">
-        <button class="button button-lock">Khóa tài khoản
-          <i class='bx bx-lock-alt'></i>
-        </button>
-        <button class="button button-unlock">Mở khóa tài khoản
-          <i class='bx bx-lock-open-alt'></i>
-        </button>
-      </div>
-    </div>
-    
-
-    <div class="add-info-account">
-        <form>
+  <div class="contanier-add-room">
+    <div class="add-info-room">
+        <form get="" method="">
             <div class="mb-3 row">
-                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Họ và tên</label>
+                <label for="inputMa" class="col-sm-2 col-form-label" id="label-add">Mã phòng</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-addaccount" id="inputName" value="Name" disabled>
+                  <input type="text" class="form-control form-control-addroom" id="inputMa" placeholder="Vui lòng nhập mã phòng" required pattern="[A-Z][0][0-5][0-9]" maxlength="4">
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="inputSex" class="col-sm-2 col-form-label" id="label-add">Giới tính</label>
+                <label for="" class="col-sm-2 col-form-label" id="label-add">Hình ảnh</label>
+                <div class="input-image">
+                    <div class="preview-image">
+                        <img id="upload-image">
+                        <p id="feedback">Vui lòng tải ảnh lên</p>
+                    </div>
+                    <label for="formFileMultiple">
+                        <i class='bx bx-cloud-upload' id="icon-upload"></i>
+                    </label>
+                    <input type="file" id="formFileMultiple" accept="image/*" onchange="showPreview(event)" multiple>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputLevel" class="col-sm-2 col-form-label" id="label-add">Loại phòng</label>
                 <div class="col-sm-10">
-                    <select class="form-control form-select-addaccount form-control-addaccount" id="inputSex" disabled>
-                        <option selected disabled value="">Gioitinh</option>
-                        <option>Nam</option>
-                        <option>Nữ</option>
+                    <select class="form-select form-select-addroom form-control-addroom" id="inputLevel" required>
+                        <option></option>
+                        <option>Phòng loại 1</option>
+                        <option>Phòng loại 2</option>
+                        <option>Phòng loại 3</option>
                       </select>
                 </div>
             </div>
             <div class="mb-3 row">
-              <label for="inputdate" class="col-sm-2 col-form-label" id="label-add">Ngày sinh</label>
-              <div class="col-sm-10">
-                <input type="date" class="form-control form-control-addaccount" id="inputdate" disabled>
-              </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputCCCD" class="col-sm-2 col-form-label" id="label-add">CMND/CCCD</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control form-control-addaccount"  id="inputCCCD" value="123456789" min="0" disabled>
+                <div class="info-level-room">
+                    <div class="info-level-room__left">
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                                <textarea class="form-control form-control-addroom fix" placeholder="" id="floatingTextarea" rows="20" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-level-room__right">
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control form-control-addroom fix" id="" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control form-control-addroom fix" id="" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control form-control-addroom fix" id="" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control form-control-addroom fix" id="" placeholder="" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="inputPhone" class="col-sm-2 col-form-label" id="label-add">Số điện thoại</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control form-control-addaccount" id="inputPhone" value="123456789" min="0" disabled>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Email</label>
-                <div class="col-sm-10">
-                  <input type="Email" class="form-control form-control-addaccount" id="inputName" value="abc@gmail.com" disabled>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputAddress" class="col-sm-2 col-form-label" id="label-add">Địa chỉ</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-addaccount" id="inputAddress" value="Diachi" disabled>
-                </div>
-            </div>
-            <div class="mb-3 row">
+            
+            
+            <!-- <div class="mb-3 row">
                 <label for="inputUsername" class="col-sm-2 col-form-label" id="label-add">Tài khoản</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-addaccount" id="inputUsername" value="taikhoan" disabled>
+                  <input type="text" class="form-control form-control-addaccount" id="inputUsername" placeholder="Vui lòng nhập tài khoản" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="inputPassword" class="col-sm-2 col-form-label" id="label-add">Mật khẩu</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-addaccount" id="inputPassword" value="matkhau" disabled>
+                  <input type="text" class="form-control form-control-addaccount" id="inputPassword" placeholder="Vui lòng nhập mật khẩu" required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="inputRole" class="col-sm-2 col-form-label" id="label-add">Quyền</label>
                 <div class="col-sm-10">
-                    <select class="form-control form-select-addaccount form-control-addaccount" id="inputRole" disabled>
-                        <option selected disabled value="">Quyen</option>
+                    <select class="form-select form-select-addaccount form-control-addaccount" id="inputRole" required>
+                        <option selected disabled value=""></option>
                         <option>Admin</option>
                         <option>Nhân viên</option>
-                        <!-- <a class="role-add" href="#">Thêm quyền</a> -->
                       </select>
                 </div>
-            </div>
-            <div class="button-edit">
-                <a class="btn-edit btn-edit__func active" role="button" href="../Admin/Chinhsuataikhoan.html" id="btn-edit__lock" target="blank">
-                    Chỉnh sửa
-                </a>
+            </div> -->
+            <div id="button">
+                <button type="submit" class="btn-add room">
+                    Thêm
+                </button>
+                <button type="submit" class="btn-cancel room">
+                    Hủy
+                </button>
             </div>
           </form>
     </div>
   </div>
-
 <!-------------------------------------------FOOTER----------------------------------------------------------->
 
   <footer class="footer">
