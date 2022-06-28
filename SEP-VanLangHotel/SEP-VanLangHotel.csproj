@@ -186,6 +186,31 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="asset\css\bootstrap-grid.css" />
+    <Content Include="asset\css\bootstrap-grid.min.css" />
+    <Content Include="asset\css\bootstrap-grid.rtl.css" />
+    <Content Include="asset\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="asset\css\bootstrap-reboot.css" />
+    <Content Include="asset\css\bootstrap-reboot.min.css" />
+    <Content Include="asset\css\bootstrap-reboot.rtl.css" />
+    <Content Include="asset\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="asset\css\bootstrap-utilities.css" />
+    <Content Include="asset\css\bootstrap-utilities.min.css" />
+    <Content Include="asset\css\bootstrap-utilities.rtl.css" />
+    <Content Include="asset\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="asset\css\bootstrap.css" />
+    <Content Include="asset\css\bootstrap.min.css" />
+    <Content Include="asset\css\bootstrap.rtl.css" />
+    <Content Include="asset\css\bootstrap.rtl.min.css" />
+    <Content Include="asset\JS\popper.min.js" />
+    <Content Include="asset\style.css" />
+    <Content Include="asset\styleAdmin.css" />
+    <Content Include="asset\styleLogin.css" />
+    <Content Include="img\banner\Banner1.jpg" />
+    <Content Include="img\banner\Banner2.png" />
+    <Content Include="img\banner\Banner3.png" />
+    <Content Include="img\logo\VanLangHotel.png" />
+    <Content Include="jsAdmin\barsMenu.js" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -201,13 +226,6 @@
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <Content Include="Views\Auth\VerifyEmail.cshtml" />
     <Content Include="Views\Auth\NewPassword.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Views\AuthoritiesManagement\Home.cshtml" />
     <Content Include="Views\AuthoritiesManagement\AddAuthorities.cshtml" />
     <Content Include="Views\AccountManagement\AddNewAccount.cshtml" />
@@ -215,7 +233,6 @@
     <Content Include="Views\AccountManagement\DetailtAccount.cshtml" />
     <Content Include="Views\AccountManagement\Information.cshtml" />
     <Content Include="Views\AccountManagement\Home.cshtml" />
-    <None Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -228,6 +245,29 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="asset\css\bootstrap-grid.css.map" />
+    <Content Include="asset\css\bootstrap-grid.min.css.map" />
+    <Content Include="asset\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="asset\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="asset\css\bootstrap-reboot.css.map" />
+    <Content Include="asset\css\bootstrap-reboot.min.css.map" />
+    <Content Include="asset\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="asset\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="asset\css\bootstrap-utilities.css.map" />
+    <Content Include="asset\css\bootstrap-utilities.min.css.map" />
+    <Content Include="asset\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="asset\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="asset\css\bootstrap.css.map" />
+    <Content Include="asset\css\bootstrap.min.css.map" />
+    <Content Include="asset\css\bootstrap.rtl.css.map" />
+    <Content Include="asset\css\bootstrap.rtl.min.css.map" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

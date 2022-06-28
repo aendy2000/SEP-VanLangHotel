@@ -28,9 +28,17 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
             {
-                var taikhoan = model.Tai_Khoan.Where(t => t.Ten_Dang_Nhap.ToUpper().Contains(keyword.ToUpper())).ToList();
-                ViewBag.Keywork = keyword;
-                return View("Home", taikhoan);
+                if (keyword.Equals("") || keyword == null)
+                {
+                    var taikhoan = model.Tai_Khoan.ToList();
+                    return View("Home", taikhoan);
+                }
+                else
+                {
+                    var taikhoan = model.Tai_Khoan.Where(t => t.Ten_Dang_Nhap.ToUpper().Contains(keyword.ToUpper())).ToList();
+                    ViewBag.Keywork = keyword;
+                    return View("Home", taikhoan);
+                }
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -42,12 +50,18 @@ namespace SEP_VanLangHotel.Controllers
                 Tai_Khoan newAccount = new Tai_Khoan();
                 ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
                 ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
+                List<string> gioitinh = new List<string>();
+                gioitinh.Add("Nam");
+                gioitinh.Add("Nữ");
+                gioitinh.Add("Khác");
+                ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                ViewBag.gioiTinh = "";
                 return View(newAccount);
             }
             return RedirectToAction("Homepage", "Home");
         }
         [HttpPost]
-        public ActionResult AddNewAccount(Tai_Khoan newAccount)
+        public ActionResult AddNewAccount(Tai_Khoan newAccount, string gioiTinh)
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
             {
@@ -56,6 +70,9 @@ namespace SEP_VanLangHotel.Controllers
                     try
                     {
                         newAccount.Ma_Tai_Khoan = "1"; //Mã tạm thời (Trigger tại DB sẽ thay đổi sau khi thêm thành công tài khoán)
+                        newAccount.Lock = 0;
+                        newAccount.Ma_Khach_San = "KS202206170001";
+                        newAccount.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
                         model.Tai_Khoan.Add(newAccount);
                         model.SaveChanges();
                     }
@@ -87,15 +104,40 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
             {
-                var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
-                ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
-                ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
-                return View(taikhoan);
+                if (id != null)
+                {
+                    var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
+                    ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
+                    ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
+                    ViewBag.Birthday = taikhoan.Sinh_Nhat.ToString("dd/MM/yyyy");
+                    List<string> gioitinh = new List<string>();
+                    if (taikhoan.Gioi_Tinh == 1)
+                    {
+                        gioitinh.Add("Nam");
+                        gioitinh.Add("Nữ");
+                        gioitinh.Add("Khác");
+                    }
+                    else if (taikhoan.Gioi_Tinh == 0)
+                    {
+                        gioitinh.Add("Nữ");
+                        gioitinh.Add("Nam");
+                        gioitinh.Add("Khác");
+                    }
+                    else
+                    {
+                        gioitinh.Add("Khác");
+                        gioitinh.Add("Nam");
+                        gioitinh.Add("Nữ");
+                    }
+
+                    ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                    return View(taikhoan);
+                }
             }
-            return RedirectToAction("Homepage", "Home");
+            return RedirectToAction("Home", "AccountManagement");
         }
         [HttpPost]
-        public ActionResult UpdateAccount(Tai_Khoan taikhoan, string id)
+        public ActionResult UpdateAccount(Tai_Khoan taikhoan, string gioiTinh)
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
             {
@@ -103,9 +145,10 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     try
                     {
+                        taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
                         model.Entry(taikhoan).State = EntityState.Modified;
                         model.SaveChanges();
-                        return RedirectToAction("Home");
+                        return RedirectToAction("DetailtAccount", new {id = taikhoan.Ma_Tai_Khoan});
                     }
                     catch (DbEntityValidationException e)
                     {
@@ -126,6 +169,27 @@ namespace SEP_VanLangHotel.Controllers
                 }
                 ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
                 ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
+                List<string> gioitinh = new List<string>();
+                if (taikhoan.Gioi_Tinh == 1)
+                {
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Nữ");
+                    gioitinh.Add("Khác");
+                }
+                else if (taikhoan.Gioi_Tinh == 0)
+                {
+                    gioitinh.Add("Nữ");
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Khác");
+                }
+                else
+                {
+                    gioitinh.Add("Khác");
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Nữ");
+                }
+
+                ViewBag.Gioi_Tinh = new SelectList(gioitinh);
                 return View(taikhoan);
             }
             return RedirectToAction("Homepage", "Home");
@@ -134,7 +198,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
             {
-                var taikhoan = model.Tai_Khoan.Find(id);
+                var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
                 if (taikhoan != null)
                     return View(taikhoan);
             }
@@ -143,7 +207,7 @@ namespace SEP_VanLangHotel.Controllers
         public ActionResult Information() //Xem thông tin cá nhân - Admin và Nhân viên
         {
             string id = Session["user-id"].ToString();
-            var taikhoan = model.Tai_Khoan.Find(id);
+            var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.Equals(id));
             if (taikhoan != null)
                 return View(taikhoan);
             return RedirectToAction("Home");
@@ -161,17 +225,36 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         model.Tai_Khoan.Remove(taikhoan);
                         model.SaveChanges();
-                        return View("Home");
+                        return RedirectToAction("Home");
                     }
                     else if (taikhoan.Ten_Dang_Nhap.Equals("admin"))
                     {
                         //Khong duoc phep xoa tk chu khach san
                         Session["taikhoan-admintop1-deleted"] = true;
-                        return View("Home");
+                        return RedirectToAction("Home");
                     }
                     //Khong duoc phep xoa tk user
                     Session["taikhoan-user-deleted"] = true;
                 }
+                return RedirectToAction("Home");
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
+        public ActionResult LockAccount(string id)
+        {
+            if (Session["user-role"].ToString().Equals("Admin"))
+            {
+                var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
+                if (taikhoan != null)
+                {
+                    if (taikhoan.Lock == 0)
+                        taikhoan.Lock = 1;
+                    else
+                        taikhoan.Lock = 0;
+                    model.SaveChanges();
+                    return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
+                }
+                return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
         }

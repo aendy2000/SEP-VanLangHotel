@@ -2,109 +2,97 @@
 
 @{
     ViewBag.Title = "Home";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Home</h2>
+<div class="contanier-list">
+    <div class="search-account">
+        <form class="d-flex" role="search" action="@Url.Content("SearchAccount")">
+            <input name="keyword" class="form-control me-2" type="search" placeholder="Tìm kiếm tài khoản" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+    <div class="content-list-account">
+        <a class="btn-add-list btn-add-list__success" role="button" href="@Url.Action("AddNewAccount")">Thêm tài khoản</a>
+        <div class="table-account">
+            <div class="table-background">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Họ & tên</th>
+                            <th scope="col">CMND/CCCD</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">Quyền</th>
+                            <th scope="col">Khác</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.Ten_Dang_Nhap</td>
+                                <td>@item.Ho_Va_Ten</td>
+                                <td>@item.CMND_CCCD</td>
+                                <td>@item.SDT</td>
+                                <td>@item.Sinh_Nhat.ToString("dd/MM/yyyy")</td>
+                                @if (item.Gioi_Tinh == 1)
+                                {
+                                    <td>Nam</td>
 
-<p>
-    @Html.ActionLink("Thêm tài khoản", "AddNewAccount")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Ten_Dang_Nhap)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mat_Khau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lock)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CMND_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SDT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ho_Va_Ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sinh_Nhat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gioi_Tinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dia_Chi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Verify_Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Khach_San.Ten_Khach_San)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quyen.Ten_Quyen)
-        </th>
-        <th></th>
-    </tr>
+                                }
+                                else if (item.Gioi_Tinh == 0)
+                                {
+                                    <td>Nữ</td>
+                                }
+                                else
+                                {
+                                    <td>Khác</td>
+                                }
+                                <td>@item.Quyen.Ten_Quyen</td>
+                                <td>
+                                    <a class="icon icon-edit" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })" target="blank">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <span>|</span>
+                                    <a class="icon icon-detail" role="button" href="@Url.Action("DetailtAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
+                                        <i class="fa-solid fa-info"></i>
+                                    </a>
+                                    @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
+                                    {
+                                        <span>|</span>
+                                        <a class="icon icon-detail" role="button" href="@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+            <div class="number-list">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ten_Dang_Nhap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mat_Khau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CMND_CCCD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SDT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ho_Va_Ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sinh_Nhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gioi_Tinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dia_Chi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Verify_Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Khach_San.Ten_Khach_San)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quyen.Ten_Quyen)
-            </td>
-            <td>
-                @Html.ActionLink("Sua", "UpdateAccount", new { id = item.Ma_Tai_Khoan }) |
-                @Html.ActionLink("...", "DetailtAccount", new { id = item.Ma_Tai_Khoan })
-                @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
-                {
-                    @Html.ActionLink("| Xoa", "RemoveAccount", new { id = item.Ma_Tai_Khoan })
-                }
-            </td>
-        </tr>
-    }
-
-</table>

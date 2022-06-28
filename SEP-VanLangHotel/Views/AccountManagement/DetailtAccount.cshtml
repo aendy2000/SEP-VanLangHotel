@@ -2,106 +2,132 @@
 
 @{
     ViewBag.Title = "DetailtAccount";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DetailtAccount</h2>
-
-<div>
-    <h4>Tai_Khoan</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Ten_Dang_Nhap)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ten_Dang_Nhap)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mat_Khau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mat_Khau)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Lock)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lock)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CMND_CCCD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CMND_CCCD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SDT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SDT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ho_Va_Ten)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ho_Va_Ten)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Sinh_Nhat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Sinh_Nhat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gioi_Tinh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gioi_Tinh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dia_Chi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dia_Chi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quyen.Ten_Quyen)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quyen.Ten_Quyen)
-        </dd>
-
-    </dl>
+<div class="top-page-account">
+    <a class="btn-back" role="button" href="@Url.Action("Home", "AccountManagement")">
+        <i class='bx bx-arrow-back'></i>
+    </a>
+    <h2 style="text-align:center;">Thông tin tài khoản</h2>
+    <h2></h2>
 </div>
-<p>
-    @Html.ActionLink("Sua", "UpdateAccount", new { id = Model.Ma_Tai_Khoan }) |
-    @Html.ActionLink("Back to List", "Home")
-</p>
+<div class="contanier-add-account" style="padding-right:11cm">
+    <div class="div-left">
+        <div class="img-account-detail">
+            <img class="profile-pic" src="" />
+            <div class="upload-button-detail">
+                <i class='bx bx-upload' aria-hidden="true"></i>
+            </div>
+            <!-- <input class="file-upload" type="file" accept="image/*"/> -->
+        </div>
+        <div class="lock-account">
+            @if (!Model.Quyen.Ten_Quyen.Equals("Admin"))
+            {
+                if (Model.Lock == 0)
+                {
+                    <a type="button" class="button button-lock" href="@Url.Action("LockAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                        Khóa tài khoản
+                        <i class='bx bx-lock-alt'></i>
+                    </a>
+                }
+                else
+                {
+                    <a type="button" class="button button-unlock" href="@Url.Action("LockAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                        Mở khóa tài khoản
+                        <i class='bx bx-lock-open-alt'></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="add-info-account">
+        <form>
+            <div class="mb-3 row">
+                <label for="inputUsername" class="col-sm-2 col-form-label" id="label-add">Username</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Model.Ten_Dang_Nhap" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Họ và tên</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Model.Ho_Va_Ten" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputSex" class="col-sm-2 col-form-label" id="label-add">Giới tính</label>
+                <div class="col-sm-10">
+                    @if (Model.Gioi_Tinh == 1)
+                    {
+                        <input style="color:black" type="text" class="form-control form-control-addaccount" value="Nam" disabled>
+                    }
+                    else if (Model.Gioi_Tinh == 0)
+                    {
+                        <input style="color:black" type="text" class="form-control form-control-addaccount" value="Nữ" disabled>
+                    }
+                    else
+                    {
+                        <input style="color:black" type="text" class="form-control form-control-addaccount" value="Khác" disabled>
+                    }
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputdate" class="col-sm-2 col-form-label" id="label-add">Ngày sinh</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Convert.ToDateTime(Model.Sinh_Nhat).ToString("dd/MM/yyyy")" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputCCCD" class="col-sm-2 col-form-label" id="label-add">CMND/CCCD</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="number" class="form-control form-control-addaccount" value="@Model.CMND_CCCD" min="0" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPhone" class="col-sm-2 col-form-label" id="label-add">Số điện thoại</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="number" class="form-control form-control-addaccount" value="@Model.SDT" min="0" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Email</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="Email" class="form-control form-control-addaccount" value="@Model.Email" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputAddress" class="col-sm-2 col-form-label" id="label-add">Địa chỉ</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Model.Dia_Chi" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputUsername" class="col-sm-2 col-form-label" id="label-add">Tài khoản</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Model.Ten_Dang_Nhap" disabled>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="inputRole" class="col-sm-2 col-form-label" id="label-add">Quyền</label>
+                <div class="col-sm-10">
+                    <input style="color:black" type="text" class="form-control form-control-addaccount" value="@Model.Quyen.Ten_Quyen" disabled>
+                </div>
+            </div>
+            <div class="button-edit">
+                <a class="btn-edit btn-edit__func active" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})" id="btn-edit__lock">
+                    Chỉnh sửa
+                </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                @if (Model.Quyen.Ten_Quyen.Equals("Admin") && !Model.Ten_Dang_Nhap.Equals("admin"))
+                {
+                    <a style="height:100px;" class="btn-edit btn-edit__func active" role="button" href="@Url.Action("RemoveAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})" id="btn-edit__lock">
+                        Xóa tài khoản
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+

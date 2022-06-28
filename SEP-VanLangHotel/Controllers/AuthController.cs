@@ -17,6 +17,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             Session["username-incorrect"] = null;
             Session["password-incorrect"] = null;
+            ViewBag.Title = "Đăng Nhập";
             return View();
         }
         [HttpPost]

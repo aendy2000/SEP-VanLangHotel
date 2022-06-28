@@ -1,13 +1,18 @@
 ﻿@model Decimal
 @{
     ViewBag.Title = "Dashboard";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Searchs = false;
 }
 
 <html>
 <body>
-    <div>
-        <p> Tổng doanh thu khách sạn: @Model.ToString("0,0") </p>
+    <div class="content">
+        <div>
+            <br /><br /><br /><br /><br />
+            <p style="text-align:center"> Tổng doanh thu khách sạn: @Model.ToString("0,0") </p>
+            <br /><br /><br /><br /><br />
+        </div>
     </div>
 </body>
 </html>
