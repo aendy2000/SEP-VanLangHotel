@@ -26,21 +26,25 @@ namespace SEP_VanLangHotel.Controllers
             var user = model.Tai_Khoan.FirstOrDefault(u => u.Ten_Dang_Nhap.ToUpper().Equals(username.ToUpper()));
             if (user != null) //Tài khoản tồn tại
             {
+
                 Session["username-incorrect"] = null;
                 if (user.Mat_Khau.Equals(password)) //Mật khẩu đúng
                 {
-                    Session["user-fullname"] = user.Ho_Va_Ten;
-                    Session["user-id"] = user.Ten_Dang_Nhap;
-                    Session["user-role"] = user.Quyen.Ten_Quyen;
-                    return RedirectToAction("Homepage", "Home");
-                }
-                else
-                {
-                    Session["password-incorrect"] = true;
+                    Session["password-incorrect"] = null;
+                    if (user.Lock == 0) //Tài khoản không bị khóa
+                    {
+                        Session["user-lock"] = null;
+                        Session["user-fullname"] = user.Ho_Va_Ten;
+                        Session["user-id"] = user.Ten_Dang_Nhap;
+                        Session["user-role"] = user.Quyen.Ten_Quyen;
+                        return RedirectToAction("Homepage", "Home");
+                    }
+                    Session["user-lock"] = true;
                     return View();
                 }
+                Session["password-incorrect"] = true;
+                return View();
             }
-
             Session["username-incorrect"] = true;
             Session["password-incorrect"] = true;
             return View();
@@ -181,7 +185,7 @@ namespace SEP_VanLangHotel.Controllers
             Session["sosanh-matkhaumoi-incorrect"] = null;
             var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(idtaikhoan));
             //Nếu mật khảu mới không bỏ trống
-            if (!matkhaumoi.Equals("") || matkhaumoi != null )
+            if (!matkhaumoi.Equals("") || matkhaumoi != null)
             {
                 //Nếu mật khẩu mới trùng khớp
                 if (matkhaumoi.Equals(nhaplaimatkhaumoi))

@@ -44,6 +44,11 @@
                     {
                         <p style="color:red">Password Incorrect</p>
                     }
+                    @* Nếu tài khoản bị khóa*@
+                    @if (Convert.ToBoolean(Session["user-lock"]) == true)
+                    {
+                        <p style="color:red">Tài khoản của bạn đã bị khóa. <br />Vui lòng liên hệ chủ khách sạn để biết thêm thông tin</p>
+                    }
                     <a href="@Url.Action("ForgotPassword")" target="_blank" style="text-align:right"><p>Quên mật khẩu</p></a>
                     <div style="text-align: left" class="btn-login">
                         <button id="btn" type="submit">Đăng nhập</button>

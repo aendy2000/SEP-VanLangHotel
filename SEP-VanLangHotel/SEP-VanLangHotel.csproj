@@ -192,6 +192,7 @@
     <Content Include="assets\css\demo.css" />
     <Content Include="assets\css\fonts.css" />
     <Content Include="assets\css\fonts.min.css" />
+    <Content Include="assets\css\profiles.css" />
     <Content Include="assets\fonts\flaticon\flaticon.css" />
     <Content Include="assets\fonts\flaticon\flaticon.html" />
     <Content Include="assets\fonts\flaticon\Flaticon.svg" />

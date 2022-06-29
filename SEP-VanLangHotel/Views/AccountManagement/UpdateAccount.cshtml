@@ -1,123 +1,116 @@
 ﻿@model SEP_VanLangHotel.Models.Tai_Khoan
 
 @{
-    ViewBag.Title = "UpdateAccount";
+    ViewBag.Title = "Chỉnh sửa thông tin tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="top-page-account">
-    <a class="btn-back" role="button" href="@Url.Action("Home", "AccountManagement")">
-        <i class='bx bx-arrow-back'></i>
-    </a>
-    <h2 style="text-align:center">Chỉnh sửa thông tin tài khoản</h2>
-    <h2></h2>
-</div>
-<div class="contanier-add-account" style="padding-right:11cm">
-    <div class="img-account">
-        <img class="profile-pic" src="" />
-        <div class="upload-button">
-            <i class='bx bx-upload' aria-hidden="true"></i>
+<title>@ViewBag.Title</title>
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
         </div>
-        <input class="file-upload" type="file" accept="image/*" />
     </div>
-    <div class="add-info-account">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Ma_Tai_Khoan)
-            @Html.HiddenFor(model => model.Ten_Dang_Nhap)
-            @Html.HiddenFor(model => model.Mat_Khau)
-            @Html.HiddenFor(model => model.Lock)
-            @Html.HiddenFor(model => model.Ma_Khach_San)
-            <div class="mb-3 row">
-                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Họ và tên</label>
-                <div class="col-sm-10">
-                    @*<input type="text" name="name" class="form-control form-control-addaccount" id="inputName" value="Name" required>*@
-                    @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control form-control-addaccount" } })
-                    @Html.ValidationMessageFor(model => model.Ho_Va_Ten, "", new { @class = "text-danger" })
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header"><b>Ảnh hồ sơ</b></div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">File hình ảnh dưới 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <button style="width: 180px" class="btn btn-primary" type="button">Chọn ảnh hồ sơ</button>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="inputSex" class="col-sm-2 col-form-label" id="label-add">Giới tính</label>
-                <div class="col-sm-10">
-                    @*<select class="form-control form-select-addaccount form-control-addaccount" id="inputSex" required>
-                            <option selected disabled value="">Gioitinh</option>
-                            <option>Nam</option>
-                            <option>Nữ</option>
-                        </select>*@
-                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-select form-select-addaccount form-control-addaccount" })
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header"><b>Thông tin tài khoản</b></div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Ma_Tai_Khoan)
+                        @Html.HiddenFor(model => model.Ten_Dang_Nhap)
+                        @Html.HiddenFor(model => model.Mat_Khau)
+                        @Html.HiddenFor(model => model.Lock)
+                        @Html.HiddenFor(model => model.Ma_Khach_San)
 
+                        <div class="mb-3">
+                            <label class="small mb-1">Họ tên</label>
+                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ho_Va_Ten, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Giới tính</label>
+                                @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Ngày sinh</label>
+                                @Html.EditorFor(model => model.Sinh_Nhat, new { type = "date", htmlAttributes = new { @class = "form-control", @placeholder = "Ngày/Tháng/Năm", @required = "required", @Value = DateTime.Now.ToString("dd/MM/yyyy") } })
+                                @Html.ValidationMessageFor(model => model.Sinh_Nhat, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">CMND/CCCD</label>
+                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.CMND_CCCD, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Số điện thoại</label>
+                                @Html.EditorFor(model => model.SDT, new { type = "tel", pattern = "[0-9]{10}", htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Địa chỉ Email</label>
+                            @Html.EditorFor(model => model.Email, new { type = "email", htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ Email", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Địa chỉ nhà</label>
+                            @Html.EditorFor(model => model.Dia_Chi, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Dia_Chi, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Quyền</label>
+                            @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
+                        </div><hr /><div style="text-align:center;" class="mb-3">
+                            <button style="width:180px" type="submit" class="btn btn-success">
+                                Lưu
+                            </button>
+                            &emsp;
+                            @if (Session["user-id"].Equals(Model.Ten_Dang_Nhap))
+                            {
+                                <a style="width:180px" type="button" class="btn btn-danger" href="@Url.Action("Information", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                                    Hủy
+                                </a>
+                            }
+                            else
+                            {
+                                <a style="width:180px" type="button" class="btn btn-danger" href="@Url.Action("DetailtAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                                    Hủy
+                                </a>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="inputdate" class="col-sm-2 col-form-label" id="label-add">Ngày sinh</label>
-                <div class="col-sm-10">
-                    @*<input type="date" class="form-control form-control-addaccount" id="inputdate" required>*@
-                    @Html.EditorFor(model => model.Sinh_Nhat, new { type = "date", htmlAttributes = new { @class = "form-control form-control-addaccount", @required = "required", @Value = ViewBag.Birthday } })
-                    @Html.ValidationMessageFor(model => model.Sinh_Nhat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputCCCD" class="col-sm-2 col-form-label" id="label-add">CMND/CCCD</label>
-                <div class="col-sm-10">
-                    @*<input type="number" class="form-control form-control-addaccount" id="inputCCCD" value="123456789" min="0" required>*@
-                    @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control form-control-addaccount", @placeholder = "vui lòng nhập CMND/CCCD", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.CMND_CCCD, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputPhone" class="col-sm-2 col-form-label" id="label-add">Số điện thoại</label>
-                <div class="col-sm-10">
-                    @*<input type="number" class="form-control form-control-addaccount" id="inputPhone" value="123456789" min="0" required>*@
-                    @Html.EditorFor(model => model.SDT, new { type = "tel", pattern = "[0-9]{10}", htmlAttributes = new { @class = "form-control form-control-addaccount", @placeholder = "Vui lòng nhập số điện thoại", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputName" class="col-sm-2 col-form-label" id="label-add">Email</label>
-                <div class="col-sm-10">
-                    @*<input type="Email" class="form-control form-control-addaccount" id="inputName" value="abc@gmail.com" required>*@
-                    @Html.EditorFor(model => model.Email, new { type = "email", htmlAttributes = new { @class = "form-control form-control-addaccount", @placeholder = "Vui lòng nhập Email", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputAddress" class="col-sm-2 col-form-label" id="label-add">Địa chỉ</label>
-                <div class="col-sm-10">
-                    @*<input type="text" class="form-control form-control-addaccount" id="inputAddress" value="Diachi" required>*@
-                    @Html.EditorFor(model => model.Dia_Chi, new { htmlAttributes = new { @class = "form-control form-control-addaccount", placeholder = "Vui lòng nhập địa chỉ", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Dia_Chi, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="inputRole" class="col-sm-2 col-form-label" id="label-add">Quyền</label>
-                <div class="col-sm-10">
-                    <!--<select class="form-control form-select-addaccount form-control-addaccount" id="inputRole" required>
-                    <option selected disabled value="">Quyen</option>
-                    <option>Admin</option>
-                    <option>Nhân viên</option>-->
-                    <!-- <a class="role-add" href="#">Thêm quyền</a> -->
-                    <!--</select>-->
-                    @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-select form-select-addaccount form-control-addaccount" })
-                    @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
-            <div id="button">
-                <button type="submit" class="btn-save">
-                    Lưu
-                </button>
-                <a type="button" class="btn-cancel" href="@Url.Action("Home", "AccountManagement")">
-                    Hủy
-                </a>
-            </div>
-            }
+        </div>
     </div>
 </div>
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<link rel="stylesheet" href="~/assets/css/profiles.css">
