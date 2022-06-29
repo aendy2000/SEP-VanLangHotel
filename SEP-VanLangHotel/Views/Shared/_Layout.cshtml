@@ -1,179 +1,438 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Atlantis Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="~/assets/img/icon.ico" type="image/x-icon" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="@Url.Content("~/asset/css/bootstrap.css")">
-    <link rel="stylesheet" href="@Url.Content("~/asset/styleAdmin.css")">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- Fonts and icons -->
+    <script src="~/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css'] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
 
-    <title> @ViewBag.Title </title>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/atlantis.min.css">
 
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="~/assets/css/demo.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header__container">
-            <a href="@Url.Action("Homepage", "Home")">
-                <img src="@Url.Content("~/img/logo/VanLangHotel.png")" alt="" class="header__img">
-            </a>
-            @if (ViewBag.Searchs == true)
-            {
-                <div class="header__search">
-                    <input type="search" placeholder="Tìm kiếm" class="header__input">
-                    <i class='bx bx-search header__icon'></i>
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="blue">
+
+                <a href="@Url.Action("Homepage", "Home")" class="logo">
+                    <img style="width:100%; height:65px" src="~/img/logo/vanlanghotellogo.png" />
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="icon-menu"></i>
+                    </span>
+                </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
                 </div>
-            }
-            <div class="header__toggle">
-                <i class='bx bx-menu' id="header-toggle"></i>
             </div>
+            <!-- End Logo Header -->
+            <!-- Navbar Header -->
+            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+
+                <div class="container-fluid">
+                    <div class="collapse" id="search-nav">
+                        <form class="navbar-left navbar-form nav-search mr-md-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="submit" class="btn btn-search pr-1">
+                                        <i class="fa fa-search search-icon"></i>
+                                    </button>
+                                </div>
+                                <input type="text" placeholder="Search ..." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell"></i>
+                                <span class="notification">4</span>
+                            </a>
+                            <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                                <li>
+                                    <div class="dropdown-title">You have 4 new notification</div>
+                                </li>
+                                <li>
+                                    <div class="notif-scroll scrollbar-outer">
+                                        <div class="notif-center">
+                                            <a href="#">
+                                                <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        New user registered
+                                                    </span>
+                                                    <span class="time">5 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Rahmad commented on Admin
+                                                    </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-img">
+                                                    <img src="~/assets/img/profile2.jpg" alt="Img Profile">
+                                                </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Reza send messages to you
+                                                    </span>
+                                                    <span class="time">12 minutes ago</span>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
+                                                <div class="notif-content">
+                                                    <span class="block">
+                                                        Farrah liked Admin
+                                                    </span>
+                                                    <span class="time">17 minutes ago</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <div class="avatar-sm">
+                                    <img src="~/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                <div class="dropdown-user-scroll scrollbar-outer">
+                                <li>
+                                    <div class="user-box">
+                                        <div class="avatar-lg"><img src="~/assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                        <div class="u-text">
+                                            <h4>@Session["user-fullname"]</h4>
+                                            <p class="text-muted">@Session["user-role"]</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("Information", "AccountManagement")">Thông tin cá nhân</a>
+                                    <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Auth")">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End Navbar -->
         </div>
-    </header>
 
-    @if (Session["user-role"].Equals("Admin"))
-    {
-        <div class="nav" id="navbar">
-            <nav class="nav__container">
-                <div>
-                    <a href="@Url.Action("Information", "AccountManagement")" class="nav__link nav__logo">
-                        <i class='bx bx-image-alt nav__icon'></i>
-                        <span style="font-size:16px" class="nav__name"><B>@Session["user-fullname"]</B></span>
-                    </a>
-
-                    <div class="nav__list">
-                        <div class="nav__items">
-                            <h3 class="nav__subtitle">Danh mục</h3>
-
-                            <a href="@Url.Action("Dashboard", "Home")" class="nav__link active">
-                                <i class='bx bx-home-alt nav__icon'></i>
-                                <span class="nav__name">Trang chủ</span>
-                            </a>
-
-                            <div class="nav__dropdown">
-                                <a class="nav__link">
-                                    <i class='bx bxs-user-account nav__icon'></i>
-                                    <span class="nav__name">Quản lý tài khoản</span>
-                                    <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
-                                </a>
-
-                                <div class="nav__dropdown-collapse">
-                                    <div class="nav__dropdown-content">
-                                        <a href="@Url.Action("Home", "AccountManagement")" class="nav__dropdown-item">Danh sách tài khoản</a>
-                                        <a href="@Url.Action("AddNewAccount", "AccountManagement")" class="nav__dropdown-item">Thêm tài khoản</a>
-                                        <a href="@Url.Action("Home", "AuthoritiesManagement")" class="nav__dropdown-item">Danh sách quyền</a>
-                                        <a href="@Url.Action("AddAuthorities", "AuthoritiesManagement")" class="nav__dropdown-item">Thêm quyền</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="nav__dropdown">
-                                <a class="nav__link">
-                                    <i class='bx bx-hotel nav__icon'></i>
-                                    <span class="nav__name">Quản lý phòng</span>
-                                    <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
-                                </a>
-
-                                <div class="nav__dropdown-collapse">
-                                    <div class="nav__dropdown-content">
-                                        <a href="@Url.Content("~/Admin/Danhsachphongkhachsan.html")" class="nav__dropdown-item">Danh sách phòng</a>
-                                        <a href="@Url.Content("~/Admin/Themphongkhachsan.html")" class="nav__dropdown-item">Thêm phòng</a>
-                                        <a href="#" class="nav__dropdown-item">Danh sách loại phòng</a>
-                                        <a href="#" class="nav__dropdown-item">Thêm loại phòng</a>
-                                        <a href="#" class="nav__dropdown-item">Thêm tiện ích</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-history nav__icon'></i>
-                                <span class="nav__name">Lịch sử đặt phòng</span>
-                            </a>
-
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-stats nav__icon'></i>
-                                <span class="nav__name">Thống kê doanh thu</span>
-                            </a>
+        <!-- Sidebar -->
+        <div class="sidebar sidebar-style-2">
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <div class="user">
+                        <div class="avatar-sm float-left mr-2">
+                            <img src="~/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
                         </div>
-
-                        <div class="nav__items">
-                            <h3 class="nav__subtitle">Khác</h3>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-wrench nav__icon'></i>
-                                <span class="nav__name">Cài đặt</span>
+                        <div class="info">
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                <span>
+                                    @Session["user-fullname"]
+                                    <span class="user-level">@Session["user-role"]</span>
+                                    <span class="caret"></span>
+                                </span>
                             </a>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-compass nav__icon'></i>
-                                <span class="nav__name">Tiện ích</span>
-                            </a>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bookmark nav__icon'></i>
-                                <span class="nav__name">Ghi nhớ</span>
-                            </a>
+                            <div class="clearfix"></div>
+                            <div class="collapse in" id="collapseExample">
+                                <ul class="nav">
+                                    <li>
+                                        <a href="@Url.Action("Information", "AccountManagement")">
+                                            <span class="link-collapse">Thông tin cá nhân</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#edit">
+                                            <span class="link-collapse">Đổi mật khẩu</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Logout", "Auth")">
+                                            <span class="link-collapse">Đăng xuất</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <ul class="nav nav-primary">
+                        <li class="nav-item active">
+                            <a href="@Url.Action("Homepage", "Home")" class="collapsed" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <p>Trang chủ</p>
+                            </a>
+                        </li>
+                        <hr />
+                        <li class="nav-section">
+                        </li>
+                        <li class="nav-item active">
+                            <a data-toggle="collapse" href="#base">
+                                <i class="fas fa-user"></i>
+                                <p>Quản lý tài khoản</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="base">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="@Url.Action("Home", "AccountManagement")">
+                                            <span class="sub-item">Danh sách tài khoản</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("AddNewAccount", "AccountManagement")">
+                                            <span class="sub-item">Thêm tài khoản</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-section">
+                        </li>
+                        <li class="nav-item active">
+                            <a data-toggle="collapse" href="#sidebarLayouts">
+                                <i class="fas fa-key"></i>
+                                <p>Quản lý quyền</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="sidebarLayouts">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="@Url.Action("Home", "AuthoritiesManagement")">
+                                            <span class="sub-item">Danh sách quyền</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
+                                            <span class="sub-item">Thêm quyền</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <hr />
+                        <li class="nav-section">
+                        </li>
+                        <li align="bottom" class="nav-item active">
+                            <a href="@Url.Action("Logout", "Auth")" class="collapsed" aria-expanded="false">
+                                <i class="fas icon-logout"></i>
+                                <p>Đăng Xuất</p>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-
-                <a href="@Url.Action("Logout", "Auth")" class="nav__link nav__logout">
-                    <i class='bx bx-log-out nav__icon'></i>
-                    <span class="nav__name">Đăng xuất</span>
-                </a>
-            </nav>
+            </div>
         </div>
-    }
-    else
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <div class="content">
+                @RenderBody()
+                @RenderSection("scripts", required: false)
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Van Lang Hotel
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Help
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Licenses
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright ml-auto">
+                        2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">VanLang Hotel</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    @if (ViewBag.Layouts != true)
     {
-
+        <script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
     }
+    <script src="~/assets/js/core/popper.min.js"></script>
+    <script src="~/assets/js/core/bootstrap.min.js"></script>
 
-    <div class="banner">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="@Url.Content("~/img/banner/Banner1.jpg")" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="@Url.Content("~/img/banner/Banner2.png")" class="d-block w-100" alt="...">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-------------------------------------------CONTAINER-------------------------------------------------------->
+    <!-- jQuery UI -->
+    <script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
-    <div class="content">
-        @RenderBody()
-        @RenderSection("scripts", required: false)
-    </div>
+    <!-- jQuery Scrollbar -->
+    <script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
-    <!-------------------------------------------FOOTER----------------------------------------------------------->
 
-    <footer class="footer">
-        <div class="footer__contanier">
-            <div class="footer__title">
-                <h4 style="color: white; padding-left:30px">Văn Lang Hotel</h4>
-            </div>
-            <div class="footer__contact nav__line">
-                <nav class="contact flex-column">
-                    <a class="contact_item" href="#">Liên hệ</a>
-                    <a class="contact_item" href="#">Chính sách riêng tư</a>
-                    <a class="contact_item" href="#">Điều khoản và điều kiện</a>
-                    <a class="contact_item" href="#">Cẩm nang du lịch</a>
-                </nav>
-            </div>
-        </div>
-        <div class="footer__img">
-            <img src="@Url.Content("~/img/logo/VanLangHotel.png")" alt="" class="header__img">
-        </div>
-    </footer>
+    <!-- Chart JS -->
+    <script src="~/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="~/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="~/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    @*<script src="~/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>*@
+
+    <!-- jQuery Vector Maps -->
+    <script src="~/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="~/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Atlantis JS -->
+    <script src="~/assets/js/atlantis.min.js"></script>
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="~/assets/js/setting-demo.js"></script>
+    <script src="~/assets/js/demo.js"></script>
+    <script>
+        Circles.create({
+            id: 'circles-1',
+            radius: 45,
+            value: 60,
+            maxValue: 100,
+            width: 7,
+            text: 5,
+            colors: ['#f1f1f1', '#FF9E27'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        Circles.create({
+            id: 'circles-2',
+            radius: 45,
+            value: 70,
+            maxValue: 100,
+            width: 7,
+            text: 36,
+            colors: ['#f1f1f1', '#2BB930'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        Circles.create({
+            id: 'circles-3',
+            radius: 45,
+            value: 40,
+            maxValue: 100,
+            width: 7,
+            text: 12,
+            colors: ['#f1f1f1', '#F25961'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+
+        var mytotalIncomeChart = new Chart(totalIncomeChart, {
+            type: 'bar',
+            data: {
+                labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
+                datasets: [{
+                    label: "Total Income",
+                    backgroundColor: '#ff9e27',
+                    borderColor: 'rgb(23, 125, 255)',
+                    data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        },
+                        gridLines: {
+                            drawBorder: false,
+                            display: false
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            drawBorder: false,
+                            display: false
+                        }
+                    }]
+                },
+            }
+        });
+
+        $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
+            type: 'line',
+            height: '70',
+            width: '100%',
+            lineWidth: '2',
+            lineColor: '#ffa534',
+            fillColor: 'rgba(255, 165, 52, .14)'
+        });
+    </script>
 </body>
-
-<scrip>
-    <script src="@Url.Content("~/jsAdmin/barsMenu.js")"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://bom.so/ck1Kpl" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-</scrip>
 </html>

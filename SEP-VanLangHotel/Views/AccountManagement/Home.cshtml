@@ -3,96 +3,230 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
 }
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Tables - Atlantis Lite Bootstrap 4 Admin Dashboard</title>
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+<link rel="icon" href="~/assets/img/icon.ico" type="image/x-icon" />
 
-<div class="contanier-list">
-    <div class="search-account">
-        <form class="d-flex" role="search" action="@Url.Content("SearchAccount")">
-            <input name="keyword" class="form-control me-2" type="search" placeholder="Tìm kiếm tài khoản" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
-        </form>
-    </div>
-    <div class="content-list-account">
-        <a class="btn-add-list btn-add-list__success" role="button" href="@Url.Action("AddNewAccount")">Thêm tài khoản</a>
-        <div class="table-account">
-            <div class="table-background">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">Họ & tên</th>
-                            <th scope="col">CMND/CCCD</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Ngày sinh</th>
-                            <th scope="col">Giới tính</th>
-                            <th scope="col">Quyền</th>
-                            <th scope="col">Khác</th>
-                        </tr>
-                    </thead>
-                    @foreach (var item in Model)
-                    {
-                        <tbody>
-                            <tr>
-                                <td>@item.Ten_Dang_Nhap</td>
-                                <td>@item.Ho_Va_Ten</td>
-                                <td>@item.CMND_CCCD</td>
-                                <td>@item.SDT</td>
-                                <td>@item.Sinh_Nhat.ToString("dd/MM/yyyy")</td>
-                                @if (item.Gioi_Tinh == 1)
-                                {
-                                    <td>Nam</td>
+<!-- Fonts and icons -->
+<script src="~/assets/js/plugin/webfont/webfont.min.js"></script>
 
-                                }
-                                else if (item.Gioi_Tinh == 0)
-                                {
-                                    <td>Nữ</td>
-                                }
-                                else
-                                {
-                                    <td>Khác</td>
-                                }
-                                <td>@item.Quyen.Ten_Quyen</td>
-                                <td>
-                                    <a class="icon icon-edit" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })" target="blank">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <span>|</span>
-                                    <a class="icon icon-detail" role="button" href="@Url.Action("DetailtAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
-                                        <i class="fa-solid fa-info"></i>
-                                    </a>
-                                    @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/assets/css/atlantis.min.css">
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link rel="stylesheet" href="~/assets/css/demo.css">
+<body>
+    <div class="page-inner">
+        <div class="page-header">
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="@Url.Action("Homepage", "Home")">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Home", "AccountManagement")">Quản lý tài khoản</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Danh sách tài khoản</h4>
+                            <button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                <i class="fa fa-plus"></i>
+                                Thêm tài khoản mới
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Modal -->
+                        <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header no-bd">
+                                        <h5 class="modal-title">
+                                            <span class="fw-mediumbold">
+                                                New
+                                            </span>
+                                            <span class="fw-light">
+                                                Row
+                                            </span>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="small">Create a new row using this form, make sure you fill them all</p>
+
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Name</label>
+                                                        <input id="addName" type="text" class="form-control" placeholder="fill name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 pr-0">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Position</label>
+                                                        <input id="addPosition" type="text" class="form-control" placeholder="fill position">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Office</label>
+                                                        <input id="addOffice" type="text" class="form-control" placeholder="fill office">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="button" id="addRowButton" class="btn btn-primary">Add</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="add-row" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Họ và tên</th>
+                                        <th>CMND/CCCD</th>
+                                        <th>Số điện thoại</th>
+                                        @*<th>Ngày sinh</th>
+                                            <th>Giới tính</th>*@
+                                        <th>Quyền</th>
+                                        <th style="width: 3%">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
                                     {
-                                        <span>|</span>
-                                        <a class="icon icon-detail" role="button" href="@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+
+
+                                        <tr>
+                                            <td>@item.Ten_Dang_Nhap</td>
+                                            <td>@item.Ho_Va_Ten</td>
+                                            <td>@item.CMND_CCCD</td>
+                                            <td>@item.SDT</td>
+                                            @*<td>@item.Sinh_Nhat.ToString("dd/MM/yyyy")</td>
+                                                @if (item.Gioi_Tinh == 1)
+                                                {
+                                                    <td>Nam</td>
+
+                                                }
+                                                else if (item.Gioi_Tinh == 0)
+                                                {
+                                                    <td>Nữ</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Khác</td>
+                                                }*@
+                                            <td>@item.Quyen.Ten_Quyen</td>
+
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Thông tin tài khoản" href="@Url.Action("DetailtAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
+                                                        <i class="fa fa-info"></i>
+                                                    </a>
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Sửa tài khoản" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })" target="blank">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
+                                                    {
+                                                        <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" href="@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
-                                </td>
-                            </tr>
-                        </tbody>
-                    }
-                </table>
-            </div>
-            <div class="number-list">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script src="~/assets/js/setting-demo2.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+
+        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $('#addRowButton').click(function () {
+            $('#add-row').dataTable().fnAddData([
+                $("#addName").val(),
+                $("#addPosition").val(),
+                $("#addOffice").val(),
+                action
+            ]);
+            $('#addRowModal').modal('hide');
+
+        });
+    });</script>
 

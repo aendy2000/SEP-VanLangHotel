@@ -5,15 +5,50 @@
     ViewBag.Searchs = false;
 }
 
-<html>
-<body>
-    <div class="content">
-        <div>
-            <br /><br /><br /><br /><br />
-            <p style="text-align:center"> Tổng doanh thu khách sạn: @Model.ToString("0,0") </p>
-            <br /><br /><br /><br /><br />
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
+            </div>
+            <div class="ml-md-auto py-2 py-md-0">
+                <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+                <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Thống kê doanh thu</div>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
+                                <span class="btn-label">
+                                    <i class="fa fa-pencil"></i>
+                                </span>
+                                Export
+                            </a>
+                            <a href="#" class="btn btn-info btn-border btn-round btn-sm">
+                                <span class="btn-label">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                Print
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="min-height: 375px">
+                        <canvas id="statisticsChart"></canvas>
+                    </div>
+                    <div id="myChartLegend"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
