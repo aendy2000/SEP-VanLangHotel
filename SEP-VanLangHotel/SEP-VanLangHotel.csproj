@@ -302,9 +302,6 @@
     <Compile Include="Models\Quyen.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tai_Khoan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

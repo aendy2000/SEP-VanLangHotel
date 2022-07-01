@@ -12,7 +12,7 @@ namespace SEP_VanLangHotel.Controllers
     public class AuthController : Controller
     {
         // GET: Admin/LoginLogout
-        VanLangHotelEntities model = new VanLangHotelEntities();
+        SEP25Team09Entities model = new SEP25Team09Entities();
         public ActionResult Login() //Trang đăng nhập
         {
             Session["username-incorrect"] = null;

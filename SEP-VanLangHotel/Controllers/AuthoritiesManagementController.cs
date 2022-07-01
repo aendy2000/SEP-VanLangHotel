@@ -14,7 +14,7 @@ namespace SEP_VanLangHotel.Controllers
     public class AuthoritiesManagementController : Controller
     {
         // GET: AuthoritiesManagement
-        VanLangHotelEntities model = new VanLangHotelEntities();
+        SEP25Team09Entities model = new SEP25Team09Entities();
         public ActionResult Home()
         {
             if (Session["user-role"].ToString().Equals("Quản lý"))  //Tài khoản thuộc quyền Admin

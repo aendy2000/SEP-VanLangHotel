@@ -106,9 +106,25 @@
                             &emsp;
                             @if (Model.Quyen.Ten_Quyen.Equals("Quản lý") && !Model.Ten_Dang_Nhap.Equals("admin"))
                             {
-                                <a style="width: 180px" class="btn btn-danger" role="button" href="@Url.Action("RemoveAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})" id="btn-edit__lock">
+                                <a style="width: 180px;color:white;" class="btn btn-danger" role="button" onclick="xoataikhoan()" id="btn-edit__lock">
                                     Xóa tài khoản
                                 </a>
+                                <script>
+                                        function xoataikhoan() {
+                                                                cuteAlert({
+                                                                    type: "question",
+                                                                    title: "Xóa tài khoản?",
+                                                                    message: "Bạn có chắc chắn muốn xóa tài khoản @Model.Ten_Dang_Nhap?",
+                                                                    confirmText: "Xác nhận", cancelText: "Hủy bỏ"
+                                                                }).then(function (isConfirm) {
+                                                                    if (isConfirm) {
+                                                                        window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = Model.Ma_Tai_Khoan })';
+                                                                    } else {
+                                                                        return false;
+                                                                    }
+                                                                });
+                                                            }
+                                </script>
                             }
                             @if (!Model.Quyen.Ten_Quyen.Equals("Quản lý"))
                             {

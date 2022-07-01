@@ -10,7 +10,7 @@ namespace SEP_VanLangHotel.Controllers
     [LoginVerification]
     public class HomeController : Controller
     {
-        VanLangHotelEntities model = new VanLangHotelEntities();
+        SEP25Team09Entities model = new SEP25Team09Entities();
         public ActionResult Homepage()
         {
             //Nếu Là tài khoản của nhân viên
@@ -24,7 +24,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             //Return với tổng doanh thu của khách sạn
             if (Session["user-role"].Equals("Quản lý"))
-                return View("Dashboard", model.TT_Dat_Phong.Sum(s => s.Phong.Loai_Phong.Gia));
+                return View("Dashboard", Convert.ToDecimal(1000000));
             return RedirectToAction("Homepage");
 
         }

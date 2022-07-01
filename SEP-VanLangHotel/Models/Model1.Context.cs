@@ -13,10 +13,10 @@ namespace SEP_VanLangHotel.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VanLangHotelEntities : DbContext
+    public partial class SEP25Team09Entities : DbContext
     {
-        public VanLangHotelEntities()
-            : base("name=VanLangHotelEntities")
+        public SEP25Team09Entities()
+            : base("name=SEP25Team09Entities")
         {
         }
     
@@ -30,7 +30,6 @@ namespace SEP_VanLangHotel.Models
         public virtual DbSet<Loai_Phong> Loai_Phong { get; set; }
         public virtual DbSet<Phong> Phong { get; set; }
         public virtual DbSet<Quyen> Quyen { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tai_Khoan> Tai_Khoan { get; set; }
         public virtual DbSet<Tien_Ich> Tien_Ich { get; set; }
         public virtual DbSet<TT_Dat_Phong> TT_Dat_Phong { get; set; }

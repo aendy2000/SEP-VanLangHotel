@@ -20,7 +20,7 @@ namespace SEP_VanLangHotel.Controllers
     public class AccountManagementController : Controller
     {
         // GET: AcountManagement
-        VanLangHotelEntities model = new VanLangHotelEntities();
+        SEP25Team09Entities model = new SEP25Team09Entities();
         private static string ApiKey = "AIzaSyCCu1XV1IcQU2pQ3l0TetO5FTs4zT59kKk";
         private static string Bucket = "sep-project-2022-6fbfd.appspot.com";
         private static string AuthEmail = "sepproject2022@gmail.com";
@@ -135,7 +135,7 @@ namespace SEP_VanLangHotel.Controllers
 
                         newAccount.Ma_Tai_Khoan = "1"; //Mã tạm thời (Trigger tại DB sẽ thay đổi sau khi thêm thành công tài khoán)
                         newAccount.Lock = 0;
-                        newAccount.Ma_Khach_San = "KS202206170001";
+                        newAccount.Ma_Khach_San = "KS202207010001";
                         newAccount.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
                         model.Tai_Khoan.Add(newAccount);
                         model.SaveChanges();
