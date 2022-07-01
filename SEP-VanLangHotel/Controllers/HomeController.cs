@@ -23,7 +23,7 @@ namespace SEP_VanLangHotel.Controllers
         public ActionResult Dashboard()
         {
             //Return với tổng doanh thu của khách sạn
-            if (Session["user-role"].Equals("Admin"))
+            if (Session["user-role"].Equals("Quản lý"))
                 return View("Dashboard", model.TT_Dat_Phong.Sum(s => s.Phong.Loai_Phong.Gia));
             return RedirectToAction("Homepage");
 

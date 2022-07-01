@@ -145,12 +145,29 @@
                                                     <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Sửa tài khoản" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })" target="_blank">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    @if (item.Quyen.Ten_Quyen.Equals("Admin") && !item.Ten_Dang_Nhap.Equals("admin"))
+                                                    @if (item.Quyen.Ten_Quyen.Equals("Quản lý") && !item.Ten_Dang_Nhap.Equals("admin"))
                                                     {
-                                                        <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" href="@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })">
+                                                        <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" onclick="xoataikhoan()">
                                                             <i class="fa fa-times"></i>
+                                                            <script>
+                                                            function xoataikhoan() {
+                                                                cuteAlert({
+                                                                    type: "question",
+                                                                    title: "Xóa tài khoản?",
+                                                                    message: "Bạn có chắc chắn muốn xóa tài khoản?",
+                                                                    confirmText: "Xác nhận", cancelText: "Hủy bỏ"
+                                                                }).then(function (isConfirm) {
+                                                                    if (isConfirm) {
+                                                                        window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })';
+                                                                    } else {
+                                                                        return false;
+                                                                    }
+                                                                });
+                                                            }
+                                                            </script>
                                                         </a>
                                                     }
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -164,6 +181,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="~/assets/js/core/popper.min.js"></script>
@@ -208,22 +227,9 @@
             }
         });
 
-        // Add Row
+         //Add Row
         $('#add-row').DataTable({
             "pageLength": 5,
-        });
-
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $('#addRowButton').click(function () {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-            ]);
-            $('#addRowModal').modal('hide');
-
         });
     });</script>
 

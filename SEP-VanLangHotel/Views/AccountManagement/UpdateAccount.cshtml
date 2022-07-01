@@ -15,37 +15,37 @@
         </div>
     </div>
 </div>
-<div class="page-inner mt--5">
-    <div class="row">
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-                <div class="card-header"><b>Ảnh hồ sơ</b></div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">File hình ảnh dưới 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button style="width: 180px" class="btn btn-primary" type="button">Chọn ảnh hồ sơ</button>
+@using (Html.BeginForm("UpdateAccount", "AccountManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Ma_Tai_Khoan)
+    @Html.HiddenFor(model => model.Ten_Dang_Nhap)
+    @Html.HiddenFor(model => model.Mat_Khau)
+    @Html.HiddenFor(model => model.Lock)
+    @Html.HiddenFor(model => model.Ma_Khach_San)
+    @Html.HiddenFor(model => model.Avatar)
+
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header"><b>Ảnh hồ sơ</b></div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="@Model.Avatar" id="previewImage">
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-2"> Chọn hình đại diện - ảnh vuông, dưới 5MB</div>
+                        <input role="button" class="btn btn-primary" type="file" name="file" accept="image/*" onchange="ShowImageUpload(this, document.getElementById('previewImage'))" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-8">
-            <!-- Account details card-->
-            <div class="card mb-4">
-                <div class="card-header"><b>Thông tin tài khoản</b></div>
-                <div class="card-body">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.Ma_Tai_Khoan)
-                        @Html.HiddenFor(model => model.Ten_Dang_Nhap)
-                        @Html.HiddenFor(model => model.Mat_Khau)
-                        @Html.HiddenFor(model => model.Lock)
-                        @Html.HiddenFor(model => model.Ma_Khach_San)
-
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header"><b>Thông tin tài khoản</b></div>
+                    <div class="card-body">
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
                             @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control" } })
@@ -65,12 +65,12 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">CMND/CCCD</label>
-                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required" } })
+                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required", @pattern = "[0-9]{9,12}" } })
                                 @Html.ValidationMessageFor(model => model.CMND_CCCD, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Số điện thoại</label>
-                                @Html.EditorFor(model => model.SDT, new { type = "tel", pattern = "[0-9]{10}", htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @required = "required" } })
+                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @required = "required", @pattern = "[0-9]{10}" } })
                                 @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ nhà</label>
-                            @Html.EditorFor(model => model.Dia_Chi, new { htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @required = "required" } })
+                            @Html.EditorFor(model => model.Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ nhà", @required = "required", @rows = "5" } })
                             @Html.ValidationMessageFor(model => model.Dia_Chi, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
@@ -89,28 +89,61 @@
                             @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
                         </div><hr /><div style="text-align:center;" class="mb-3">
-                            <button style="width:180px" type="submit" class="btn btn-success">
+                            <button style="width:180px" type="submit" class="btn btn-success" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false }">
                                 Lưu
                             </button>
                             &emsp;
                             @if (Session["user-id"].Equals(Model.Ten_Dang_Nhap))
                             {
-                                <a style="width:180px" type="button" class="btn btn-danger" href="@Url.Action("Information", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                                <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huycapnhattaikhoan()">
                                     Hủy
                                 </a>
+                                @*xác nhận hủy chỉnh sửa*@
+                                <script>
+                                    function huycapnhattaikhoan() {
+                                       cuteAlert({
+                                           type: "question",
+                                           title: "Hủy bỏ?",
+                                           message: "Bạn có chắc chắn muốn hủy chỉnh sửa tài khoản?",
+                                           confirmText: "Xác nhận", cancelText: "không hủy"
+                                       }).then(function (isConfirm) {
+                                           if (isConfirm) {
+                                               window.location.href = '@Url.Action("Information", "AccountManagement", new { id = Model.Ma_Tai_Khoan })';
+                                           } else {
+                                               return false;
+                                           }
+                                       });
+                                    }
+                                </script>
                             }
                             else
                             {
-                                <a style="width:180px" type="button" class="btn btn-danger" href="@Url.Action("DetailtAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                                <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huycapnhattaikhoan()">
                                     Hủy
                                 </a>
+                                <script>
+                                    function huycapnhattaikhoan() {
+                                       cuteAlert({
+                                           type: "question",
+                                           title: "Hủy bỏ?",
+                                           message: "Bạn có chắc chắn muốn hủy chỉnh sửa tài khoản?",
+                                           confirmText: "Xác nhận", cancelText: "không hủy"
+                                       }).then(function (isConfirm) {
+                                           if (isConfirm) {
+                                               window.location.href = '@Url.Action("DetailtAccount", "AccountManagement", new { id = Model.Ma_Tai_Khoan })';
+                                           } else {
+                                               return false;
+                                           }
+                                       });
+                                    }
+                                </script>
                             }
                         </div>
-                    }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 <link rel="stylesheet" href="~/assets/css/profiles.css">

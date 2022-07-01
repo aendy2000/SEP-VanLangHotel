@@ -37,6 +37,7 @@ namespace SEP_VanLangHotel.Controllers
                         Session["user-fullname"] = user.Ho_Va_Ten;
                         Session["user-id"] = user.Ten_Dang_Nhap;
                         Session["user-role"] = user.Quyen.Ten_Quyen;
+                        @Session["user-vatatar"] = user.Avatar;
                         return RedirectToAction("Homepage", "Home");
                     }
                     Session["user-lock"] = true;
@@ -51,9 +52,7 @@ namespace SEP_VanLangHotel.Controllers
         }
         public ActionResult Logout() //Đăng xuất
         {
-            Session["user-fullname"] = null;
-            Session["user-id"] = null;
-            Session["user-role"] = null;
+            Session.Clear();
             return RedirectToAction("Login");
         }
         public ActionResult ForgotPassword()
@@ -192,6 +191,7 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     taikhoan.Mat_Khau = matkhaumoi;
                     model.SaveChanges();
+                    Session["laylaimatkhauthanhcong"] = true;
                     return RedirectToAction("Homepage", "Home");
                 }
                 //Nếu mật khẩu mới không trùng khớp sẽ thông báo sai và quay lại trang nhập mật khẩu mới

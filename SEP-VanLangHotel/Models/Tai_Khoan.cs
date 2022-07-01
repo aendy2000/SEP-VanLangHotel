@@ -11,8 +11,7 @@ namespace SEP_VanLangHotel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Tai_Khoan
     {
         public string Ma_Tai_Khoan { get; set; }
@@ -24,13 +23,13 @@ namespace SEP_VanLangHotel.Models
         public string CMND_CCCD { get; set; }
         public string SDT { get; set; }
         public string Ho_Va_Ten { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Sinh_Nhat { get; set; }
         public int Gioi_Tinh { get; set; }
         public string Dia_Chi { get; set; }
         public string Email { get; set; }
         public string Verify_Password { get; set; }
         public string OutOfDate_Code { get; set; }
+        public string Avatar { get; set; }
     
         public virtual Khach_San Khach_San { get; set; }
         public virtual Quyen Quyen { get; set; }

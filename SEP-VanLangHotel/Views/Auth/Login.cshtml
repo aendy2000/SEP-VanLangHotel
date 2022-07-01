@@ -8,19 +8,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="~/asset/styleLogin.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+    <link rel="stylesheet" href="~/assets/css/cute-alert-style.css" />
+    <script src="~/assets/js/cute-alert.js"></script>
+
     <title>@ViewBag.Title</title>
 </head>
+
 <body>
+    @if (Convert.ToBoolean(Session["laylaimatkhauthanhcong"]) == true)
+    {
+        <body onload="thongbao()">
+        </body>
+        <script>
+            function thongbao() {
+                cuteAlert({
+                    type: "success",
+                    title: "Đã đặt lại mật khẩu mới!",
+                    message: "Mật khẩu của bạn đã được đặt lại thành công, hãy thực hiện đăng nhập.",
+                    buttonText: "Xác nhận"
+                })
+            }
+        </script>
+        Session["laylaimatkhauthanhcong"] = null;
+    }
     <div class="main">
         <div class="form-login">
             <div class="form-login___border">
                 <h2>Đăng nhập</h2>
+                <br />
                 <form action="@Url.Action("Login")" method="post">
                     <div class="form-floating user-login">
                         <input type="text" class="form-control" name="username" placeholder="Tên tài khoản" required>
@@ -29,12 +49,9 @@
                     @* Nếu tài khoản bị sai sẽ báo lỗi sai tk*@
                     @if (Convert.ToBoolean(Session["username-incorrect"]) == true)
                     {
-                        <p style="color:red">Username Incorrect</p>
+                        <p style="color:red">Tài khoản chưa chính xác, vui lòng kiểm tra lại</p>
+                        Session["username-incorrect"] = null;
                     }
-                    <div class="icon-hide">
-                        Hiển thị mật khẩu
-                        <i class="fa-solid fa-eye-slash"></i>
-                    </div>
                     <div class="form-floating password-login">
                         <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
                         <label for="floatingPassword">Mật khẩu</label>
@@ -42,14 +59,28 @@
                     @* Nếu mật khẩu bị sai sẽ báo lỗi sai mật khẩu*@
                     @if (Convert.ToBoolean(Session["password-incorrect"]) == true)
                     {
-                        <p style="color:red">Password Incorrect</p>
+                        <p style="color:red">Mật khẩu chưa chính xác, vui lòng kiểm tra lại</p>
+                        Session["password-incorrect"] = null;
                     }
                     @* Nếu tài khoản bị khóa*@
                     @if (Convert.ToBoolean(Session["user-lock"]) == true)
                     {
-                        <p style="color:red">Tài khoản của bạn đã bị khóa. <br />Vui lòng liên hệ chủ khách sạn để biết thêm thông tin</p>
+                        <body onload="thongbao()">
+                        </body>
+                        <script>
+                            function thongbao() {
+                                cuteAlert({
+                                    type: "warning",
+                                    title: "Tài khoản đã bị khóa",
+                                    message: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ chủ khách sạn để biết thêm thông tin",
+                                    buttonText: "Xác nhận"
+                                })
+                            }
+                        </script>
+                        Session["user-lock"] = null;
                     }
                     <a href="@Url.Action("ForgotPassword")" target="_blank" style="text-align:right"><p>Quên mật khẩu</p></a>
+                    <br />
                     <div style="text-align: left" class="btn-login">
                         <button id="btn" type="submit">Đăng nhập</button>
                     </div>

@@ -18,16 +18,13 @@
 <div class="page-inner mt--5">
     <div class="row">
         <div class="col-xl-4">
-            <!-- Profile picture card-->
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header"><b>Ảnh hồ sơ</b></div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">File hình ảnh dưới 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button style="width: 180px" class="btn btn-primary" type="button">Đổi ảnh hồ sơ</button>
+                    <img class="img-account-profile rounded-circle mb-2" src="@Model.Avatar" alt="">
+                    <div class="small font-italic text-muted mb-2">@Model.Quyen.Ten_Quyen</div>
+                    <label style="width: 250px;" class="btn btn-danger" type="label"><b style="font-size:16px;color:white;">@Model.Ho_Va_Ten</b></label>
                 </div>
             </div>
         </div>
@@ -91,7 +88,7 @@
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ nhà</label>
-                            <input style="color:black" type="text" class="form-control" value="@Model.Dia_Chi" disabled>
+                            <textarea rows="5" style="color:black; height: 600px" type="text" class="form-control" disabled>@Model.Dia_Chi</textarea>
                         </div>
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
@@ -101,11 +98,11 @@
                         <!-- Save changes button-->
                         <hr />
                         <div style="text-align:center;" class="mb-3">
-                            <a style="width: 180px" class="btn btn-primary" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})" id="btn-edit__lock">
+                            <a style="width: 180px;color:white;" class="btn btn-primary" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
                                 Chỉnh sửa TT
                             </a>
                             &emsp;
-                            <a style="width: 180px" class="btn btn-primary" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})" id="btn-edit__lock">
+                            <a style="width: 180px;color:white;" class="btn btn-primary" role="button" href="@Url.Action("ChangePassword", "AccountManagement", new {id = Model.Ten_Dang_Nhap})" target="_blank">
                                 Đổi mật khẩu
                             </a>
                         </div>

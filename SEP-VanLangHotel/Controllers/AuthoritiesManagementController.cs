@@ -17,93 +17,60 @@ namespace SEP_VanLangHotel.Controllers
         VanLangHotelEntities model = new VanLangHotelEntities();
         public ActionResult Home()
         {
-            if (Session["user-role"].ToString().Equals("Admin"))  //Tài khoản thuộc quyền Admin
+            if (Session["user-role"].ToString().Equals("Quản lý"))  //Tài khoản thuộc quyền Admin
             {
                 var quyen = model.Quyen.ToList();
                 return View(quyen);
             }
             return RedirectToAction("Homepage", "Home");
         }
-        public ActionResult SearchAuthorities(string keyword) //Tìm kiếm quyền
+        public ActionResult AddAuthorities(string tenquyenmoi, string motaquyenmoi) //Thêm quyền
         {
-            if (Session["user-role"].Equals("Admin")) //Tài khoản thuộc quyền Admin
-            {
-                var quyen = model.Quyen.Where(t => t.Ten_Quyen.ToUpper().Contains(keyword.ToUpper())).ToList();
-                ViewBag.Keywork = keyword;
-                return View("Home", quyen);
-            }
-            return RedirectToAction("Homepage", "Home");
-        }
-        public ActionResult AddAuthorities() //Thêm quyền
-        {
-            if (Session["user-role"].ToString().Equals("Admin")) //Tài khoản thuộc quyền Admin
+            if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
                 Quyen quyen = new Quyen();
-                return View(quyen);
-            }
-            return RedirectToAction("Homepage", "Home");
-        }
-        [HttpPost]
-        public ActionResult AddAuthorities(Quyen quyen)
-        {
-            if (Session["user-role"].ToString().Equals("Admin"))//Tài khoản thuộc quyền Admin
-            {
-                if (ModelState.IsValid)
+                var quyens = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Equals(tenquyenmoi.Trim().ToLower()));
+                if (quyens == null)
                 {
-                    try
-                    {
-                        quyen.Ma_Quyen = "1";
-                        model.Quyen.Add(quyen);
-                        model.SaveChanges();
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                    return View("Home");
+                    Session["quyen-tontai"] = null;
+                    quyen.Ma_Quyen = "1";
+                    quyen.Ten_Quyen = tenquyenmoi.Trim();
+                    quyen.Mo_Ta = motaquyenmoi.Trim();
+                    model.Quyen.Add(quyen);
+                    model.SaveChanges();
+                    return RedirectToAction("Home");
                 }
-                return View(quyen);
-
+                Session["quyen-tontai"] = true;
+                return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
         }
 
-
-        public ActionResult UpdateAuthorities(string id) //Chỉnh sửa quyền
+        public ActionResult UpdateAuthorities(string maquyen, string tenquyen, string motaquyen) //Sửa quyền
         {
-            if (Session["user-role"].ToString().Equals("Admin")) //Tài khoản thuộc quyền Admin
+            if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                var quyen = model.Quyen.Find(id);
+                var quyen = model.Quyen.FirstOrDefault(q => q.Ma_Quyen.ToLower().Equals(maquyen));
                 if (quyen != null)
                 {
-                    return View(quyen);
-                }
-                return View("Home");
-            }
-            return RedirectToAction("Homepage", "Home");
-        }
-        [HttpPost]
-        public ActionResult UpdateAuthorities(Quyen quyen)
-        {
-            if (Session["user-role"].ToString().Equals("Admin")) //Tài khoản thuộc quyền Admin
-            {
-                if (ModelState.IsValid)
-                {
-                    model.Entry(quyen).State = EntityState.Modified;
+                    Session["quyen-tontai"] = null;
+                    quyen.Ten_Quyen = tenquyen.Trim();
+                    quyen.Mo_Ta = motaquyen.Trim();
                     model.SaveChanges();
-                    return View("Home");
+                    return RedirectToAction("Home");
                 }
-                return View(quyen);
+                return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
         }
+
         public ActionResult RemoveAuthorities(string id)
         {
             Session["try-taikhoan-dadungquyen"] = null;
-            if (Session["user-role"].ToString().Equals("Admin")) //Tài khoản thuộc quyền Admin
+            if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                var quyen = model.Quyen.Find(id);
-                if (quyen != null)
+                var quyen = model.Quyen.FirstOrDefault(q => q.Ma_Quyen.Equals(id));
+                if (quyen != null) //quyền tồn tại
                 {
                     var taikhoan = model.Tai_Khoan.ToList();
                     foreach (var item in taikhoan)
@@ -115,10 +82,10 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         model.Quyen.Remove(quyen);
                         model.SaveChanges();
-                        return View("Home");
+                        return RedirectToAction("Home");
                     }
                 }
-                return View("Home");
+                return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
         }

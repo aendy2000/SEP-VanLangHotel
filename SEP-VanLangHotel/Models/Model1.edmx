@@ -82,6 +82,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Verify_Password" Type="varchar" MaxLength="6" />
           <Property Name="OutOfDate_Code" Type="varchar" MaxLength="17" />
+          <Property Name="Avatar" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Tien_Ich">
           <Key>
@@ -393,6 +394,7 @@
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Verify_Password" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="OutOfDate_Code" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Khach_San" Relationship="Self.fk_TaiKhoan_KhachSan" FromRole="Tai_Khoan" ToRole="Khach_San" />
           <NavigationProperty Name="Quyen" Relationship="Self.fk_TaiKhoan_Quyen" FromRole="Tai_Khoan" ToRole="Quyen" />
         </EntityType>
@@ -706,6 +708,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Verify_Password" ColumnName="Verify_Password" />
                 <ScalarProperty Name="OutOfDate_Code" ColumnName="OutOfDate_Code" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
