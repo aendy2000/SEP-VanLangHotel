@@ -88,7 +88,9 @@
                             <label class="small mb-1" for="inputEmailAddress">Quyền</label>
                             @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
-                        </div><hr /><div style="text-align:center;" class="mb-3">
+                        </div>
+                        <hr />
+                        <div style="text-align:center;" class="mb-3">
                             <button style="width:180px" type="submit" class="btn btn-success" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false }">
                                 Lưu
                             </button>
@@ -147,3 +149,4 @@
 }
 
 <link rel="stylesheet" href="~/assets/css/profiles.css">
+

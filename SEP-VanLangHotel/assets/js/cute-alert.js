@@ -61,7 +61,7 @@ const cuteAlert = ({
                 ? 'alert-close-circle'
                 : 'alert-close-default'
             }">X</span>
-          ${img !== '' ? '<img class="alert-img" src="' + '/assets/img/' + type + '.png" />' : ''}
+          ${img !== '' ? '<img class="alert-img" src="' + '/SEP25Team09/assets/img/' + type + '.svg" />' : ''}
         </div>
         <div class="alert-body">
           <span class="alert-title">${title}</span>
@@ -147,7 +147,7 @@ const cuteToast = ({ type, title, message, timer = 5000, vibrate = [], playSound
       <div>
         <div class="toast-frame">
           <div class="toast-body">
-            <img class="toast-body-img" src="~assets/img/${type}.png" />'
+            <img class="toast-body-img" src="/SEP25Team09/assets/img/${type}.svg" />'
             <div class="toast-body-content">
               <span class="toast-title">${title}</span>
               <span class="toast-message">${message}</span>
