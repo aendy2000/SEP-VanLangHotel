@@ -14,7 +14,7 @@ namespace SEP_VanLangHotel.Controllers
         public ActionResult Homepage()
         {
             //Nếu Là tài khoản của nhân viên
-            if (Session["user-role"].Equals("Staff"))
+            if (Session["user-role"].Equals("Nhân viên"))
                 return View(model.Tien_Ich.ToList());
             return RedirectToAction("Dashboard"); //Nếu Là tài khoản của admin sẽ đi đến hàm Dashboard
 
