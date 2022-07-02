@@ -426,6 +426,7 @@
     <Content Include="asset\style.css" />
     <Content Include="asset\styleAdmin.css" />
     <Content Include="asset\styleLogin.css" />
+    <Content Include="Content\images\vanlanghotellogo.png" />
     <Content Include="img\logo\VanLangHotel.png" />
     <Content Include="img\logo\vanlanghotellogo.png" />
     <Content Include="img\logo\vanlanghotellogo.svg" />
@@ -581,7 +582,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
