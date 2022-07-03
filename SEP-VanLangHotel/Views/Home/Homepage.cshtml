@@ -1,34 +1,120 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.Tien_Ich>
 
 @{
-    ViewBag.Title = "Homepage";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
 }
+<title>@ViewBag.Title</title>
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <div class="card-title">Danh sách Quyền</div>
+                        <input  class="btn btn-secondary btn-round ml-auto" type="button" id="loadFileXml" value="Import Danh Sách" onclick="document.getElementById('file').click();" />
+                        <input id="file" name="file" style="display:none;" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Thêm quyền-->
+                    <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Thêm quyền mới
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                @*<form action="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Tên quyền</label>
+                                                    <input name="tenquyenmoi" type="text" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Mô tả</label>
+                                                    <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>Homepage</h2>
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Ten_Tien_Ich)
-        </th>
-        <th></th>
-    </tr>
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ten_Tien_Ich)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Ma_Tien_Ich }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Ma_Tien_Ich }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Ma_Tien_Ich })
-        </td>
-    </tr>
-}
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
 
-</table>
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>

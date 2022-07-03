@@ -325,6 +325,7 @@
     <Content Include="assets\css\demo.css" />
     <Content Include="assets\css\fonts.css" />
     <Content Include="assets\css\fonts.min.css" />
+    <Content Include="assets\css\loadingg.css" />
     <Content Include="assets\css\profiles.css" />
     <Content Include="assets\fonts\flaticon\flaticon.css" />
     <Content Include="assets\fonts\flaticon\flaticon.html" />
@@ -630,6 +631,7 @@
     <Content Include="assets\img\img-shadow.png" />
     <Content Include="assets\img\info.svg" />
     <Content Include="assets\img\jm_denis.jpg" />
+    <Content Include="assets\img\loader.gif" />
     <Content Include="assets\img\logo.svg" />
     <Content Include="assets\img\logo2.svg" />
     <Content Include="assets\img\logoalternatif.svg" />

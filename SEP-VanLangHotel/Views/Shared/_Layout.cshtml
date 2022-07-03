@@ -1,7 +1,13 @@
 ﻿@Html.AntiForgeryToken()
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="~/assets/css/loadingg.css">
+<div id="coverScreen" class="LockOn">
+</div>
 <head>
+    <script>
+        window.onbeforeunload = function () { $('#loading').show(); }
+    </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="~/assets/img/icon.ico" type="image/x-icon" />
@@ -147,48 +153,84 @@
                         <hr />
                         <li class="nav-section">
                         </li>
-                        <li class="nav-item active">
-                            <a data-toggle="collapse" href="#base">
-                                <i class="fas fa-user"></i>
-                                <p>Quản lý tài khoản</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="base">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="@Url.Action("Home", "AccountManagement")">
-                                            <span class="sub-item">Danh sách tài khoản</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("AddNewAccount", "AccountManagement")">
-                                            <span class="sub-item">Thêm tài khoản</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-section">
-                        </li>
-                        <li class="nav-item active">
-                            <a data-toggle="collapse" href="#sidebarLayouts">
-                                <i class="fas fa-key"></i>
-                                <p>Quản lý quyền</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="sidebarLayouts">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="@Url.Action("Home", "AuthoritiesManagement")">
-                                            <span class="sub-item">Danh sách quyền</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <hr />
-                        <li class="nav-section">
-                        </li>
+                        @if (Session["user-role"].Equals("Quản lý"))
+                        {
+
+                            <li class="nav-item active">
+                                <a data-toggle="collapse" href="#base">
+                                    <i class="fas fa-user"></i>
+                                    <p>Quản lý tài khoản</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="base">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("Home", "AccountManagement")">
+                                                <span class="sub-item">Danh sách tài khoản</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("AddNewAccount", "AccountManagement")">
+                                                <span class="sub-item">Thêm tài khoản</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-section">
+                            </li>
+                            <li class="nav-item active">
+                                <a data-toggle="collapse" href="#sidebarLayouts">
+                                    <i class="fas fa-key"></i>
+                                    <p>Quản lý quyền</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="sidebarLayouts">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("Home", "AuthoritiesManagement")">
+                                                <span class="sub-item">Danh sách quyền</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <hr />
+                            <li class="nav-section">
+                            </li>
+                        }
+                        else if (Session["user-role"].Equals("Nhân viên"))
+                        {
+                            <li class="nav-item active">
+                                <a data-toggle="collapse" href="#sidebarLayouts">
+                                    <i class="fas fa-key"></i>
+                                    <p>Quản lý phòng</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="sidebarLayouts">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("Homepage", "Home")">
+                                                <span class="sub-item">Phòng đang cho thuê</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Homepage", "Home")">
+                                                <span class="sub-item">Phòng trả trong hôm nay</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Homepage", "Home")">
+                                                <span class="sub-item">Phòng trống</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <hr />
+                            <li class="nav-section">
+                            </li>
+                        }
                         <li align="bottom" class="nav-item active">
                             <a class="collapsed" aria-expanded="false" onclick="xacnhandangxuat()">
                                 <i class="fas icon-logout"></i>
@@ -391,5 +433,14 @@
             fillColor: 'rgba(255, 165, 52, .14)'
         });
     </script>
+    <script>
+        $(window).on('load', function () {
+            $("#coverScreen").hide();
+        });
+    </script>
+    <script>
+        window.onbeforeunload = function () { $('#coverScreen').show(); }
+    </script>
 </body>
+
 </html>
