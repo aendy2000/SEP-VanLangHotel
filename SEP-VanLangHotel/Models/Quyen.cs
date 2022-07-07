@@ -6,13 +6,12 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
+
 namespace SEP_VanLangHotel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Quyen
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,11 +19,11 @@ namespace SEP_VanLangHotel.Models
         {
             this.Tai_Khoan = new HashSet<Tai_Khoan>();
         }
-
+    
         public string Ma_Quyen { get; set; }
         public string Ten_Quyen { get; set; }
         public string Mo_Ta { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tai_Khoan> Tai_Khoan { get; set; }
     }

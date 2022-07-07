@@ -77,33 +77,27 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
                 string kiemtraa = "No";
-                var dsTaiKhoan = model.Tai_Khoan.ToList();
-                foreach (var item in dsTaiKhoan)
+                if (model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.ToUpper().Trim().Equals(newAccount.Ten_Dang_Nhap.ToUpper().Trim())) != null)
                 {
-                    if (newAccount.Ten_Dang_Nhap.ToUpper().Trim().Equals(item.Ten_Dang_Nhap.ToUpper().Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkUserName"] = true;
-                        break;
-                    }
-                    else if (newAccount.SDT.Trim().Equals(item.SDT.Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkPhone"] = true;
-                        break;
-                    }
-                    else if (newAccount.Email.ToUpper().Trim().Equals(item.Email.ToUpper().Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkEmail"] = true;
-                        break;
-                    } else if(newAccount.CMND_CCCD.Trim().Equals(item.CMND_CCCD.Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkCMNDCCCD"] = true;
-                        break;
-                    }
+                    kiemtraa = "Yes";
+                    Session["checkUserName"] = true;
                 }
+                else if (model.Tai_Khoan.FirstOrDefault(t => t.SDT.ToUpper().Trim().Equals(newAccount.SDT.ToUpper().Trim())) != null)
+                {
+                    kiemtraa = "Yes";
+                    Session["checkPhone"] = true;
+                }
+                else if (model.Tai_Khoan.FirstOrDefault(t => t.Email.ToUpper().Trim().Equals(newAccount.Email.ToUpper().Trim())) != null)
+                {
+                    kiemtraa = "Yes";
+                    Session["checkEmail"] = true;
+                }
+                else if (model.Tai_Khoan.FirstOrDefault(t => t.CMND_CCCD.ToUpper().Trim().Equals(newAccount.CMND_CCCD.ToUpper().Trim())) != null)
+                {
+                    kiemtraa = "Yes";
+                    Session["checkCMNDCCCD"] = true;
+                }
+
 
                 if (kiemtraa.Equals("No"))
                 {
@@ -210,6 +204,11 @@ namespace SEP_VanLangHotel.Controllers
                 if (id != null)
                 {
                     var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
+                    Session["update-username"] = taikhoan.Ten_Dang_Nhap.ToLower().Trim();
+                    Session["update-sdt"] = taikhoan.SDT.ToLower().Trim();
+                    Session["update-email"] = taikhoan.Email.ToLower().Trim();
+                    Session["update-cmnd"] = taikhoan.CMND_CCCD.ToLower().Trim();
+
                     ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
                     ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
                     ViewBag.Birthday = taikhoan.Sinh_Nhat.ToString("dd/MM/yyyy");
@@ -244,114 +243,88 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                string kiemtraa = "No";
-                var dsTaiKhoan = model.Tai_Khoan.ToList();
-                foreach (var item in dsTaiKhoan)
+                if (ModelState.IsValid)
                 {
-                    if (taikhoan.Ten_Dang_Nhap.ToUpper().Trim().Equals(item.Ten_Dang_Nhap.ToUpper().Trim()))
+                    try
                     {
-                        kiemtraa = "Yes";
-                        Session["checkUserName"] = true;
-                        break;
-                    }
-                    else if (taikhoan.SDT.Trim().Equals(item.SDT.Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkPhone"] = true;
-                        break;
-                    }
-                    else if (taikhoan.Email.ToUpper().Trim().Equals(item.Email.ToUpper().Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkEmail"] = true;
-                        break;
-                    }
-                    else if (taikhoan.CMND_CCCD.Trim().Equals(item.CMND_CCCD.Trim()))
-                    {
-                        kiemtraa = "Yes";
-                        Session["checkCMNDCCCD"] = true;
-                        break;
-                    }
-                }
-
-                if (kiemtraa.Equals("No"))
-                {
-                    if (ModelState.IsValid)
-                    {
-                        try
+                        FileStream stream;
+                        if (file != null)
                         {
-                            FileStream stream;
-                            if (file != null)
+                            if (file.ContentLength > 0)
                             {
-                                if (file.ContentLength > 0)
+                                const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
+                                int length = 30;
+                                var sb = new StringBuilder();
+                                Random RNG = new Random();
+                                for (var i = 0; i < length; i++)
                                 {
-                                    const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
-                                    int length = 30;
-                                    var sb = new StringBuilder();
-                                    Random RNG = new Random();
-                                    for (var i = 0; i < length; i++)
-                                    {
-                                        var c = src[RNG.Next(0, src.Length)];
-                                        sb.Append(c);
-                                    }
-
-                                    string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
-                                    file.SaveAs(path);
-                                    stream = new FileStream(Path.Combine(path), FileMode.Open);
-                                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                                    var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-                                    var cancellation = new CancellationTokenSource();
-
-                                    var task = new FirebaseStorage(
-                                        Bucket,
-                                        new FirebaseStorageOptions
-                                        {
-                                            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                                            ThrowOnCancel = true
-                                        })
-                                        .Child("images")
-                                        .Child(sb.ToString().Trim() + file.FileName)
-                                        .PutAsync(stream, cancellation.Token);
-                                    try
-                                    {
-                                        string link = await task;
-                                        taikhoan.Avatar = link;
-                                        System.IO.File.Delete(path);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e);
-                                    }
+                                    var c = src[RNG.Next(0, src.Length)];
+                                    sb.Append(c);
                                 }
-                            }
-                            taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
-                            model.Entry(taikhoan).State = EntityState.Modified;
-                            model.SaveChanges();
-                            if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"]))
-                            {
-                                Session["user-vatatar"] = taikhoan.Avatar;
-                                return RedirectToAction("Information", new { id = taikhoan.Ma_Tai_Khoan });
-                            }
-                            else
-                            {
-                                return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
+
+                                string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
+                                file.SaveAs(path);
+                                stream = new FileStream(Path.Combine(path), FileMode.Open);
+                                var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                                var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+                                var cancellation = new CancellationTokenSource();
+
+                                var task = new FirebaseStorage(
+                                    Bucket,
+                                    new FirebaseStorageOptions
+                                    {
+                                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                                        ThrowOnCancel = true
+                                    })
+                                    .Child("images")
+                                    .Child(sb.ToString().Trim() + file.FileName)
+                                    .PutAsync(stream, cancellation.Token);
+                                try
+                                {
+                                    string link = await task;
+                                    taikhoan.Avatar = link;
+                                    System.IO.File.Delete(path);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                             }
                         }
-                        catch (DbEntityValidationException e)
+                        taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
+                        model.Entry(taikhoan).State = EntityState.Modified;
+                        model.SaveChanges();
+                        if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"]))
                         {
-                            foreach (var eve in e.EntityValidationErrors)
-                            {
-                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                                foreach (var ve in eve.ValidationErrors)
-                                {
-                                    Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
-                                        ve.PropertyName,
-                                        eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
-                                        ve.ErrorMessage);
-                                }
-                            }
-                            throw;
+                            Session["user-vatatar"] = taikhoan.Avatar;
+                            return RedirectToAction("Information", new { id = taikhoan.Ma_Tai_Khoan });
+                        }
+                        else
+                        {
+                            return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        if (model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.ToUpper().Trim().Equals(taikhoan.Ten_Dang_Nhap.ToUpper().Trim())) != null
+                        && !taikhoan.Ten_Dang_Nhap.ToLower().Trim().Equals(Session["update-username"].ToString()))
+                        {
+                            Session["checkUserName"] = true;
+                        }
+                        else if (model.Tai_Khoan.FirstOrDefault(t => t.SDT.ToUpper().Trim().Equals(taikhoan.SDT.ToUpper().Trim())) != null
+                            && !taikhoan.SDT.ToLower().Trim().Equals(Session["update-sdt"].ToString()))
+                        {
+                            Session["checkPhone"] = true;
+                        }
+                        else if (model.Tai_Khoan.FirstOrDefault(t => t.Email.ToUpper().Trim().Equals(taikhoan.Email.ToUpper().Trim())) != null
+                            && !taikhoan.Email.ToLower().Trim().Equals(Session["update-email"].ToString()))
+                        {
+                            Session["checkEmail"] = true;
+                        }
+                        else if (model.Tai_Khoan.FirstOrDefault(t => t.CMND_CCCD.ToUpper().Trim().Equals(taikhoan.CMND_CCCD.ToUpper().Trim())) != null
+                            && !taikhoan.CMND_CCCD.ToLower().Trim().Equals(Session["update-cmnd"].ToString()))
+                        {
+                            Session["checkCMNDCCCD"] = true;
                         }
                     }
                 }

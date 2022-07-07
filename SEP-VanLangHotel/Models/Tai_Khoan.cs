@@ -6,12 +6,12 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
+
 namespace SEP_VanLangHotel.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public partial class Tai_Khoan
     {
@@ -20,7 +20,7 @@ namespace SEP_VanLangHotel.Models
         {
             this.TT_Dat_Phong = new HashSet<TT_Dat_Phong>();
         }
-
+    
         public string Ma_Tai_Khoan { get; set; }
         public string Ten_Dang_Nhap { get; set; }
         public string Mat_Khau { get; set; }
@@ -37,6 +37,7 @@ namespace SEP_VanLangHotel.Models
         public string Verify_Password { get; set; }
         public string OutOfDate_Code { get; set; }
         public string Avatar { get; set; }
+    
         public virtual Khach_San Khach_San { get; set; }
         public virtual Quyen Quyen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

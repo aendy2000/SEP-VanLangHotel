@@ -19,6 +19,9 @@
         }
     </script>
     Session["checkUserName"] = null;
+    Session["checkPhone"] = null;
+    Session["checkEmail"] = null;
+    Session["checkCMNDCCCD"] = null;
 }
 else
 {
@@ -36,8 +39,10 @@ else
                 })
             }
         </script>
+        Session["checkUserName"] = null;
         Session["checkPhone"] = null;
-
+        Session["checkEmail"] = null;
+        Session["checkCMNDCCCD"] = null;
     }
     else
     {
@@ -55,7 +60,10 @@ else
                     })
                 }
             </script>
+            Session["checkUserName"] = null;
+            Session["checkPhone"] = null;
             Session["checkEmail"] = null;
+            Session["checkCMNDCCCD"] = null;
         }
         else
         {
@@ -73,6 +81,9 @@ else
                         })
                     }
                 </script>
+                Session["checkUserName"] = null;
+                Session["checkPhone"] = null;
+                Session["checkEmail"] = null;
                 Session["checkCMNDCCCD"] = null;
             }
 
