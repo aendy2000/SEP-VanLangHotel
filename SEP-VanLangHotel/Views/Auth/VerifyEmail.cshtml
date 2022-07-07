@@ -29,7 +29,7 @@
                 <form action="@Url.Action("VerifyEmail")" method="post">
                     <div class="form-floating user-login">
                         <input class="hidden" type="hidden" name="idtaikhoan" value="@Model.Ma_Tai_Khoan" />
-                        <input type="text" pattern = "[0-9]{6}" class="form-control" name="maxacnhan" placeholder="Nhập mã gồm 6 chữ số:" required>
+                        <input type="text" pattern = "[0-9]{6}" class="form-control" name="maxacnhan" placeholder="Nhập mã gồm 6 chữ số:" required oninvalid="this.setCustomValidity('Hãy nhập mã xác nhận gồm 6 chữ số!')" oninput="this.setCustomValidity('')">
                         <label for="floatingInput" style="font-size:12px">Nhập mã gồm 6 chữ số (hết hạn sau 10 phút):</label>
                     </div>
                     @if (Convert.ToBoolean(Session["thongbao-maxacnhan-null"]) == true)

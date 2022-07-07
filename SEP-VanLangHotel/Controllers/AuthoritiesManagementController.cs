@@ -29,7 +29,7 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
                 Quyen quyen = new Quyen();
-                var quyens = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Equals(tenquyenmoi.Trim().ToLower()));
+                var quyens = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Trim().Equals(tenquyenmoi.Trim().ToLower()));
                 if (quyens == null)
                 {
                     Session["quyen-tontai"] = null;
@@ -50,15 +50,20 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                var quyen = model.Quyen.FirstOrDefault(q => q.Ma_Quyen.ToLower().Equals(maquyen));
-                if (quyen != null)
+                var ktraquyen = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Trim().Equals(tenquyen.ToLower().Trim()));
+                if (ktraquyen == null)
                 {
-                    Session["quyen-tontai"] = null;
-                    quyen.Ten_Quyen = tenquyen.Trim();
-                    quyen.Mo_Ta = motaquyen.Trim();
-                    model.SaveChanges();
-                    return RedirectToAction("Home");
+                    var quyen = model.Quyen.FirstOrDefault(q => q.Ma_Quyen.ToLower().Equals(maquyen));
+                    if (quyen != null)
+                    {
+                        Session["quyen-tontai"] = null;
+                        quyen.Ten_Quyen = tenquyen.Trim();
+                        quyen.Mo_Ta = motaquyen.Trim();
+                        model.SaveChanges();
+                        return RedirectToAction("Home");
+                    }
                 }
+                Session["quyen-tontai"] = true;
                 return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");

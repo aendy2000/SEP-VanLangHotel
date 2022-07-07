@@ -25,7 +25,6 @@ namespace SEP_VanLangHotel.Models
         public string Ten_Loai_Phong { get; set; }
         public int So_Nguoi_Lon { get; set; }
         public int So_Tre_Em { get; set; }
-        public int So_Em_Be { get; set; }
         public int So_Giuong { get; set; }
         public decimal Gia { get; set; }
         public string Mo_Ta { get; set; }

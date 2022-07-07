@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.Tien_Ich>
-
+@using SEP_VanLangHotel.Models;
+@{SEP25Team09Entities db = new SEP25Team09Entities(); }
 @{
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,9 +22,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách Quyền</div>
-                        <input  class="btn btn-secondary btn-round ml-auto" type="button" id="loadFileXml" value="Import Danh Sách" onclick="document.getElementById('file').click();" />
-                        <input id="file" name="file" style="display:none;" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        @using (Html.BeginForm("ImportData", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="card-title">Đặt phòng</div>
+                            <hr />
+                            <input id="importFileExcel" name="importFileExcel" class="btn btn-secondary" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                            <br />
+                            <br />
+                            <button class="btn btn-secondary" type="submit" onclick="thongbaoxacnhan()"> Tìm Phòng <span> <i class="flaticon-search-1"></i></span></button>
+                        }
                     </div>
                 </div>
                 <div class="card-body">
@@ -42,23 +49,23 @@
                                     </button>
                                 </div>
                                 @*<form action="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Tên quyền</label>
-                                                    <input name="tenquyenmoi" type="text" class="form-control" required>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Tên quyền</label>
+                                                        <input name="tenquyenmoi" type="text" class="form-control" required>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Mô tả</label>
-                                                    <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required></textarea>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Mô tả</label>
+                                                        <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>*@
+                                    </form>*@
                             </div>
                         </div>
                     </div>

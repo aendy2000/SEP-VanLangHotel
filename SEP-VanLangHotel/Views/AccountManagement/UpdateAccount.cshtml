@@ -4,6 +4,82 @@
     ViewBag.Title = "Chỉnh sửa thông tin tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Convert.ToBoolean(Session["checkUserName"]) == true)
+{
+    <body onload="kiemtrataikhoantrung()">
+    </body>
+    <script>
+        function kiemtrataikhoantrung() {
+            cuteAlert({
+                type: "error",
+                title: "Tài khoản đã tồn tại!",
+                message: "Tên tài khoản đã được đăng ký, vui lòng thử lại tên tài khoản khác!",
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["checkUserName"] = null;
+}
+else
+{
+    if (Convert.ToBoolean(Session["checkPhone"]) == true)
+    {
+        <body onload="kiemtraPhone()">
+        </body>
+        <script>
+            function kiemtraPhone() {
+                cuteAlert({
+                    type: "error",
+                    title: "Số điện thoại đã tồn tại!",
+                    message: "Số điện thoại đã được đăng ký trên tài khoản khác, vui lòng thử lại số điện thoại khác",
+                    buttonText: "Xác nhận"
+                })
+            }
+        </script>
+        Session["checkPhone"] = null;
+
+    }
+    else
+    {
+        if (Convert.ToBoolean(Session["checkEmail"]) == true)
+        {
+            <body onload="kiemtraEmail()">
+            </body>
+            <script>
+                function kiemtraEmail() {
+                    cuteAlert({
+                        type: "error",
+                        title: "Email đã tồn tại!",
+                        message: "Email đã được đăng ký trên tài khoản khác, vui lòng thử lại một Email khác!",
+                        buttonText: "Xác nhận"
+                    })
+                }
+            </script>
+            Session["checkEmail"] = null;
+        }
+        else
+        {
+            if (Convert.ToBoolean(Session["checkCMNDCCCD"]) == true)
+            {
+                <body onload="kiemtraCMNDCCCD()">
+                </body>
+                <script>
+                    function kiemtraCMNDCCCD() {
+                        cuteAlert({
+                            type: "error",
+                            title: "Số CMND/CCCD đã tồn tại!",
+                            message: "Số CMND/CCCD đã được đăng ký trên tài khoản khác, vui lòng không tạo nhiều tài khoản cho một người!!",
+                            buttonText: "Xác nhận"
+                        })
+                    }
+                </script>
+                Session["checkCMNDCCCD"] = null;
+            }
+
+        }
+    }
+
+}
 
 <title>@ViewBag.Title</title>
 <div class="panel-header bg-primary-gradient">
@@ -54,34 +130,34 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">Giới tính</label>
-                                @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required" })
+                                @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required", @oninvalid = "this.setCustomValidity('Họ và tên không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Ngày sinh</label>
-                                @Html.EditorFor(model => model.Sinh_Nhat, new { type = "date", htmlAttributes = new { @class = "form-control", @placeholder = "Ngày/Tháng/Năm", @required = "required", @Value = DateTime.Now.ToString("dd/MM/yyyy") } })
+                                @Html.EditorFor(model => model.Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ngày/Tháng/Năm", @Value = Model.Sinh_Nhat.ToString("dd/MM/yyyy"), @pattern = "[0-9]{2}/[0-9]{2}/[0-9]{4}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào ngày tháng năm sinh của bạn (VD: 30/01/2022)')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.Sinh_Nhat, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">CMND/CCCD</label>
-                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required", @pattern = "[0-9]{9,12}" } })
+                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required", @pattern = "[0-9]{9,12}", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.CMND_CCCD, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Số điện thoại</label>
-                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @required = "required", @pattern = "[0-9]{10}" } })
+                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{10}", @placeholder = "Số điện thoại di động", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số điện thoại của bạn')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ Email</label>
-                            @Html.EditorFor(model => model.Email, new { type = "email", htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ Email", @required = "required" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Địa chỉ Email", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào địa chỉ Email của bạn')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ nhà</label>
-                            @Html.EditorFor(model => model.Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ nhà", @required = "required", @rows = "5" } })
+                            @Html.EditorFor(model => model.Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Dia_Chi, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">

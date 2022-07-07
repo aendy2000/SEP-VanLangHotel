@@ -29,7 +29,6 @@
           <Property Name="Ten_Loai_Phong" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="So_Nguoi_Lon" Type="int" Nullable="false" />
           <Property Name="So_Tre_Em" Type="int" Nullable="false" />
-          <Property Name="So_Em_Be" Type="int" Nullable="false" />
           <Property Name="So_Giuong" Type="int" Nullable="false" />
           <Property Name="Gia" Type="money" Nullable="false" />
           <Property Name="Mo_Ta" Type="nvarchar" MaxLength="255" />
@@ -96,6 +95,7 @@
           <Property Name="Thoi_Gian_Dat" Type="datetime" Nullable="false" />
           <Property Name="Thoi_Gian_Doi_Tra" Type="datetime" Nullable="false" />
           <Property Name="Ma_Phong" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ma_Tai_Khoan" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -213,6 +213,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TTDatPhong_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TTDoiPhong_Phong">
           <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
           <End Role="TT_Doi_Phong" Type="Self.TT_Doi_Phong" Multiplicity="*" />
@@ -280,6 +292,10 @@
             <End Role="Phong" EntitySet="Phong" />
             <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
           </AssociationSet>
+          <AssociationSet Name="fk_TTDatPhong_TaiKhoan" Association="Self.fk_TTDatPhong_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+          </AssociationSet>
           <AssociationSet Name="fk_TTDoiPhong_Phong" Association="Self.fk_TTDoiPhong_Phong">
             <End Role="Phong" EntitySet="Phong" />
             <End Role="TT_Doi_Phong" EntitySet="TT_Doi_Phong" />
@@ -322,7 +338,6 @@
           <Property Name="Ten_Loai_Phong" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="So_Nguoi_Lon" Type="Int32" Nullable="false" />
           <Property Name="So_Tre_Em" Type="Int32" Nullable="false" />
-          <Property Name="So_Em_Be" Type="Int32" Nullable="false" />
           <Property Name="So_Giuong" Type="Int32" Nullable="false" />
           <Property Name="Gia" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Mo_Ta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -376,6 +391,7 @@
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Khach_San" Relationship="Self.fk_TaiKhoan_KhachSan" FromRole="Tai_Khoan" ToRole="Khach_San" />
           <NavigationProperty Name="Quyen" Relationship="Self.fk_TaiKhoan_Quyen" FromRole="Tai_Khoan" ToRole="Quyen" />
+          <NavigationProperty Name="TT_Dat_Phong" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="Tai_Khoan" ToRole="TT_Dat_Phong" />
         </EntityType>
         <EntityType Name="Tien_Ich">
           <Key>
@@ -400,7 +416,9 @@
           <Property Name="Thoi_Gian_Dat" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Thoi_Gian_Doi_Tra" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Ma_Phong" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ma_Tai_Khoan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Phong" Relationship="Self.fk_TTDatPhong_Phong" FromRole="TT_Dat_Phong" ToRole="Phong" />
+          <NavigationProperty Name="Tai_Khoan" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="TT_Dat_Phong" ToRole="Tai_Khoan" />
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.fk_TTDoiPhong_TTDatPhong" FromRole="TT_Dat_Phong" ToRole="TT_Doi_Phong" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
@@ -534,6 +552,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TTDatPhong_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TTDoiPhong_TTDatPhong">
           <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="1" />
           <End Role="TT_Doi_Phong" Type="Self.TT_Doi_Phong" Multiplicity="*" />
@@ -593,6 +623,10 @@
             <End Role="Quyen" EntitySet="Quyen" />
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
           </AssociationSet>
+          <AssociationSet Name="fk_TTDatPhong_TaiKhoan" Association="Self.fk_TTDatPhong_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+          </AssociationSet>
           <AssociationSet Name="fk_TTDoiPhong_TTDatPhong" Association="Self.fk_TTDoiPhong_TTDatPhong">
             <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
             <End Role="TT_Doi_Phong" EntitySet="TT_Doi_Phong" />
@@ -629,7 +663,6 @@
                 <ScalarProperty Name="Ten_Loai_Phong" ColumnName="Ten_Loai_Phong" />
                 <ScalarProperty Name="So_Nguoi_Lon" ColumnName="So_Nguoi_Lon" />
                 <ScalarProperty Name="So_Tre_Em" ColumnName="So_Tre_Em" />
-                <ScalarProperty Name="So_Em_Be" ColumnName="So_Em_Be" />
                 <ScalarProperty Name="So_Giuong" ColumnName="So_Giuong" />
                 <ScalarProperty Name="Gia" ColumnName="Gia" />
                 <ScalarProperty Name="Mo_Ta" ColumnName="Mo_Ta" />
@@ -701,6 +734,7 @@
                 <ScalarProperty Name="Thoi_Gian_Dat" ColumnName="Thoi_Gian_Dat" />
                 <ScalarProperty Name="Thoi_Gian_Doi_Tra" ColumnName="Thoi_Gian_Doi_Tra" />
                 <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+                <ScalarProperty Name="Ma_Tai_Khoan" ColumnName="Ma_Tai_Khoan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

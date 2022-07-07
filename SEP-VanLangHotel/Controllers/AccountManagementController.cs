@@ -76,91 +76,129 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                if (ModelState.IsValid)
+                string kiemtraa = "No";
+                var dsTaiKhoan = model.Tai_Khoan.ToList();
+                foreach (var item in dsTaiKhoan)
                 {
-                    try
+                    if (newAccount.Ten_Dang_Nhap.ToUpper().Trim().Equals(item.Ten_Dang_Nhap.ToUpper().Trim()))
                     {
-                        FileStream stream;
-                        if (file != null)
+                        kiemtraa = "Yes";
+                        Session["checkUserName"] = true;
+                        break;
+                    }
+                    else if (newAccount.SDT.Trim().Equals(item.SDT.Trim()))
+                    {
+                        kiemtraa = "Yes";
+                        Session["checkPhone"] = true;
+                        break;
+                    }
+                    else if (newAccount.Email.ToUpper().Trim().Equals(item.Email.ToUpper().Trim()))
+                    {
+                        kiemtraa = "Yes";
+                        Session["checkEmail"] = true;
+                        break;
+                    } else if(newAccount.CMND_CCCD.Trim().Equals(item.CMND_CCCD.Trim()))
+                    {
+                        kiemtraa = "Yes";
+                        Session["checkCMNDCCCD"] = true;
+                        break;
+                    }
+                }
+
+                if (kiemtraa.Equals("No"))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        try
                         {
-                            if (file.ContentLength > 0)
+                            FileStream stream;
+                            if (file != null)
                             {
-                                const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
-                                int length = 30;
-                                var sb = new StringBuilder();
-                                Random RNG = new Random();
-                                for (var i = 0; i < length; i++)
+                                if (file.ContentLength > 0)
                                 {
-                                    var c = src[RNG.Next(0, src.Length)];
-                                    sb.Append(c);
-                                }
-
-                                string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
-                                file.SaveAs(path);
-                                stream = new FileStream(Path.Combine(path), FileMode.Open);
-                                //await Task.Run(() => Upload(stream, sb.ToString().Trim() + file.FileName));
-
-                                var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                                var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-
-                                var cancellation = new CancellationTokenSource();
-
-                                var task = new FirebaseStorage(
-                                    Bucket,
-                                    new FirebaseStorageOptions
+                                    const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
+                                    int length = 30;
+                                    var sb = new StringBuilder();
+                                    Random RNG = new Random();
+                                    for (var i = 0; i < length; i++)
                                     {
-                                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                                        ThrowOnCancel = true
-                                    })
-                                    .Child("images")
-                                    .Child(sb.ToString().Trim() + file.FileName)
-                                    .PutAsync(stream, cancellation.Token);
-                                try
-                                {
-                                    string link = await task;
-                                    newAccount.Avatar = link;
-                                    System.IO.File.Delete(path);
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                }
+                                        var c = src[RNG.Next(0, src.Length)];
+                                        sb.Append(c);
+                                    }
 
+                                    string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
+                                    file.SaveAs(path);
+                                    stream = new FileStream(Path.Combine(path), FileMode.Open);
+                                    //await Task.Run(() => Upload(stream, sb.ToString().Trim() + file.FileName));
+
+                                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                                    var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+
+                                    var cancellation = new CancellationTokenSource();
+
+                                    var task = new FirebaseStorage(
+                                        Bucket,
+                                        new FirebaseStorageOptions
+                                        {
+                                            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                                            ThrowOnCancel = true
+                                        })
+                                        .Child("images")
+                                        .Child(sb.ToString().Trim() + file.FileName)
+                                        .PutAsync(stream, cancellation.Token);
+                                    try
+                                    {
+                                        string link = await task;
+                                        newAccount.Avatar = link;
+                                        System.IO.File.Delete(path);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e);
+                                    }
+
+                                }
                             }
-                        }
-                        else
-                        {
-                            newAccount.Avatar = "https://firebasestorage.googleapis.com/v0/b/sep-project-2022-6fbfd.appspot.com/o/images%2FDefaultAvatar.png?alt=media&token=c1099848-26b6-4ddb-8cce-209ec415fe7a";
-                        }
-
-                        newAccount.Ma_Tai_Khoan = "1"; //Mã tạm thời (Trigger tại DB sẽ thay đổi sau khi thêm thành công tài khoán)
-                        newAccount.Lock = 0;
-                        newAccount.Ma_Khach_San = "KS202207010001";
-                        newAccount.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
-                        model.Tai_Khoan.Add(newAccount);
-                        model.SaveChanges();
-                        Session["addnewaccountsuccess"] = true;
-                    }
-                    catch (DbEntityValidationException e) //Nhận thông tin lỗi thêm tài khoản bị thất bại
-                    {
-                        foreach (var eve in e.EntityValidationErrors)
-                        {
-                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
+                            else
                             {
-                                Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
-                                    ve.PropertyName,
-                                    eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
-                                    ve.ErrorMessage);
+                                newAccount.Avatar = "https://firebasestorage.googleapis.com/v0/b/sep-project-2022-6fbfd.appspot.com/o/images%2FDefaultAvatar.png?alt=media&token=c1099848-26b6-4ddb-8cce-209ec415fe7a";
                             }
+
+                            newAccount.Ma_Tai_Khoan = "1"; //Mã tạm thời (Trigger tại DB sẽ thay đổi sau khi thêm thành công tài khoán)
+                            newAccount.Lock = 0;
+                            newAccount.Ma_Khach_San = "KS202207010001";
+                            newAccount.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
+                            model.Tai_Khoan.Add(newAccount);
+                            model.SaveChanges();
+                            Session["addnewaccountsuccess"] = true;
                         }
-                        throw;
+                        catch (DbEntityValidationException e) //Nhận thông tin lỗi thêm tài khoản bị thất bại
+                        {
+                            foreach (var eve in e.EntityValidationErrors)
+                            {
+                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                                        ve.PropertyName,
+                                        eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                                        ve.ErrorMessage);
+                                }
+                            }
+                            throw;
+                        }
+                        return RedirectToAction("DetailtAccount", new { id = newAccount.Ma_Tai_Khoan });
                     }
-                    return RedirectToAction("Home");
                 } //Thêm thất bại sẽ:
                 ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
                 ViewBag.Ma_Khach_San = new SelectList(model.Khach_San, "Ma_Khach_San", "Ten_Khach_San");
+                List<string> gioitinh = new List<string>();
+                gioitinh.Add("Nam");
+                gioitinh.Add("Nữ");
+                gioitinh.Add("Khác");
+                ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                ViewBag.gioiTinh = "";
                 return View(newAccount);
             }
             return RedirectToAction("Homepage", "Home");
@@ -206,82 +244,115 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                if (ModelState.IsValid)
+                string kiemtraa = "No";
+                var dsTaiKhoan = model.Tai_Khoan.ToList();
+                foreach (var item in dsTaiKhoan)
                 {
-                    try
+                    if (taikhoan.Ten_Dang_Nhap.ToUpper().Trim().Equals(item.Ten_Dang_Nhap.ToUpper().Trim()))
                     {
-                        FileStream stream;
-                        if (file != null)
-                        {
-                            if (file.ContentLength > 0)
-                            {
-                                const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
-                                int length = 30;
-                                var sb = new StringBuilder();
-                                Random RNG = new Random();
-                                for (var i = 0; i < length; i++)
-                                {
-                                    var c = src[RNG.Next(0, src.Length)];
-                                    sb.Append(c);
-                                }
-
-                                string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
-                                file.SaveAs(path);
-                                stream = new FileStream(Path.Combine(path), FileMode.Open);
-                                var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                                var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-                                var cancellation = new CancellationTokenSource();
-
-                                var task = new FirebaseStorage(
-                                    Bucket,
-                                    new FirebaseStorageOptions
-                                    {
-                                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                                        ThrowOnCancel = true
-                                    })
-                                    .Child("images")
-                                    .Child(sb.ToString().Trim() + file.FileName)
-                                    .PutAsync(stream, cancellation.Token);
-                                try
-                                {
-                                    string link = await task;
-                                    taikhoan.Avatar = link;
-                                    System.IO.File.Delete(path);
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                }
-                            }
-                        }
-                        taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
-                        model.Entry(taikhoan).State = EntityState.Modified;
-                        model.SaveChanges();
-                        if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"]))
-                        {
-                            Session["user-vatatar"] = taikhoan.Avatar;
-                            return RedirectToAction("Information", new { id = taikhoan.Ma_Tai_Khoan });
-                        } 
-                        else
-                        {
-                            return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
-                        }
+                        kiemtraa = "Yes";
+                        Session["checkUserName"] = true;
+                        break;
                     }
-                    catch (DbEntityValidationException e)
+                    else if (taikhoan.SDT.Trim().Equals(item.SDT.Trim()))
                     {
-                        foreach (var eve in e.EntityValidationErrors)
+                        kiemtraa = "Yes";
+                        Session["checkPhone"] = true;
+                        break;
+                    }
+                    else if (taikhoan.Email.ToUpper().Trim().Equals(item.Email.ToUpper().Trim()))
+                    {
+                        kiemtraa = "Yes";
+                        Session["checkEmail"] = true;
+                        break;
+                    }
+                    else if (taikhoan.CMND_CCCD.Trim().Equals(item.CMND_CCCD.Trim()))
+                    {
+                        kiemtraa = "Yes";
+                        Session["checkCMNDCCCD"] = true;
+                        break;
+                    }
+                }
+
+                if (kiemtraa.Equals("No"))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        try
                         {
-                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
+                            FileStream stream;
+                            if (file != null)
                             {
-                                Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
-                                    ve.PropertyName,
-                                    eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
-                                    ve.ErrorMessage);
+                                if (file.ContentLength > 0)
+                                {
+                                    const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
+                                    int length = 30;
+                                    var sb = new StringBuilder();
+                                    Random RNG = new Random();
+                                    for (var i = 0; i < length; i++)
+                                    {
+                                        var c = src[RNG.Next(0, src.Length)];
+                                        sb.Append(c);
+                                    }
+
+                                    string path = Path.Combine(Server.MapPath("~/Content/images/"), sb.ToString().Trim() + file.FileName); ;
+                                    file.SaveAs(path);
+                                    stream = new FileStream(Path.Combine(path), FileMode.Open);
+                                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                                    var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+                                    var cancellation = new CancellationTokenSource();
+
+                                    var task = new FirebaseStorage(
+                                        Bucket,
+                                        new FirebaseStorageOptions
+                                        {
+                                            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                                            ThrowOnCancel = true
+                                        })
+                                        .Child("images")
+                                        .Child(sb.ToString().Trim() + file.FileName)
+                                        .PutAsync(stream, cancellation.Token);
+                                    try
+                                    {
+                                        string link = await task;
+                                        taikhoan.Avatar = link;
+                                        System.IO.File.Delete(path);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e);
+                                    }
+                                }
+                            }
+                            taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
+                            model.Entry(taikhoan).State = EntityState.Modified;
+                            model.SaveChanges();
+                            if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"]))
+                            {
+                                Session["user-vatatar"] = taikhoan.Avatar;
+                                return RedirectToAction("Information", new { id = taikhoan.Ma_Tai_Khoan });
+                            }
+                            else
+                            {
+                                return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
                             }
                         }
-                        throw;
+                        catch (DbEntityValidationException e)
+                        {
+                            foreach (var eve in e.EntityValidationErrors)
+                            {
+                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                                        ve.PropertyName,
+                                        eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
+                                        ve.ErrorMessage);
+                                }
+                            }
+                            throw;
+                        }
                     }
                 }
                 ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");

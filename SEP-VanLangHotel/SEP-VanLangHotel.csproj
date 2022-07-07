@@ -775,13 +775,6 @@
     <Content Include="asset\css\bootstrap.min.css.map" />
     <Content Include="asset\css\bootstrap.rtl.css.map" />
     <Content Include="asset\css\bootstrap.rtl.min.css.map" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="assets\css\atlantis.css.map" />
     <Content Include="assets\fonts\flaticon\Flaticon.eot" />
     <Content Include="assets\fonts\flaticon\Flaticon.ttf" />
@@ -854,6 +847,13 @@
     <Content Include="assets\sass\atlantis\_responsive.scss" />
     <Content Include="assets\sass\atlantis\_typography.scss" />
     <Content Include="assets\sass\atlantis\_variables.scss" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

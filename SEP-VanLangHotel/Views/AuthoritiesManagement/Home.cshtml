@@ -5,7 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
-
+@if (Convert.ToBoolean(Session["quyen-tontai"]) == true)
+{
+    <body onload="kiemtraquyen()">
+    </body>
+    <script>
+        function kiemtraquyen() {
+            cuteAlert({
+                type: "error",
+                title: "Quyền đã tồn tài!",
+                message: "Quyền đã tồn tại, vui lòng kiểm tra lại!",
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["quyen-tontai"] = null;
+}
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -53,13 +68,13 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Tên quyền</label>
-                                                    <input name="tenquyenmoi" type="text" class="form-control" required>
+                                                    <input name="tenquyenmoi" type="text" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Mô tả</label>
-                                                    <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required></textarea>
+                                                    <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
                                                 </div>
                                             </div>
                                         </div>
