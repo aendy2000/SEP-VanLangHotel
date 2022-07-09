@@ -21,8 +21,10 @@ namespace SEP_VanLangHotel.Models
         public System.DateTime TG_Doi_Tra { get; set; }
         public string Ma_TT_Dat_Phong { get; set; }
         public string Ma_Phong { get; set; }
+        public string Ma_Tai_Khoan { get; set; }
     
         public virtual Phong Phong { get; set; }
+        public virtual Tai_Khoan Tai_Khoan { get; set; }
         public virtual TT_Dat_Phong TT_Dat_Phong { get; set; }
     }
 }

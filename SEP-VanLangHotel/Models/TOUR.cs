@@ -12,37 +12,32 @@ namespace SEP_VanLangHotel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tai_Khoan
+    public partial class TOUR
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tai_Khoan()
+        public TOUR()
         {
             this.TT_Dat_Phong = new HashSet<TT_Dat_Phong>();
-            this.TT_Doi_Phong = new HashSet<TT_Doi_Phong>();
         }
     
-        public string Ma_Tai_Khoan { get; set; }
-        public string Ten_Dang_Nhap { get; set; }
-        public string Mat_Khau { get; set; }
-        public int Lock { get; set; }
-        public string Ma_Quyen { get; set; }
-        public string Ma_Khach_San { get; set; }
+        public string Ma_Tour { get; set; }
+        public string Ho_Ten_Chu_Tour { get; set; }
         public string CMND_CCCD { get; set; }
         public string SDT { get; set; }
-        public string Ho_Va_Ten { get; set; }
         public System.DateTime Sinh_Nhat { get; set; }
         public int Gioi_Tinh { get; set; }
-        public string Dia_Chi { get; set; }
         public string Email { get; set; }
-        public string Verify_Password { get; set; }
-        public string OutOfDate_Code { get; set; }
-        public string Avatar { get; set; }
+        public string Dia_Chi { get; set; }
+        public System.DateTime Thoi_Gian_DatPhong_Coc { get; set; }
+        public System.DateTime Thoi_Gian_NhanPhong { get; set; }
+        public System.DateTime Thoi_Gian_TraPhong { get; set; }
+        public Nullable<System.DateTime> Thoi_Gian_ThanhToan_Huy { get; set; }
+        public decimal So_Tien_Coc { get; set; }
+        public decimal Tong_Thanh_Toan { get; set; }
+        public int Trang_Thai { get; set; }
+        public string Ma_Tai_Khoan { get; set; }
     
-        public virtual Khach_San Khach_San { get; set; }
-        public virtual Quyen Quyen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Dat_Phong> TT_Dat_Phong { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
     }
 }

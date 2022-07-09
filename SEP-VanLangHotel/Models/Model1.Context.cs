@@ -32,6 +32,7 @@ namespace SEP_VanLangHotel.Models
         public virtual DbSet<Quyen> Quyen { get; set; }
         public virtual DbSet<Tai_Khoan> Tai_Khoan { get; set; }
         public virtual DbSet<Tien_Ich> Tien_Ich { get; set; }
+        public virtual DbSet<TOUR> TOUR { get; set; }
         public virtual DbSet<TT_Dat_Phong> TT_Dat_Phong { get; set; }
         public virtual DbSet<TT_Doi_Phong> TT_Doi_Phong { get; set; }
         public virtual DbSet<Trang_Thai> Trang_Thai { get; set; }

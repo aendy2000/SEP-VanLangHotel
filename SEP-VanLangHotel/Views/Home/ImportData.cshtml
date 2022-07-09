@@ -1,0 +1,594 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.TT_Dat_Phong>
+
+@{
+    ViewBag.Title = "ImportData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ImportData</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ho_Ten_KH)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ho_Ten_KH)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Danh sách phòng đặt</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <!-- Fonts and icons -->
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css'] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/atlantis.min.css">
+    <link rel="stylesheet" href="../assets/css/add-style.css">
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="blue">
+
+                <a href="index.html" class="logo">
+                    <img style="width: 100%; height: 65px;" src="~/assets/img/vanlanghotellogo.png" alt="navbar brand">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="icon-menu"></i>
+                    </span>
+                </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar sidebar-style-2">
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <div class="user">
+                    <div class="avatar-sm float-left mr-2">
+                        <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <span>
+                                Đặng Văn Egg
+                                <span class="user-level">Nhân viên</span>
+                                <span class="caret"></span>
+                            </span>
+                        </a>
+                        <div class="clearfix"></div>
+
+                        <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#profile">
+                                        <span class="link-collapse">Thông tin cá nhân </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Chỉnh sửa thông tin</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#settings">
+                                        <span class="link-collapse">Cài đặt</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav nav-primary">
+                    <li class="nav-item active">
+                        <a href="../demo1/index.html" class="collapsed" aria-expanded="false">
+                            <i class="fas fa-home"></i>
+                            <p>Trang chủ</p>
+                            <!-- <span class="caret"></span> -->
+                        </a>
+                        <!-- <div class="collapse" id="dashboard">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="../demo1/index.html">
+                                        <span class="sub-item">Dashboard</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </li>
+                    <hr />
+                    <li class="nav-section">
+                    </li>
+                    <li class="nav-item active">
+                        <a data-toggle="collapse" href="#quanlyphong">
+                            <i class="fas fa-bed"></i>
+                            <p>Phòng khách sạn</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="quanlyphong">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="../demo1/ListRoomNull.html">
+                                        <span class="sub-item">Phòng trống</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../demo1/ListRoomHire.html">
+                                        <span class="sub-item">Phòng đang thuê</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../demo1/ListRoomCome.html">
+                                        <span class="sub-item">Phòng đến hạn</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <a data-toggle="collapse" href="#sidebarThongke">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Thống kê</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="sidebarThongke">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="sidebar-style-1.html">
+                                        <span class="sub-item">Xem thống kê</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <a data-toggle="collapse" href="#sidebarHistory">
+                            <i class="fas fa-history"></i>
+                            <p>Lịch sử đặt phòng</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="sidebarHistory">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="../demo1/ListHistoryHired.html">
+                                        <span class="sub-item">Xem lịch sử đặt phòng</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <hr />
+                    <li class="nav-section">
+                    </li>
+                    <li class="nav-item active">
+                        <a data-toggle="collapse" href="#" class="collapsed" aria-expanded="false" onclick="xacnhandangxuat()">
+                            <i class="fas icon-logout"></i>
+                            <p>Đăng Xuất</p>
+                        </a>
+                        <script>
+                                function xacnhandangxuat() {
+                                    cuteAlert({
+                                    type: "question",
+                                    title: "Đăng xuất?",
+                                    message: "Bạn có chắc chắn muốn đăng xuất?",
+                                        confirmText: "Xác nhận",
+                                    cancelText: "Hủy bỏ"
+
+                                    }).then(function (isConfirm) {
+                                    if (isConfirm) {
+                                    window.location.href = '@Url.Action("Logout", "Auth")';
+                                    } else {
+                                    return false;
+                                    }
+                                    });
+                                    }
+                        </script>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="panel-header bg-primary-gradient">
+                <div class="page-inner py-5">
+                    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                        <div>
+                            <h2 class="text-white pb-2 fw-bold">Danh sách phòng khách sạn</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-inner mt--5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-title">Phòng khách sạn</div>
+                                    <!-- <button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                            <i class="fa fa-plus"></i>
+                                            Thêm tài khoản mới
+                                    </button> -->
+                                    <div class="form-group ml-auto">
+                                        <div class="input-icon" id="add-row_filter">
+                                            <input type="search" class="form-control" placeholder="Tìm kiếm...">
+                                            <span class="input-icon-addon">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row card-item bg">
+                                    <!-- Form Group (Hình ảnh)-->
+                                    <div class="col-md-6 size">
+                                        <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Form Group (Mã phòng)-->
+                                        <div class="col-md-6 ml-auto mr-auto range text-center">
+                                            <label class="small-title">Phòng A001</label>
+                                        </div>
+                                        <!-- Form Group (Số người) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số người:</label>
+                                            <label class="small-item col-sm-7" for="">2 người</label>
+                                        </div>
+                                        <!-- Form Group (Số giường) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số giường:</label>
+                                            <label class="small-item col-sm-7" for="">1 giường</label>
+                                        </div>
+                                        <!-- Form Group (Tiện ích)-->
+                                        <div class="form-group col-md-12 text-center">
+                                            <div class="selectgroup selectgroup-pills range">
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Nhà bếp</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Tủ lạnh</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">TV</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Phòng xông hơi</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center layout-footer">
+                                            <label class="small-footer">7.000.000</label>
+                                            &emsp;
+                                            <label class="small-footer">VND</label>
+                                        </div>
+                                        <div class="col text-center">
+                                            <a style="width:180px" class="btn btn-bookroom" role="button" href="../demo1/detailBookRoom.html" id="btn-edit__lock">
+                                                Đặt phòng
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row card-item bg">
+                                    <!-- Form Group (Hình ảnh)-->
+                                    <div class="col-md-6 size">
+                                        <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Form Group (Mã phòng)-->
+                                        <div class="col-md-6 ml-auto mr-auto range text-center">
+                                            <label class="small-title">Phòng A001</label>
+                                        </div>
+                                        <!-- Form Group (Số người) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số người:</label>
+                                            <label class="small-item col-sm-7" for="">2 người</label>
+                                        </div>
+                                        <!-- Form Group (Số giường) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số giường:</label>
+                                            <label class="small-item col-sm-7" for="">1 giường</label>
+                                        </div>
+                                        <!-- Form Group (Tiện ích)-->
+                                        <div class="form-group col-md-12 text-center">
+                                            <div class="selectgroup selectgroup-pills range">
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Nhà bếp</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Tủ lạnh</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">TV</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Phòng xông hơi</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center layout-footer">
+                                            <label class="small-footer">7.000.000</label>
+                                            &emsp;
+                                            <label class="small-footer">VND</label>
+                                        </div>
+                                        <div class="col text-center">
+                                            <a style="width:180px" class="btn btn-bookroom" role="button" href="../demo1/detailBookRoom.html" id="btn-edit__lock">
+                                                Đặt phòng
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row card-item bg">
+                                    <!-- Form Group (Hình ảnh)-->
+                                    <div class="col-md-6 size">
+                                        <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Form Group (Mã phòng)-->
+                                        <div class="col-md-6 ml-auto mr-auto range text-center">
+                                            <label class="small-title">Phòng A001</label>
+                                        </div>
+                                        <!-- Form Group (Số người) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số người:</label>
+                                            <label class="small-item col-sm-7" for="">2 người</label>
+                                        </div>
+                                        <!-- Form Group (Số giường) -->
+                                        <div class="col-md-12 layout range">
+                                            <label class="small-item" for="">Số giường:</label>
+                                            <label class="small-item col-sm-7" for="">1 giường</label>
+                                        </div>
+                                        <!-- Form Group (Tiện ích)-->
+                                        <div class="form-group col-md-12 text-center">
+                                            <div class="selectgroup selectgroup-pills range">
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Nhà bếp</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Tủ lạnh</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">TV</span>
+                                                </label>
+                                                <label class="selectgroup-item">
+                                                    <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                    <span class="selectgroup-button no-active">Phòng xông hơi</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center layout-footer">
+                                            <label class="small-footer">7.000.000</label>
+                                            &emsp;
+                                            <label class="small-footer">VND</label>
+                                        </div>
+                                        <div class="col text-center">
+                                            <a style="width:180px" class="btn btn-bookroom" role="button" href="../demo1/detailBookRoom.html" id="btn-edit__lock">
+                                                Đặt phòng
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="add-row_paginate">
+                                            <ul class="pagination">
+                                                <li class="paginate_button page-item previous disabled" id="add-row_previous">
+                                                    <a href="#" aria-controls="add-row" data-dt-idx="0" tabindex="0" class="page-link">Trang trước</a>
+                                                </li>
+                                                <li class="paginate_button page-item active">
+                                                    <a href="#" aria-controls="add-row" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                                </li>
+                                                <li class="paginate_button page-item ">
+                                                    <a href="#" aria-controls="add-row" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                                </li>
+                                                <li class="paginate_button page-item next" id="add-row_next">
+                                                    <a href="#" aria-controls="add-row" data-dt-idx="3" tabindex="0" class="page-link">Trang sau</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Validation -->
+    <script src="../assets/js/alertValidation.js"></script>
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+    <!-- Chart JS -->
+    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+    <script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Atlantis JS -->
+    <script src="../assets/js/atlantis.min.js"></script>
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/setting-demo.js"></script>
+    <script src="../assets/js/demo.js"></script>
+    <script>
+        Circles.create({
+            id: 'circles-1',
+            radius: 45,
+            value: 60,
+            maxValue: 100,
+            width: 7,
+            text: 5,
+            colors: ['#f1f1f1', '#FF9E27'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        Circles.create({
+            id: 'circles-2',
+            radius: 45,
+            value: 70,
+            maxValue: 100,
+            width: 7,
+            text: 36,
+            colors: ['#f1f1f1', '#2BB930'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        Circles.create({
+            id: 'circles-3',
+            radius: 45,
+            value: 40,
+            maxValue: 100,
+            width: 7,
+            text: 12,
+            colors: ['#f1f1f1', '#F25961'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+
+        var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+
+        var mytotalIncomeChart = new Chart(totalIncomeChart, {
+            type: 'bar',
+            data: {
+                labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
+                datasets: [{
+                    label: "Total Income",
+                    backgroundColor: '#ff9e27',
+                    borderColor: 'rgb(23, 125, 255)',
+                    data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        },
+                        gridLines: {
+                            drawBorder: false,
+                            display: false
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            drawBorder: false,
+                            display: false
+                        }
+                    }]
+                },
+            }
+        });
+
+        $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
+            type: 'line',
+            height: '70',
+            width: '100%',
+            lineWidth: '2',
+            lineColor: '#ffa534',
+            fillColor: 'rgba(255, 165, 52, .14)'
+        });
+    </script>
+</body>
+</html>

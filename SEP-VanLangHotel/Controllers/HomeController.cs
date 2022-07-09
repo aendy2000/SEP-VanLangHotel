@@ -9,6 +9,7 @@ using System.IO;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Data;
+using System.Globalization;
 
 namespace SEP_VanLangHotel.Controllers
 {
@@ -84,8 +85,6 @@ namespace SEP_VanLangHotel.Controllers
                                 }
                             }
                         }
-                        //Kiem tra giới hạn số lượng người và giường
-
 
                         //Lấy ra danh sách đặt phòng từ file import
                         List<List<string>> listDSDatPhong = new List<List<string>>();
@@ -105,6 +104,53 @@ namespace SEP_VanLangHotel.Controllers
                             }
                         }
 
+                        //Kiểm tra ds ngày đi và ds ngày ở có bị sai hay không
+                        for (int i = 0; i < listDSDatPhong.Count; i++)
+                        {
+                            if (!listDSDatPhong[i][4].Trim().Equals(listDSDatPhong[0][4].Trim()))
+                            {
+                                Session["error-import-file"] = "Ngày trả phòng của các khách hàng trong danh sách không khớp với nhau, hãy kiểm tra lại!";
+                                return RedirectToAction("Homepage");
+                            }
+                            if (!listDSDatPhong[i][5].Trim().Equals(listDSDatPhong[0][5].Trim()))
+                            {
+                                Session["error-import-file"] = "Ngày trả phòng của các khách hàng trong danh sách không khớp với nhau, hãy kiểm tra lại!";
+                                return RedirectToAction("Homepage");
+                            }
+                            for (int j = 0; j < listDSDatPhong.Count; j++)
+                            {
+                                if (listDSDatPhong[j][7].Trim().Length != 12 && listDSDatPhong[j][7].Trim().Length != 9)
+                                {
+                                    Session["error-import-file"] = "Số CMND/CCCD của khách hàng số " + listDSDatPhong[j][0] + " chưa đúng định dạng!";
+                                    return RedirectToAction("Homepage");
+                                }
+                                if (i != j)
+                                {
+                                    if (listDSDatPhong[i][7].Trim().Equals(listDSDatPhong[j][7].Trim()))
+                                    {
+                                        Session["error-import-file"] = "CMND/CCCD giữa các khách hàng trong danh sách có sự trùng lặp!";
+                                        return RedirectToAction("Homepage");
+                                    }
+                                }
+                            }
+                            for (int j = 0; j < listDSDatPhong.Count; j++)
+                            {
+                                if (listDSDatPhong[j][8].Trim().Length != 10)
+                                {
+                                    Session["error-import-file"] = "Số điện thoại của khách hàng số " + listDSDatPhong[j][0] + " chưa đúng định dạng!";
+                                    return RedirectToAction("Homepage");
+                                }
+                                if (i != j)
+                                {
+                                    if (listDSDatPhong[i][8].Trim().Equals(listDSDatPhong[j][8].Trim()))
+                                    {
+                                        Session["error-import-file"] = "Số điện thoại giữa các khách hàng trong danh sách có sự trùng lặp!";
+                                        return RedirectToAction("Homepage");
+                                    }
+                                }
+                            }
+                        }
+
                         //Lấy danh sách các tiện ích trên database
                         var tienIch = model.Tien_Ich.ToList();
                         List<List<string>> listTienIch = new List<List<string>>();
@@ -116,12 +162,14 @@ namespace SEP_VanLangHotel.Controllers
 
                         //Lấy danh sách tiện ích cần có của từng dòng trong file import
                         List<List<string>> listTienIchCanCo = new List<List<string>>();
+                        int soCotTTPhong = 6;
+                        int soCotThongTTKhachHang = 6;
                         for (int i = 0; i < listDSDatPhong.Count; i++)
                         {
                             listTienIchCanCo.Add(new List<string>());
-                            for (int j = 12; j < listDSDatPhong[i].Count; j++) //Bắt đầu từ cột tiện ích thứ 1 trở đi
+                            for (int j = (soCotTTPhong + soCotThongTTKhachHang); j < listDSDatPhong[i].Count; j++) //Bắt đầu từ cột tiện ích thứ 1 trở đi
                                 if (Convert.ToInt32(listDSDatPhong[i][j].ToString().Trim()) == 1) //1 nghĩa là khách hàng chọn tiện ích
-                                    listTienIchCanCo[i].Add(listTienIch[((-(listDSDatPhong[i].Count)) + (listDSDatPhong[i].Count - 12) + j)][0]);
+                                    listTienIchCanCo[i].Add(listTienIch[((-(listDSDatPhong[i].Count)) + (listDSDatPhong[i].Count - (soCotTTPhong + soCotThongTTKhachHang)) + j)][0]);
                             listTienIchCanCo[i].Add("TI202207070001"); //Tiện ích wifi mặc định có
                         }
 
@@ -338,17 +386,34 @@ namespace SEP_VanLangHotel.Controllers
                         }
                         else
                         {
-                            string hshs = "";
-                            Session["error-import-file"] = "Có danh sách rồi !!";
-                            List<List<string>> dsDeXuatPhong = new List<List<string>>();
+                            // string phongne = "";
+                            List<TT_Dat_Phong> dsDatPhongTamThoi = new List<TT_Dat_Phong>();
                             for (int i = 0; i < listDSDatPhong.Count; i++)
                             {
-                                //Đưa phòng và tt cá nhân vào 1 danh sách dsDeXuatPhong
-                                hshs += listPhongDuocDeXuat[i][0] + "\n";
+                                // phongne += listPhongDuocDeXuat[i][0] + "\n";
+                                var ttdatphong = new TT_Dat_Phong();
+
+                                ttdatphong.Ma_TT_Dat_Phong = "1";
+                                ttdatphong.Ho_Ten_KH = listDSDatPhong[i][6].Trim();
+                                ttdatphong.CMND_CCCD_KH = listDSDatPhong[i][7].Trim();
+                                ttdatphong.SDT_KH = listDSDatPhong[i][8].Trim();
+                                // dsDatPhongTamThoi[i].Sinh_Nhat_KH = DateTime.ParseExact(listDSDatPhong[i][9], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                ttdatphong.Sinh_Nhat_KH = DateTime.Parse(listDSDatPhong[i][9].Trim());
+                                ttdatphong.Gioi_Tinh_KH = Int32.Parse(listDSDatPhong[i][10].Trim());
+                                ttdatphong.Dia_Chi_KH = listDSDatPhong[i][11].Trim();
+                                ttdatphong.Doi_Tra = 0; //Tra = 0; doi = 1
+                                //dsDatPhongTamThoi[i].Thoi_Gian_Dat = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture); ;
+                                ttdatphong.Thoi_Gian_Dat = DateTime.Parse(listDSDatPhong[i][4].Trim());
+                                ttdatphong.Thoi_Gian_Doi_Tra = DateTime.Parse(listDSDatPhong[i][5].Trim());
+
+                                ttdatphong.Ma_Tai_Khoan = Session["user-ma"].ToString();
+
+                                dsDatPhongTamThoi.Add(ttdatphong);
+                                // DateTime.Now.AddDays(1); // Cộng thêm 1 ngày
+
                             }
-                            hshs += Session["error-import-file"];
-                            hshs.Trim();
-                            return RedirectToAction("Homepage");
+                            return View(dsDatPhongTamThoi);
+                            // phongne = "";
                         }
                     }
                 }
@@ -356,7 +421,6 @@ namespace SEP_VanLangHotel.Controllers
             catch (Exception e)
             {
                 Session["error-import-file"] = "Lỗi " + e.Message.ToString();
-                return RedirectToAction("Homepage");
             }
             return RedirectToAction("Homepage");
         }

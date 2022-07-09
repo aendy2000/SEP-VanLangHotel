@@ -308,6 +308,9 @@
     <Compile Include="Models\Tien_Ich.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TOUR.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Trang_Thai.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -879,6 +882,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\AccountManagement\ChangePassword.cshtml" />
+    <Content Include="Views\Home\ImportData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -32,9 +32,11 @@ namespace SEP_VanLangHotel.Models
         public System.DateTime Thoi_Gian_Doi_Tra { get; set; }
         public string Ma_Phong { get; set; }
         public string Ma_Tai_Khoan { get; set; }
+        public string Ma_Tour { get; set; }
     
         public virtual Phong Phong { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }
+        public virtual TOUR TOUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
     }
