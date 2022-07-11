@@ -1,0 +1,230 @@
+﻿@model List<SEP_VanLangHotel.Models.TT_Dat_Phong>
+@using SEP_VanLangHotel.Models;
+@{SEP25Team09Entities modelss = new SEP25Team09Entities();}
+@{
+    ViewBag.Title = "Đặt phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<title>@ViewBag.Title</title>
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">THÔNG TIN ĐẶT PHÒNG THEO TOUR</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+
+        @using (Html.BeginForm("SaveDataImport", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-title"><b>THÔNG TIN NGƯỜI TRỤ TRÌ TOUR</b></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row card-item bg">
+                                <div class="col-xl-12">
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Họ tên</label>
+                                            <input type="text" class="form-control" name="hoten" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">CMND/CCCD</label>
+                                            <input type="text" class="form-control" name="cmndcccd" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Số điện thoại</label>
+                                            <input type="text" class="form-control" name="sdt" pattern="[0-9]{10}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số điện thoại của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Ngày sinh</label>
+                                            <input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Giới tính</label>
+                                            @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Email</label>
+                                            <input type="email" class="form-control" name="Email" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào Email của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1">Địa chỉ</label>
+                                        <textarea rows="4" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                    </div>
+                                    <hr />
+                                    <br />
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Thời gian nhận phòng</label>
+                                            <input style="text-align: center; font-weight: bold; font-size: 18px; color: black" value="@Model[0].Thoi_Gian_Dat.ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Thời gian trả phòng</label>
+                                            <input style="text-align:center;font-weight:bold; font-size:18px; color:black" value="@Model[0].Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Tổng Thanh Toán (VND)</label>
+                                            <input style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0")" type="text" class="form-control" disabled />
+                                            <input style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@Convert.ToDecimal(Session["tong-thanhtoan"])" type="text" hidden="hidden" name="tongthanhtoan" />
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Số tiền cọc  (VND - từ 30% trở lên)</label>
+                                            <input min="@Convert.ToInt32(Session["tong-coc"])" max="@Convert.ToDecimal(Session["tong-thanhtoan"])" style="text-align: center; font-weight: bold; font-size: 18px; color:red" type="number" class="form-control" name="sotiencoc" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                        </div>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div style="text-align:right" class="col-md-6">
+                                            <button style="text-align:center" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-secondary">Hoàn Tất</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a style="color:white;" class="btn btn-secondary" onclick="xacnhanhuybo()" role="button"> Hủy Bỏ </a>
+                                            <script>
+                                                function xacnhanhuybo() {
+                                                    cuteAlert({
+                                                    type: "question",
+                                                    title: "Hủy bỏ đặt phòng?",
+                                                    message: "Bạn có chắc chắn muốn hủy bỏ?",
+                                                        confirmText: "Xác nhận",
+                                                    cancelText: "Không hủy"
+
+                                                }).then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.href = '@Url.Action("Homepage", "Home")';
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                });
+                                            }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-title"><b>DANH SÁCH PHÒNG ĐƯỢC ĐẶT CHO @Model.Count NHÓM KHÁCH HÀNG</b></div>
+                            </div>
+                        </div>
+                        @for (var i = 0; i < Model.Count; i++)
+                        {
+                            @Html.HiddenFor(m => Model[i].Ma_TT_Dat_Phong)
+                            @Html.HiddenFor(m => Model[i].Ho_Ten_KH)
+                            @Html.HiddenFor(m => Model[i].CMND_CCCD_KH)
+                            @Html.HiddenFor(m => Model[i].SDT_KH)
+                            @Html.HiddenFor(m => Model[i].Sinh_Nhat_KH)
+                            @Html.HiddenFor(m => Model[i].Gioi_Tinh_KH)
+                            @Html.HiddenFor(m => Model[i].Dia_Chi_KH)
+                            @Html.HiddenFor(m => Model[i].Doi_Tra)
+                            @Html.HiddenFor(m => Model[i].Thoi_Gian_Dat)
+                            @Html.HiddenFor(m => Model[i].Thoi_Gian_Doi_Tra)
+                            @Html.HiddenFor(m => Model[i].Ma_Tai_Khoan)
+                            @Html.HiddenFor(m => Model[i].Nguoi_Lon)
+                            @Html.HiddenFor(m => Model[i].Tre_Em)
+                            @Html.HiddenFor(m => Model[i].Ma_Phong)
+                            var maphongg = Model[i].Ma_Phong;
+                            <div class="card-body">
+                                <div class="col-xl-12">
+                                    <div class="row card-item bg">
+                                        <!-- Form Group (Hình ảnh)-->
+                                        <div class="col-md-6 size">
+                                            <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Form Group (Số phòng)-->
+                                            <div class="col-md-6 ml-auto mr-auto range text-center">
+                                                <label class="small-title">
+                                                    @foreach (var item in modelss.Phong.Where(c => c.Ma_Phong.Equals(maphongg)))
+                                                    {
+                                                        <b>
+                                                            @item.So_Phong
+                                                        </b>
+                                                    }
+
+                                                </label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row gx-3 mb-3">
+                                                    <div class="col-md-6">
+                                                        <label class="small-item" for="">Họ & Tên</label>
+                                                        <input class="form-control" type="text" value="@Model[i].Ho_Ten_KH" disabled style="font-weight:bold;color:black;" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
+                                                        {
+                                                            <label class="small-item" for="">Số điện thoại</label>
+                                                            <input class="form-control" type="text" value="@Model[i].SDT_KH" disabled style="font-weight:bold;color:black;" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Form Group(Tiện ích)-->
+                                            <div class="form-group col-md-12 text-center">
+                                                <div class="selectgroup selectgroup-pills range">
+                                                    @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
+                                                    {
+                                                        foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(item.Ma_Loai_Phong)))
+                                                        {
+                                                            <label class="selectgroup-item">
+                                                                <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                                <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
+                                                            </label>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col text-center layout-footer">
+                                                @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
+                                                {
+                                                    <label class="small-footer">
+                                                        @item.Loai_Phong.Gia.ToString("0,0")
+                                                    </label>
+                                                }
+                                                &emsp;
+                                                <label class="small-footer">VND</label>
+                                            </div>
+                                            <!--<div class="col text-center">-->
+                                            @*<a style="width:180px" class="btn btn-bookroom" role="button" href="../demo1/detailBookRoom.html" id="btn-edit__lock">
+                                                    Đặt phòng
+                                                </a>*@
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

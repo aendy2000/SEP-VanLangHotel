@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SEP25Team09Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SEP25Team09Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DS_Tien_Ich">
           <Key>
             <PropertyRef Name="Ma_DS_Tien_Ich" />
@@ -118,6 +118,8 @@
           <Property Name="Ma_Phong" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Ma_Tai_Khoan" Type="varchar" MaxLength="20" />
           <Property Name="Ma_Tour" Type="nvarchar" MaxLength="20" />
+          <Property Name="Nguoi_Lon" Type="int" />
+          <Property Name="Tre_Em" Type="int" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -361,8 +363,7 @@
             <End Role="TT_Doi_Phong" EntitySet="TT_Doi_Phong" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SEP25Team09Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -501,6 +502,8 @@
           <NavigationProperty Name="Tai_Khoan" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="TT_Dat_Phong" ToRole="Tai_Khoan" />
           <NavigationProperty Name="TOUR" Relationship="Self.FK_TTDATPHONG_TOUR" FromRole="TT_Dat_Phong" ToRole="TOUR" />
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.fk_TTDoiPhong_TTDatPhong" FromRole="TT_Dat_Phong" ToRole="TT_Doi_Phong" />
+          <Property Name="Nguoi_Lon" Type="Int32" />
+          <Property Name="Tre_Em" Type="Int32" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -861,6 +864,8 @@
           <EntitySetMapping Name="TT_Dat_Phong">
             <EntityTypeMapping TypeName="SEP25Team09Model.TT_Dat_Phong">
               <MappingFragment StoreEntitySet="TT_Dat_Phong">
+                <ScalarProperty Name="Tre_Em" ColumnName="Tre_Em" />
+                <ScalarProperty Name="Nguoi_Lon" ColumnName="Nguoi_Lon" />
                 <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
                 <ScalarProperty Name="Ho_Ten_KH" ColumnName="Ho_Ten_KH" />
                 <ScalarProperty Name="CMND_CCCD_KH" ColumnName="CMND_CCCD_KH" />

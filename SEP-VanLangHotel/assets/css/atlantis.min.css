@@ -5798,10 +5798,23 @@ label.error {
     color: #8d9498
 }
 
-.nav-search .btn-search {
+.nav-search {
     background: 0 0;
     padding: .375rem 1rem
 }
+
+.btn-search{
+    background: #f37820 !important;
+    border-color: #f37820 !important;
+    color: #fff;
+    font-weight: 400;
+    padding: .375rem 1rem
+}
+
+    .btn-search:disabled, .btn-search:focus, .btn-search:hover {
+        background: #f37820 !important;
+        border-color: #f37820 !important;
+    }
 
 .badge {
     border-radius: 50px;
@@ -6561,6 +6574,11 @@ label.error {
         color: #fff !important
     }
 
+.btn-book{
+    background: #f37820 !important;
+    border-color: #f37820 !important;
+}
+
 .btn-danger {
     background: #f25961 !important;
     border-color: #f25961 !important
@@ -6644,6 +6662,11 @@ label.error {
         border: 1px solid #efefef;
         background: #fff !important
     }
+
+    /* .btn-border.btn-bookroom{
+        border: 1px solid #f37820;
+        background: #f2f2f2;
+    } */
 
 .btn-round {
     border-radius: 100px !important

@@ -47,7 +47,7 @@
                             <input id="importFileExcel" name="importFileExcel" class="btn btn-secondary" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                             <br />
                             <br />
-                            <button class="btn btn-secondary" type="submit" onclick="thongbaoxacnhan()"> Tìm Phòng <span> <i class="flaticon-search-1"></i></span></button>
+                            <button class="btn btn-secondary" type="submit" onclick="if (!confirm('Tìm phòng từ file import?')) { return false; }"> Tìm Phòng <span> <i class="flaticon-search-1"></i></span></button>
                         }
                     </div>
                 </div>

@@ -33,6 +33,8 @@ namespace SEP_VanLangHotel.Models
         public string Ma_Phong { get; set; }
         public string Ma_Tai_Khoan { get; set; }
         public string Ma_Tour { get; set; }
+        public Nullable<int> Nguoi_Lon { get; set; }
+        public Nullable<int> Tre_Em { get; set; }
     
         public virtual Phong Phong { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }

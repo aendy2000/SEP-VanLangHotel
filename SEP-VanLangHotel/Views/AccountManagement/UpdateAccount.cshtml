@@ -142,7 +142,7 @@ else
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">Giới tính</label>
-                                @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required", @oninvalid = "this.setCustomValidity('Họ và tên không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Ngày sinh</label>

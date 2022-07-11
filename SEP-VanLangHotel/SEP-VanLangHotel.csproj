@@ -321,6 +321,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="assets\css\add-style.css" />
     <Content Include="assets\css\atlantis.css" />
     <Content Include="assets\css\atlantis.min.css" />
     <Content Include="assets\css\bootstrap.min.css" />
@@ -882,7 +883,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\AccountManagement\ChangePassword.cshtml" />
-    <Content Include="Views\Home\ImportData.cshtml" />
+    <Content Include="Views\Home\SaveDataImport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

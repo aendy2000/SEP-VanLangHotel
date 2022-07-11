@@ -203,16 +203,30 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 	padding: 5px 0;
 }
 
-.row-demo-grid{
-	margin-bottom: 15px;
+.card-item{
+	margin-bottom: 30px;
 }
 
 .row-demo-grid [class^="col"]{
 	text-align: center;
 }
 
-.row-demo-grid [class^="col"] .card-body{
-	background: #ddd;
+/* .card-item [class^="col"] .card-item-detail{
+	background: #f2f2f2;
+} */
+
+.bg {
+	background: #FDF5E6;
+	padding: 1rem;
+	margin-left: 0.25rem;
+	margin-right: 0.25rem;
+	border-radius: 10px;
+	box-shadow: rgb(69 65 78 / 10%) 2px 6px 15px 0px;
+	;
+}
+
+.bg:hover{
+	box-shadow: 2px 2px 2px 2px #eca962
 }
 
 .btnSwitch button[data-color="white"] {

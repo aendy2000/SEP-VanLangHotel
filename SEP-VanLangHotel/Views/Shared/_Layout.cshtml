@@ -1,10 +1,11 @@
 ﻿@Html.AntiForgeryToken()
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="~/assets/css/loadingg.css">
-<div id="coverScreen" class="LockOn">
-</div>
+
 <head>
+    <link rel="stylesheet" href="~/assets/css/loadingg.css">
+    <link href="~/assets/css/add-style.css" rel="stylesheet" />
+
     <script>
         window.onbeforeunload = function () { $('#loading').show(); }
     </script>
@@ -40,6 +41,8 @@
     <link rel="stylesheet" href="~/assets/css/demo.css">
 </head>
 <body>
+    <div id="coverScreen" class="LockOn">
+    </div>
     <div class="wrapper">
         <div class="main-header">
             <!-- Logo Header -->
@@ -274,16 +277,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     Van Lang Hotel
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Help
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Licenses
                                 </a>
                             </li>
                         </ul>

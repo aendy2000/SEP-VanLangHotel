@@ -494,5 +494,11 @@ namespace SEP_VanLangHotel.Controllers
                 Console.WriteLine(e);
             }
         }
+
+        public ActionResult Thu()
+        {
+            return View();
+        }
     }
+
 }
