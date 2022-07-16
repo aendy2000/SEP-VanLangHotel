@@ -18,6 +18,7 @@ namespace SEP_VanLangHotel.Models
         public TT_Dat_Phong()
         {
             this.TT_Doi_Phong = new HashSet<TT_Doi_Phong>();
+            this.Nhan_Than = new HashSet<Nhan_Than>();
         }
     
         public string Ma_TT_Dat_Phong { get; set; }
@@ -35,11 +36,15 @@ namespace SEP_VanLangHotel.Models
         public string Ma_Tour { get; set; }
         public Nullable<int> Nguoi_Lon { get; set; }
         public Nullable<int> Tre_Em { get; set; }
+        public Nullable<decimal> Tong_Thanh_Toan { get; set; }
+        public Nullable<decimal> Tien_Coc { get; set; }
     
         public virtual Phong Phong { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }
         public virtual TOUR TOUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Nhan_Than> Nhan_Than { get; set; }
     }
 }

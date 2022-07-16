@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SEP_VanLangHotel.Models.Tien_Ich>
+﻿@model  SEP_VanLangHotel.Models.ListTienIch
 @using SEP_VanLangHotel.Models;
 @{SEP25Team09Entities db = new SEP25Team09Entities(); }
 @{
@@ -24,76 +24,132 @@
     Session["error-import-file"] = "empthy";
 }
 
-<title>@ViewBag.Title</title>
-<div class="panel-header bg-primary-gradient">
-    <div class="page-inner py-5">
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <div>
-                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title </h2>
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">ĐẶT PHÒNG KHÁCH SẠN</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="page-inner mt--5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        @using (Html.BeginForm("ImportData", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <div class="card-title">Đặt phòng</div>
-                            <hr />
-                            <input id="importFileExcel" name="importFileExcel" class="btn btn-secondary" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-                            <br />
-                            <br />
-                            <button class="btn btn-secondary" type="submit" onclick="if (!confirm('Tìm phòng từ file import?')) { return false; }"> Tìm Phòng <span> <i class="flaticon-search-1"></i></span></button>
-                        }
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <label for="import"></label>
+                            <button style="color:white;" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
+                                <i class="fas fa-file-import"></i> &ensp;
+                                Import Danh Sách
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <!-- Thêm quyền-->
-                    <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header no-bd">
-                                    <h5 class="modal-title">
-                                        <span class="fw-mediumbold">
-                                            Thêm quyền mới
-                                        </span>
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                @*<form action="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
-                                        <div class="modal-body">
+                    <div class="card-body">
+
+                        <div class="modal fade" id="imPortModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header no-bd">
+                                        <h5 class="modal-title">
+                                            <span class="fw-mediumbold">
+                                                Nhập danh sách
+                                            </span>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    @using (Html.BeginForm("ImportData", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div style="text-align:center;" class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
-                                                        <label>Tên quyền</label>
-                                                        <input name="tenquyenmoi" type="text" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="form-group form-group-default">
-                                                        <label>Mô tả</label>
-                                                        <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required></textarea>
+                                                        <input id="importFileExcel" name="importFileExcel" class="btn btn-secondary btn-round ml-aut" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>*@
+                                        <div style="text-align:center;" class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button style="text-align: center; width: 150px" type="submit" class="btn btn-success" onclick="if (!confirm('Tìm phòng?')) { return false; } {$('#imPortModal').modal('toggle'); }">Tìm Phòng</button>
+                                                    &ensp;
+                                                    <a role="button" style="text-align: center; width: 150px; color: white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
+
+                        <div class="row card-item bg">
+                            <div class="col-xl-12">
+                                @using (Html.BeginForm("orderRooms", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-3">
+                                            <label class="small mb-1">Ở từ ngày</label>
+                                            <input name="ngayDen" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="small mb-1">Đến hết ngày</label>
+                                            <input name="ngayVe" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="small mb-1">Số người lớn</label>
+                                            <input name="soNguoiLon" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="small mb-1">Số trẻ em (dưới 14 tuổi)</label>
+                                            <input name="soTreEm" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="small mb-1">Số giường</label>
+                                            <input name="soGiuong" style="color:black" type="number" min="1" max="2" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng giường của phòng tối đa 2 giường')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group col-md-12 text-center">
+                                        <label style="text-align:center" class="small-title mb-1" for="">Tiện ích loại phòng</label>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="form-group col-md-12 text-center">
+                                            <div class="selectgroup selectgroup-pills">
+                                                @for (int i = 0; i < Model.tienIch.Count; i++)
+                                                {
+                                                    <label class="selectgroup-item">
+                                                        @Html.CheckBoxFor(t => Model.tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox" })
+                                                        <span style="border-color:peru;" class="selectgroup-button">@Model.tienIch[i].Ten_Tien_Ich</span>
+                                                        @Html.HiddenFor(t => Model.tienIch[i].Ma_Tien_Ich)
+                                                        @Html.HiddenFor(t => Model.tienIch[i].Ten_Tien_Ich)
+
+                                                    </label>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <br />
+                                    <div style="text-align: center;" class="mb-3">
+                                        <button style="width:180px" type="submit" class="btn btn-search">
+                                            Tìm kiếm
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="~/assets/js/core/popper.min.js"></script>

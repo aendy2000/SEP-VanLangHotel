@@ -64,11 +64,10 @@
                                 </div>
                                 <form action="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
                                     <div class="modal-body">
-                                        <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Tên quyền</label>
-                                                    <input name="tenquyenmoi" type="text" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                                    <input name="tenquyenmoi" type="text" pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
@@ -76,7 +75,6 @@
                                                     <label>Mô tả</label>
                                                     <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div style="text-align:center;" class="modal-footer no-bd">
@@ -119,19 +117,17 @@
                                                         </div>
                                                         <form action="@Url.Action("UpdateAuthorities", "AuthoritiesManagement")">
                                                             <div class="modal-body">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="form-group form-group-default">
-                                                                            <label>Tên quyền</label>
-                                                                            <input name="maquyen" type="hidden" class="hidden" value="@item.Ma_Quyen">
-                                                                            <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" required>
-                                                                        </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group form-group-default">
+                                                                        <label>Tên quyền</label>
+                                                                        <input name="maquyen" type="hidden" class="hidden" value="@item.Ma_Quyen">
+                                                                        <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" required pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
                                                                     </div>
-                                                                    <div class="col-sm-12">
-                                                                        <div class="form-group form-group-default">
-                                                                            <label>Mô tả</label>
-                                                                            <textarea rows="5" name="motaquyen" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required>@item.Mo_Ta</textarea>
-                                                                        </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group form-group-default">
+                                                                        <label>Mô tả</label>
+                                                                        <textarea rows="5" name="motaquyen" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required>@item.Mo_Ta</textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>

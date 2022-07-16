@@ -1,4 +1,4 @@
-﻿@model List<SEP_VanLangHotel.Models.TT_Dat_Phong>
+﻿@model List<List<List<string>>>
 @using SEP_VanLangHotel.Models;
 @{SEP25Team09Entities modelss = new SEP25Team09Entities();}
 @{
@@ -6,9 +6,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
 <title>@ViewBag.Title</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <div class="content">
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -21,7 +37,7 @@
     </div>
     <div class="page-inner mt--5">
 
-        @using (Html.BeginForm("SaveDataImport", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("SaveDataImport", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -39,7 +55,7 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
                                             <label class="small mb-1">Họ tên</label>
-                                            <input type="text" class="form-control" name="hoten" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" class="form-control" name="hoten" pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">CMND/CCCD</label>
@@ -74,31 +90,29 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Thời gian nhận phòng</label>
-                                            <input style="text-align: center; font-weight: bold; font-size: 18px; color: black" value="@Model[0].Thoi_Gian_Dat.ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
+                                            <input style="text-align: center; font-weight: bold; font-size: 18px; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Thời gian trả phòng</label>
-                                            <input style="text-align:center;font-weight:bold; font-size:18px; color:black" value="@Model[0].Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
+                                            <input style="text-align:center;font-weight:bold; font-size:18px; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")" type="text" class="form-control" disabled />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Tổng Thanh Toán (VND)</label>
-                                            <input style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0")" type="text" class="form-control" disabled />
-                                            <input style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@Convert.ToDecimal(Session["tong-thanhtoan"])" type="text" hidden="hidden" name="tongthanhtoan" />
-
+                                            <input style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))" type="text" class="form-control" readonly />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Số tiền cọc  (VND - từ 30% trở lên)</label>
-                                            <input min="@Convert.ToInt32(Session["tong-coc"])" max="@Convert.ToDecimal(Session["tong-thanhtoan"])" style="text-align: center; font-weight: bold; font-size: 18px; color:red" type="number" class="form-control" name="sotiencoc" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; font-size: 18px; color:red" class="form-control" name="sotiencoc" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div style="text-align:right" class="col-md-6">
-                                            <button style="text-align:center" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-secondary">Hoàn Tất</button>
+                                            <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Hoàn Tất</button>
                                         </div>
                                         <div class="col-md-6">
-                                            <a style="color:white;" class="btn btn-secondary" onclick="xacnhanhuybo()" role="button"> Hủy Bỏ </a>
+                                            <a style="color: white; width: 180px;" class="btn btn-secondary" onclick="xacnhanhuybo()" role="button"> Hủy Bỏ </a>
                                             <script>
                                                 function xacnhanhuybo() {
                                                     cuteAlert({
@@ -137,21 +151,8 @@
                         </div>
                         @for (var i = 0; i < Model.Count; i++)
                         {
-                            @Html.HiddenFor(m => Model[i].Ma_TT_Dat_Phong)
-                            @Html.HiddenFor(m => Model[i].Ho_Ten_KH)
-                            @Html.HiddenFor(m => Model[i].CMND_CCCD_KH)
-                            @Html.HiddenFor(m => Model[i].SDT_KH)
-                            @Html.HiddenFor(m => Model[i].Sinh_Nhat_KH)
-                            @Html.HiddenFor(m => Model[i].Gioi_Tinh_KH)
-                            @Html.HiddenFor(m => Model[i].Dia_Chi_KH)
-                            @Html.HiddenFor(m => Model[i].Doi_Tra)
-                            @Html.HiddenFor(m => Model[i].Thoi_Gian_Dat)
-                            @Html.HiddenFor(m => Model[i].Thoi_Gian_Doi_Tra)
-                            @Html.HiddenFor(m => Model[i].Ma_Tai_Khoan)
-                            @Html.HiddenFor(m => Model[i].Nguoi_Lon)
-                            @Html.HiddenFor(m => Model[i].Tre_Em)
-                            @Html.HiddenFor(m => Model[i].Ma_Phong)
-                            var maphongg = Model[i].Ma_Phong;
+                            var maphong = Model[i][Model[i].Count - 1][0];
+
                             <div class="card-body">
                                 <div class="col-xl-12">
                                     <div class="row card-item bg">
@@ -163,7 +164,7 @@
                                             <!-- Form Group (Số phòng)-->
                                             <div class="col-md-6 ml-auto mr-auto range text-center">
                                                 <label class="small-title">
-                                                    @foreach (var item in modelss.Phong.Where(c => c.Ma_Phong.Equals(maphongg)))
+                                                    @foreach (var item in modelss.Phong.Where(c => c.Ma_Phong.Equals(maphong)))
                                                     {
                                                         <b>
                                                             @item.So_Phong
@@ -176,26 +177,23 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small-item" for="">Họ & Tên</label>
-                                                        <input class="form-control" type="text" value="@Model[i].Ho_Ten_KH" disabled style="font-weight:bold;color:black;" />
+                                                        <input class="form-control" type="text" value="@Model[i][0][1]" disabled style="font-weight:bold;color:black;" />
                                                     </div>
                                                     <div class="col-md-6">
-                                                        @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
-                                                        {
-                                                            <label class="small-item" for="">Số điện thoại</label>
-                                                            <input class="form-control" type="text" value="@Model[i].SDT_KH" disabled style="font-weight:bold;color:black;" />
-                                                        }
+                                                        <label class="small-item" for="">Số điện thoại</label>
+                                                        <input class="form-control" type="text" value="@Model[i][0][3]" disabled style="font-weight:bold;color:black;" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <!--Form Group(Tiện ích)-->
                                             <div class="form-group col-md-12 text-center">
-                                                <div class="selectgroup selectgroup-pills range">
-                                                    @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
+                                                <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
+                                                    @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphong)))
                                                     {
                                                         foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(item.Ma_Loai_Phong)))
                                                         {
                                                             <label class="selectgroup-item">
-                                                                <input type="checkbox" name="value" value="" class="selectgroup-input" disabled>
+                                                                <input type="checkbox" class="selectgroup-input" disabled>
                                                                 <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
                                                             </label>
                                                         }
@@ -203,10 +201,10 @@
                                                 </div>
                                             </div>
                                             <div class="col text-center layout-footer">
-                                                @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphongg)))
+                                                @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphong)))
                                                 {
                                                     <label class="small-footer">
-                                                        @item.Loai_Phong.Gia.ToString("0,0")
+                                                        @item.Loai_Phong.Gia.ToString("0,0") &emsp;×&emsp; @Session["SoNgay"] ngày &emsp;=&emsp; @((item.Loai_Phong.Gia * (Convert.ToInt32(Session["SoNgay"]))).ToString("0,0"))
                                                     </label>
                                                 }
                                                 &emsp;
@@ -228,3 +226,42 @@
         }
     </div>
 </div>
+
+<script>
+    $("#testinput").on("keydown", function (e) {
+        var keycode = (event.which) ? event.which : event.keyCode;
+        if (e.shiftKey == true || e.ctrlKey == true) return false;
+        if ([8, 110, 39, 37, 46].indexOf(keycode) >= 0 || // allow tab, dot, left and right arrows, delete keys
+            (keycode == 190 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode == 110 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode >= 48 && keycode <= 57) || // allow numbers
+            (keycode >= 96 && keycode <= 105)) { // allow numpad numbers
+            // check for the decimals after dot and prevent any digits
+            var parts = this.value.split('.');
+            if (parts.length > 1 && // has decimals
+                parts[1].length >= 2 && // should limit this
+                (
+                    (keycode >= 48 && keycode <= 57) || (keycode >= 96 && keycode <= 105)
+                ) // requested key is a digit
+            ) {
+                return false;
+            } else {
+                if (keycode == 110) {
+                    this.value += ".";
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }).on("keyup", function () {
+        var parts = this.value.split('.');
+        parts[0] = parts[0].replace(/,/g, '').replace(/^0+/g, '');
+        if (parts[0] == "") parts[0] = "0";
+        var calculated = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        if (parts.length >= 2) calculated += "." + parts[1].substring(0, 2);
+        this.value = calculated;
+        if (this.value == "NaN" || this.value == "") this.value = 0;
+    });
+</script>

@@ -33,6 +33,19 @@
           <Property Name="Gia" Type="money" Nullable="false" />
           <Property Name="Mo_Ta" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="Nhan_Than">
+          <Key>
+            <PropertyRef Name="Ma_Nhan_Than" />
+          </Key>
+          <Property Name="Ma_Nhan_Than" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ho_Ten" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CMND_CCCD" Type="varchar" MaxLength="12" />
+          <Property Name="Sinh_Nhat" Type="date" Nullable="false" />
+          <Property Name="Gioi_Tinh" Type="int" Nullable="false" />
+          <Property Name="Dia_Chi" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Moi_Quan_He" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Ma_TT_Dat_Phong" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Phong">
           <Key>
             <PropertyRef Name="Ma_Phong" />
@@ -51,6 +64,16 @@
           <Property Name="Ma_Quyen" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Ten_Quyen" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="Mo_Ta" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Tai_Khoan">
           <Key>
@@ -120,6 +143,8 @@
           <Property Name="Ma_Tour" Type="nvarchar" MaxLength="20" />
           <Property Name="Nguoi_Lon" Type="int" />
           <Property Name="Tre_Em" Type="int" />
+          <Property Name="Tong_Thanh_Toan" Type="money" />
+          <Property Name="Tien_Coc" Type="money" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -226,6 +251,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TTDatPhong_NhanThan">
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="0..1" />
+          <End Role="Nhan_Than" Type="Self.Nhan_Than" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Nhan_Than">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TTDatPhong_Phong">
           <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
           <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="*" />
@@ -302,8 +339,10 @@
           <EntitySet Name="DS_Tien_Ich" EntityType="Self.DS_Tien_Ich" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Khach_San" EntityType="Self.Khach_San" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loai_Phong" EntityType="Self.Loai_Phong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nhan_Than" EntityType="Self.Nhan_Than" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Phong" EntityType="Self.Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tai_Khoan" EntityType="Self.Tai_Khoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tien_Ich" EntityType="Self.Tien_Ich" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TOUR" EntityType="Self.TOUR" Schema="dbo" store:Type="Tables" />
@@ -337,6 +376,10 @@
           <AssociationSet Name="fk_TaiKhoan_Quyen" Association="Self.fk_TaiKhoan_Quyen">
             <End Role="Quyen" EntitySet="Quyen" />
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TTDatPhong_NhanThan" Association="Self.fk_TTDatPhong_NhanThan">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Nhan_Than" EntitySet="Nhan_Than" />
           </AssociationSet>
           <AssociationSet Name="fk_TTDatPhong_Phong" Association="Self.fk_TTDatPhong_Phong">
             <End Role="Phong" EntitySet="Phong" />
@@ -504,6 +547,9 @@
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.fk_TTDoiPhong_TTDatPhong" FromRole="TT_Dat_Phong" ToRole="TT_Doi_Phong" />
           <Property Name="Nguoi_Lon" Type="Int32" />
           <Property Name="Tre_Em" Type="Int32" />
+          <Property Name="Tong_Thanh_Toan" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Tien_Coc" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Nhan_Than" Relationship="SEP25Team09Model.fk_TTDatPhong_NhanThan" FromRole="TT_Dat_Phong" ToRole="Nhan_Than" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -750,7 +796,49 @@
             <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
             <End Role="TT_Doi_Phong" EntitySet="TT_Doi_Phong" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="SEP25Team09Model.sysdiagrams" />
+          <EntitySet Name="Nhan_Than" EntityType="SEP25Team09Model.Nhan_Than" />
+          <AssociationSet Name="fk_TTDatPhong_NhanThan" Association="SEP25Team09Model.fk_TTDatPhong_NhanThan">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Nhan_Than" EntitySet="Nhan_Than" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Nhan_Than">
+          <Key>
+            <PropertyRef Name="Ma_Nhan_Than" />
+          </Key>
+          <Property Name="Ma_Nhan_Than" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ho_Ten" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CMND_CCCD" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Sinh_Nhat" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gioi_Tinh" Type="Int32" Nullable="false" />
+          <Property Name="Dia_Chi" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Moi_Quan_He" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Ma_TT_Dat_Phong" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TT_Dat_Phong" Relationship="SEP25Team09Model.fk_TTDatPhong_NhanThan" FromRole="Nhan_Than" ToRole="TT_Dat_Phong" />
+        </EntityType>
+        <Association Name="fk_TTDatPhong_NhanThan">
+          <End Type="SEP25Team09Model.TT_Dat_Phong" Role="TT_Dat_Phong" Multiplicity="0..1" />
+          <End Type="SEP25Team09Model.Nhan_Than" Role="Nhan_Than" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Nhan_Than">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -864,6 +952,8 @@
           <EntitySetMapping Name="TT_Dat_Phong">
             <EntityTypeMapping TypeName="SEP25Team09Model.TT_Dat_Phong">
               <MappingFragment StoreEntitySet="TT_Dat_Phong">
+                <ScalarProperty Name="Tien_Coc" ColumnName="Tien_Coc" />
+                <ScalarProperty Name="Tong_Thanh_Toan" ColumnName="Tong_Thanh_Toan" />
                 <ScalarProperty Name="Tre_Em" ColumnName="Tre_Em" />
                 <ScalarProperty Name="Nguoi_Lon" ColumnName="Nguoi_Lon" />
                 <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
@@ -902,6 +992,31 @@
                 <ScalarProperty Name="Ma_Trang_Thai" ColumnName="Ma_Trang_Thai" />
                 <ScalarProperty Name="Ten_Trang_Thai" ColumnName="Ten_Trang_Thai" />
                 <ScalarProperty Name="Mo_Ta_Trang_Thai" ColumnName="Mo_Ta_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SEP25Team09Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nhan_Than">
+            <EntityTypeMapping TypeName="SEP25Team09Model.Nhan_Than">
+              <MappingFragment StoreEntitySet="Nhan_Than">
+                <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
+                <ScalarProperty Name="Moi_Quan_He" ColumnName="Moi_Quan_He" />
+                <ScalarProperty Name="Dia_Chi" ColumnName="Dia_Chi" />
+                <ScalarProperty Name="Gioi_Tinh" ColumnName="Gioi_Tinh" />
+                <ScalarProperty Name="Sinh_Nhat" ColumnName="Sinh_Nhat" />
+                <ScalarProperty Name="CMND_CCCD" ColumnName="CMND_CCCD" />
+                <ScalarProperty Name="Ho_Ten" ColumnName="Ho_Ten" />
+                <ScalarProperty Name="Ma_Nhan_Than" ColumnName="Ma_Nhan_Than" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

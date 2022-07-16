@@ -216,13 +216,12 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 } */
 
 .bg {
-	background: #FDF5E6;
+	background: #FFFFFF;
 	padding: 1rem;
 	margin-left: 0.25rem;
 	margin-right: 0.25rem;
 	border-radius: 10px;
 	box-shadow: rgb(69 65 78 / 10%) 2px 6px 15px 0px;
-	;
 }
 
 .bg:hover{

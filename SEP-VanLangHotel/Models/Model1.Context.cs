@@ -36,5 +36,7 @@ namespace SEP_VanLangHotel.Models
         public virtual DbSet<TT_Dat_Phong> TT_Dat_Phong { get; set; }
         public virtual DbSet<TT_Doi_Phong> TT_Doi_Phong { get; set; }
         public virtual DbSet<Trang_Thai> Trang_Thai { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Nhan_Than> Nhan_Than { get; set; }
     }
 }

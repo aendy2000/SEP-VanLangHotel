@@ -1,0 +1,335 @@
+﻿@model List<SEP_VanLangHotel.Models.Nhan_Than>
+@using SEP_VanLangHotel.Models;
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    var phong = Session["thongtinphong"] as Phong;
+    var maLoaiPhong = phong.Ma_Loai_Phong;
+    var dsTienIch = models.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maLoaiPhong)).ToList();
+}
+@{
+    ViewBag.Title = "AddDataOrderRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">THÔNG TIN ĐẶT PHÒNG</h2>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("AddDataOrderRoom", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
+                             style="border-radius:3%; width:100%" class="img-room-profile mb-2">
+                        <p style="margin-top:-10px"></p>
+                        <h2 class="btn btn-search" style="font-weight:bold; width:100%"> @phong.So_Phong </h2>
+                    </div>
+                </div>
+            </div>
+            <div style="font-weight:bold" class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Loại Phòng</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@phong.Loai_Phong.Ten_Loai_Phong</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Giá</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@phong.Loai_Phong.Gia.ToString("0,0") VND</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Chứa Tối Đa</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em) người</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Số Giường</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@phong.Loai_Phong.So_Giuong giường</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Mô Tả</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@phong.Loai_Phong.Mo_Ta</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
+                        <br />
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-3">
+                                <label class="small mb-1">Ngày đến</label>
+                                <input name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Ngày về</label>
+                                <input name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Người lớn</label>
+                                <input name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
+                                <input name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-8">
+                                <label class="small mb-1">Tổng thanh toán</label>
+                                <p type="text" style="text-align:center;color:red;font-weight:bold;" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">Số tiền cọc (ít nhất 30%)</label>
+                                <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; font-size: 18px; color:red" class="form-control" name="tienCoc" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN NGƯỜI ĐẶT PHÒNG</p>
+                        <br />
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="small mb-1">Họ tên</label>
+                                <input type="text" class="form-control" name="hoten" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">CMND/CCCD</label>
+                                <input type="text" class="form-control" name="cmndcccd" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">Số điện thoại</label>
+                                <input type="text" class="form-control" name="sdt" pattern="[0-9]{10}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số điện thoại của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                                <div>
+                                    <label class="small mb-1">Ngày sinh</label>
+                                    <input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                </div>
+                                <br />
+                                <div style="margin-top:6px">
+                                    <label class="small mb-1">Giới tính</label>
+                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="small mb-1">Địa chỉ</label>
+                                <textarea rows="6" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            Html.HiddenFor(m => m[i].Gioi_Tinh);
+            Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @i </p>
+                            <br />
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Họ tên</label>
+                                    @*<input type="text" class="form-control" name="Ho_Ten" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />*@
+                                    @Html.EditorFor(model => Model[i].Ho_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.ValidationMessageFor(model => Model[i].Ho_Ten, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small mb-1">CMND/CCCD</label>
+                                    @*<input type="text" class="form-control" name="CMND_CCCD" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
+                                    @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @maxlength = "12", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.ValidationMessageFor(model => Model[i].CMND_CCCD, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Mối quan hệ</label>
+                                    @*<input type="text" class="form-control" name="Moi_Quan_He" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số mối quan hệ đối với của người đại diện')" oninput="this.setCustomValidity('')" />*@
+                                    @Html.EditorFor(model => Model[i].Moi_Quan_He, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập mối quan hệ với người đại diện')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.ValidationMessageFor(model => Model[i].Moi_Quan_He, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-4">
+                                    <div>
+                                        <label class="small mb-1">Ngày sinh</label>
+                                        @*<input type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
+                                        @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
+                                        @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
+
+                                    </div>
+                                    <br />
+                                    <div style="margin-top:6px">
+                                        <label class="small mb-1">Giới tính</label>
+                                        @*<select name="Gioi_Tinh" class="form-control">
+                                                <option value="1">Nam</option>
+                                                <option value="0">Nữ</option>
+                                                <option value="2">Khác</option>
+                                            </select>*@
+                                        @*@Html.DropDownListFor(model => Model[i].Gioi_Tinh, (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required", @oninvalid = "this.setCustomValidity('Hãy chọn giới tính')", @oninput = "this.setCustomValidity('')" })*@
+                                        @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="small mb-1">Địa chỉ</label>
+                                    @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
+                                    @Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <br />
+                        <div class="row gx-3 mb-3">
+                            <div style="text-align:right" class="col-md-6">
+                                <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Đặt Phòng</button>
+                            </div>
+                            <div class="col-md-6">
+                                <a style="color: white; width: 180px;" class="btn btn-danger" onclick="xacnhanhuybo()" role="button"> Hủy Bỏ </a>
+                                <script>
+                                                function xacnhanhuybo() {
+                                                    cuteAlert({
+                                                    type: "question",
+                                                    title: "Hủy bỏ đặt phòng?",
+                                                    message: "Bạn có chắc chắn muốn hủy bỏ?",
+                                                        confirmText: "Xác nhận",
+                                                    cancelText: "Không hủy"
+
+                                                }).then(function (isConfirm) {
+                                                        if (isConfirm) {
+                                                            window.location.href = '@Url.Action("Homepage", "Home")';
+                                                        } else {
+                                                            return false;
+                                                        }
+                                                    });
+                                                }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $("#testinput").on("keydown", function (e) {
+        var keycode = (event.which) ? event.which : event.keyCode;
+        if (e.shiftKey == true || e.ctrlKey == true) return false;
+        if ([8, 110, 39, 37, 46].indexOf(keycode) >= 0 || // allow tab, dot, left and right arrows, delete keys
+            (keycode == 190 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode == 110 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode >= 48 && keycode <= 57) || // allow numbers
+            (keycode >= 96 && keycode <= 105)) { // allow numpad numbers
+            // check for the decimals after dot and prevent any digits
+            var parts = this.value.split('.');
+            if (parts.length > 1 && // has decimals
+                parts[1].length >= 2 && // should limit this
+                (
+                    (keycode >= 48 && keycode <= 57) || (keycode >= 96 && keycode <= 105)
+                ) // requested key is a digit
+            ) {
+                return false;
+            } else {
+                if (keycode == 110) {
+                    this.value += ".";
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }).on("keyup", function () {
+        var parts = this.value.split('.');
+        parts[0] = parts[0].replace(/,/g, '').replace(/^0+/g, '');
+        if (parts[0] == "") parts[0] = "0";
+        var calculated = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        if (parts.length >= 2) calculated += "." + parts[1].substring(0, 2);
+        this.value = calculated;
+        if (this.value == "NaN" || this.value == "") this.value = 0;
+    });
+</script>
+

@@ -25,5 +25,11 @@ namespace SEP_VanLangHotel.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DS_Tien_Ich> DS_Tien_Ich { get; set; }
+
+        public bool IsChecks { get; set; }
     }
-}
+
+    public class ListTienIch {
+        public List<Tien_Ich> tienIch { get; set; }
+    }
+} 

@@ -127,7 +127,7 @@ else
 
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
-                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control" , @required = "required", pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Ho_Va_Ten, "", new { @class = "text-danger" })
                         </div>
                         <div class="row gx-3 mb-3">
@@ -149,7 +149,7 @@ else
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Số điện thoại</label>
-                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{10}", @placeholder = "Số điện thoại di động", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số điện thoại của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @pattern = "[0-9]{10}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số điện thoại của bạn')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                             </div>
                         </div>
