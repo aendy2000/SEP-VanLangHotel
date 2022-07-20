@@ -421,7 +421,7 @@ namespace SEP_VanLangHotel.Controllers
         }
         public ActionResult ChangePassword(string id)
         {
-            if (Session["user-role"].ToString().Equals("Quản lý"))
+            if (!string.IsNullOrEmpty(id))
             {
                 var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.Equals(id));
                 if (taikhoan != null)
@@ -437,34 +437,30 @@ namespace SEP_VanLangHotel.Controllers
         public ActionResult ChangePassword(string id, string password = null, string newpassword = null, string renewpassword = null)
         {
             var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
-            if (Session["user-role"].ToString().Equals("Quản lý"))
+            if (taikhoan != null)
             {
-                if (taikhoan != null)
+                if (taikhoan.Mat_Khau.Equals(password))
                 {
-                    if (taikhoan.Mat_Khau.Equals(password))
+                    Session["passcu-false"] = null;
+                    string newpass = (password.Trim().Equals(newpassword.Trim())) ? "trung" : (newpassword.Trim().Equals(renewpassword.Trim())) ? "true" : "false";
+                    if (!newpass.Equals("trung"))
                     {
-                        Session["passcu-false"] = null;
-                        string newpass = (password.Trim().Equals(newpassword.Trim())) ? "trung" : (newpassword.Trim().Equals(renewpassword.Trim())) ? "true" : "false";
-                        if (!newpass.Equals("trung"))
+                        Session["newpass-trung"] = null;
+                        if (newpass.Equals("true"))
                         {
-                            Session["newpass-trung"] = null;
-                            if (newpass.Equals("true"))
-                            {
-                                Session["newpass-khongtrung"] = null;
-                                taikhoan.Mat_Khau = newpassword;
-                                model.SaveChanges();
-                                return RedirectToAction("Homepage", "Home");
-                            }
-                            Session["newpass-khongtrung"] = true; //mật khẩu mới không trùng nhau
-                            return View(taikhoan);
+                            Session["newpass-khongtrung"] = null;
+                            taikhoan.Mat_Khau = newpassword;
+                            model.SaveChanges();
+                            return RedirectToAction("Homepage", "Home");
                         }
-                        Session["newpass-trung"] = true; // trùng với mk cũ
+                        Session["newpass-khongtrung"] = true; //mật khẩu mới không trùng nhau
                         return View(taikhoan);
                     }
-                    Session["passcu-false"] = true; //mk cũ sai
+                    Session["newpass-trung"] = true; // trùng với mk cũ
                     return View(taikhoan);
                 }
-                return RedirectToAction("Homepage", "Home");
+                Session["passcu-false"] = true; //mk cũ sai
+                return View(taikhoan);
             }
             return RedirectToAction("Homepage", "Home");
         }

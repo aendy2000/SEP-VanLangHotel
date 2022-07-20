@@ -11,8 +11,15 @@
 
 }
 
-<title>@ViewBag.Title</title>
+<style>
+    input[type=checkbox] {
+        transform: scale(2);
+        margin-top: 10px;
+        margin-bottom: 7px;
+    }
+</style>
 
+<title>@ViewBag.Title</title>
 <script>
     //  document.getElementById('tries').scrollIntoView()
     window.location.hash = '#tries';
@@ -87,11 +94,11 @@
                                 {
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-3">
-                                            <label class="small mb-1">Ngày đến</label>
+                                            <label class="small mb-1">Ở từ ngày</label>
                                             <input name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="small mb-1">Ngày về</label>
+                                            <label class="small mb-1">Đến hết ngày</label>
                                             <input name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                                         </div>
                                         <div class="col-md-2">
@@ -141,6 +148,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

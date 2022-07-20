@@ -1,0 +1,161 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.TT_Dat_Phong>
+
+@{
+    ViewBag.Title = "QUẢN LÝ PHÒNG ĐẾN HẠN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <div class="card-title">Danh sách phòng đến hạn</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Modal -->
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Số phòng</th>
+                                    <th>Họ & Tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ở từ ngày</th>
+                                    <th>Đến hết ngày</th>
+                                    <th style="width: 3%">Hành động</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>@item.Phong.So_Phong</td>
+                                        <td>@item.Ho_Ten_KH</td>
+                                        <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
+                                        @if (item.Gioi_Tinh_KH == 1)
+                                        {
+                                            <td>Nam</td>
+
+                                        }
+                                        else if (item.Gioi_Tinh_KH == 0)
+                                        {
+                                            <td>Nữ</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Khác</td>
+                                        }
+                                        <td>@item.SDT_KH</td>
+                                        <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtAccount", "AccountManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                    <i class="fa fa-info"></i>
+                                                </a>
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                @*@if (item.Quyen.Ten_Quyen.Equals("Quản lý") && !item.Ten_Dang_Nhap.Equals("admin"))
+                                                                {
+                                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" onclick="xoataikhoan()">
+                                                                    <i class="fa fa-times"></i>
+                                                                    <script>
+                                                    function xoataikhoan() {
+                                                        cuteAlert({
+                                                            type: "question",
+                                                            title: "Xóa tài khoản?",
+                                                            message: "Bạn có chắc chắn muốn xóa tài khoản?",
+                                                            confirmText: "Xác nhận", cancelText: "Hủy bỏ"
+                                                        }).then(function (isConfirm) {
+                                                            if (isConfirm) {
+                                                                window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })';
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        });
+                                                    }
+                                                                    </script>
+                                                                </a>
+                                                                }*@
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        //Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>
+

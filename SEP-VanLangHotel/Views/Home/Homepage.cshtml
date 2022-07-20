@@ -24,6 +24,15 @@
     Session["error-import-file"] = "empthy";
 }
 
+
+<style>
+    input[type=checkbox] {
+        transform: scale(2);
+        margin-top: 10px;
+        margin-bottom: 7px;
+    }
+</style>
+
 <div class="content">
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -76,7 +85,7 @@
                                         <div style="text-align:center;" class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <button style="text-align: center; width: 150px" type="submit" class="btn btn-success" onclick="if (!confirm('Tìm phòng?')) { return false; } {$('#imPortModal').modal('toggle'); }">Tìm Phòng</button>
+                                                    <button style="text-align: center; color: white; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Tìm phòng?')) { return false; } {$('#imPortModal').modal('toggle'); }">Tìm Phòng</button>
                                                     &ensp;
                                                     <a role="button" style="text-align: center; width: 150px; color: white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
                                                 </div>

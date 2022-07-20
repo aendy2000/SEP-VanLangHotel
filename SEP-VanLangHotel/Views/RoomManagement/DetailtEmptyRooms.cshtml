@@ -1,0 +1,237 @@
+﻿@model SEP_VanLangHotel.Models.Phong
+@using SEP_VanLangHotel.Models
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    string dsTienIch = "";
+    foreach (var item in Model.Loai_Phong.DS_Tien_Ich)
+    {
+        dsTienIch += item.Tien_Ich.Ten_Tien_Ich + "; ";
+    }
+}
+@{
+    ViewBag.Title = "Chi tiết phòng còn trống";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">THÔNG TIN PHÒNG</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <p style="width: 100%; font-style: italic ">Phòng đang @Model.Trang_Thai.Ten_Trang_Thai </p>
+
+                    <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
+                         style="border-radius:3%; width:100%" class="img-room-profile mb-2">
+                    <p></p>
+                    <h2 class="btn btn-danger" style="font-weight:bold; width:100%"> @Model.So_Phong </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Loại Phòng</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Ten_Loai_Phong</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Giá</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Gia.ToString("0,0") VND</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Chứa Tối Đa</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@(Model.Loai_Phong.So_Nguoi_Lon + Model.Loai_Phong.So_Tre_Em) người</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Số Giường</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.So_Giuong giường</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Tiện ích</p>
+                        </div>
+                        <div class="col-sm-9">
+
+                            <p class="text-muted mb-0">@dsTienIch.Substring(0, (dsTienIch.Length - 2))</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Mô Tả</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Mo_Ta</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="text-align:center;" class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button style="width:180px;" class="btn btn-search" data-toggle="modal" data-target="#changeStateRoo">Đổi trạng thái</button>
+                                @if (!Model.Trang_Thai.Ten_Trang_Thai.Equals("Sửa chửa"))
+                                {
+                                    <span>&emsp;&emsp;</span>
+                                    <button style="width:180px;" class="btn btn-search" data-toggle="modal" data-target="#orderrooms">Đặt Phòng</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Đổi trạng thái*@
+    <div class="modal fade" id="changeStateRoo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header no-bd">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            Thay đổi trạng thái
+                        </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="@Url.Action("DetailtEmptyRooms", "RoomManagement")" method="post">
+                    <div class="modal-body">
+                        <div class="col-sm-12">
+                            <div class="form-group form-group-default">
+                                @Html.HiddenFor(p => Model.Ma_Phong)
+                                @Html.HiddenFor(p => Model.Ma_Loai_Phong)
+                                @Html.HiddenFor(p => Model.Ma_Khach_San)
+                                @Html.HiddenFor(p => Model.So_Phong)
+                                @Html.HiddenFor(p => Model.Hinh_Anh)
+
+                                @*@Html.DropDownList("idTrangThai", (IEnumerable<SelectListItem>)ViewBag.StateList, "Ma_Trang_Thai", "Ten_Trang_Thai")*@
+                                @Html.DropDownListFor(t => Model.Ma_Trang_Thai, null, new { @class = "form-control", @style = "text-align: center;" })
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;" class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button style="text-align: center; color: white; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Lưu thay đổi trạng thái?')) { return false; } {$('#changeStateRoo').modal('toggle'); } ">Lưu</button>
+                                &ensp;
+                                <a role="button" style="text-align: center; color: white; width: 150px" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*Đặt phòng*@
+    <div class="modal fade" id="orderrooms" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header no-bd">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            Thông Tin Đặt Phòng
+                        </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="@Url.Action("OrderRoomsSateEmpty", "OrderRoom")" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Ở từ</label>
+                                    <input name="ngayDen" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Đến hết</label>
+                                    <input name="ngayVe" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Người lớn</label>
+                                    <input name="soNguoiLon" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Trẻ em</label>
+                                    <input name="soTreEm" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;" class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" name="maPhong" hidden value="@Model.Ma_Phong" />
+                                <button style="text-align: center; color: white; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Tiếp tục đặt phòng?')) { return false; } {$('#orderrooms').modal('toggle'); } ">Tiếp Tục</button>
+                                &ensp;
+                                <a role="button" style="text-align: center; color: white; width: 150px" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

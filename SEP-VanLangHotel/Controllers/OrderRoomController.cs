@@ -989,14 +989,14 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     try
                     {
-
-
                         decimal dtienCoc = Convert.ToDecimal(tienCoc.Trim().Replace(",", ""));
                         string tongCocs = Convert.ToDecimal(Session["tong-coc"]).ToString("0,0").Replace(".", ",");
                         string tongThanhToans = Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0").Replace(".", ",");
 
                         decimal tongCoc = Convert.ToDecimal(tongCocs.Trim().Replace(",", ""));
                         decimal dtongThanhToan = Convert.ToDecimal(tongThanhToans.Trim().Replace(",", ""));
+
+
 
                         if (dtienCoc < tongCoc || dtienCoc > dtongThanhToan)
                         {
@@ -1070,13 +1070,99 @@ namespace SEP_VanLangHotel.Controllers
                         gioitinhs.Add("Khác");
                         ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
                         ViewBag.gioiTinh = "";
-                        Session["error-import-file"] = "Lỗi" + e.Message;
+                        Session["error-import-file"] = "Lỗi " + e.Message;
                         return View(nhanthans);
                     }
                 }
                 return RedirectToAction("Homepage", "Home");
             }
             return RedirectToAction("Homepage", "Home");
+        }
+
+        public ActionResult OrderRoomsSateEmpty(string maPhong, DateTime ngayDen, DateTime ngayVe, int soNguoiLon, int soTreEm)
+        {
+            if (Session["user-role"].Equals("Nhân viên"))
+            {
+                if (!string.IsNullOrEmpty(maPhong))
+                {
+                    try
+                    {
+                        var phong = model.Phong.FirstOrDefault(p => p.Ma_Phong.Equals(maPhong));
+                        int ngaynay = (int)ngayDen.Subtract(DateTime.Now).TotalDays + 1;
+                        if (ngaynay < 1)
+                        {
+                            Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày hiện tại!";
+                            return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                        }
+                        int songay = (int)ngayVe.Subtract(ngayDen).TotalDays + 1;
+                        if (songay < 1)
+                        {
+                            Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày kết thúc!";
+                            return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                        }
+
+                        int soNguoiLonChoPhep = phong.Loai_Phong.So_Nguoi_Lon;
+                        int soTreEmChoPhep = phong.Loai_Phong.So_Tre_Em;
+                        if (soNguoiLon > soNguoiLonChoPhep)
+                        {
+                            Session["error-import-file"] = "Số người ở vượt qua giới hạn của phòng, hãy tìm phòng khác phù hợp với khách hàng!";
+                            return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                        }
+                        else if (soNguoiLon == soNguoiLonChoPhep && soTreEm > soTreEmChoPhep)
+                        {
+                            Session["error-import-file"] = "Số người ở vượt qua giới hạn của phòng, hãy tìm phòng khác phù hợp với khách hàng!";
+                            return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                        }
+                        else if (soNguoiLon < soNguoiLonChoPhep && (soTreEm - 1) > soTreEmChoPhep)
+                        {
+                            Session["error-import-file"] = "Số người ở vượt qua giới hạn của phòng, hãy tìm phòng khác phù hợp với khách hàng!";
+                            return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                        }
+
+                        List<string> gioitinh = new List<string>();
+                        gioitinh.Add("Nam");
+                        gioitinh.Add("Nữ");
+                        gioitinh.Add("Khác");
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                        ViewBag.gioiTinh = "";
+
+
+                        Session["thoigian-ve"] = ngayVe;
+                        Session["thoigian-den"] = ngayDen;
+                        Session["tong-thanhtoan"] = songay * phong.Loai_Phong.Gia;
+                        Session["tong-coc"] = (songay * phong.Loai_Phong.Gia) * Convert.ToDecimal(0.3);
+
+                        Session["maphongorder"] = phong.Ma_Phong;
+                        Session["thongtinphong"] = phong;
+                        Session["songuoi-lon"] = soNguoiLon;
+                        Session["songuoi-treem"] = soTreEm;
+                        int tongsonguoi = Int32.Parse(Session["songuoi-lon"].ToString()) + Int32.Parse(Session["songuoi-treem"].ToString());
+
+                        List<Nhan_Than> nhanThans = new List<Nhan_Than>();
+                        for (int i = 0; i < tongsonguoi - 1; i++)
+                        {
+                            Nhan_Than nhanThan = new Nhan_Than();
+                            nhanThan.Ma_Nhan_Than = null;
+                            nhanThan.Ho_Ten = null;
+                            nhanThan.CMND_CCCD = null;
+                            nhanThan.Sinh_Nhat = DateTime.Now;
+                            nhanThan.Gioi_Tinh = 0;
+                            nhanThan.Dia_Chi = null;
+                            nhanThan.Moi_Quan_He = null;
+                            nhanThans.Add(nhanThan);
+                        }
+                        return View("AddDataOrderRoom", nhanThans);
+                    }
+                    catch (Exception e)
+                    {
+                        Session["error-import-file"] = "Lỗi " + e.Message;
+                        return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
+                    }
+                }
+                return RedirectToAction("ListOfEmptyRooms", "RoomManagement");
+            }
+            return RedirectToAction("Homepage", "Home");
+
         }
     }
 }

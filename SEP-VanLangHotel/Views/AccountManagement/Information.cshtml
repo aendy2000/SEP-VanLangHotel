@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <title>@ViewBag.Title</title>
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -97,15 +99,26 @@
                         </div>
                         <!-- Save changes button-->
                         <hr />
-                        <div style="text-align:center;" class="mb-3">
-                            <a style="width: 180px;color:white;" class="btn btn-primary" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
-                                Chỉnh sửa TT
-                            </a>
-                            &emsp;
-                            <a style="width: 180px;color:white;" class="btn btn-primary" role="button" href="@Url.Action("ChangePassword", "AccountManagement", new {id = Model.Ten_Dang_Nhap})" target="_blank">
-                                Đổi mật khẩu
-                            </a>
-                        </div>
+                        @if (Session["user-role"].Equals("Quản lý"))
+                        {
+                            <div style="text-align:center;" class="mb-3">
+                                <a style="width: 180px;color:white;" class="btn btn-search" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
+                                    Chỉnh sửa TT
+                                </a>
+                                &emsp;
+                                <a style="width: 180px;color:white;" class="btn btn-search" role="button" href="@Url.Action("ChangePassword", "AccountManagement", new {id = Model.Ten_Dang_Nhap})" target="_blank">
+                                    Đổi mật khẩu
+                                </a>
+                            </div>
+                        }
+                        else if (Session["user-role"].Equals("Nhân viên"))
+                        {
+                            <div style="text-align:center;" class="mb-3">
+                                <a style="width: 180px;color:white;" class="btn btn-search" role="button" href="@Url.Action("ChangePassword", "AccountManagement", new {id = Model.Ten_Dang_Nhap})" target="_blank">
+                                    Đổi mật khẩu
+                                </a>
+                            </div>
+                        }
                     </form>
                 </div>
             </div>

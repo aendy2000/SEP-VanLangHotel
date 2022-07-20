@@ -894,11 +894,14 @@
     <Content Include="Views\OrderRoom\SaveDataImport.cshtml" />
     <Content Include="Views\OrderRoom\SaveDataOrderRoom.cshtml" />
     <Content Include="Views\OrderRoom\AddDataOrderRoom.cshtml" />
+    <Content Include="Views\RoomManagement\ListOfEmptyRooms.cshtml" />
+    <Content Include="Views\RoomManagement\ListOfRentingRooms.cshtml" />
+    <Content Include="Views\RoomManagement\ListRoomDueToPay.cshtml" />
+    <Content Include="Views\RoomManagement\DetailtEmptyRooms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BookRoom\" />
-    <Folder Include="Views\RoomManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

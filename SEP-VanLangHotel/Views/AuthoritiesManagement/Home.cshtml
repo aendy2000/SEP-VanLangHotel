@@ -64,22 +64,27 @@
                                 </div>
                                 <form action="@Url.Action("AddAuthorities", "AuthoritiesManagement")">
                                     <div class="modal-body">
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Tên quyền</label>
-                                                    <input name="tenquyenmoi" type="text" pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
-                                                </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Tên quyền</label>
+                                                <input name="tenquyenmoi" type="text" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
                                             </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Mô tả</label>
-                                                    <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
-                                                </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Mô tả</label>
+                                                <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div style="text-align:center;" class="modal-footer no-bd">
-                                        <button style="width:150px" type="submit" class="btn btn-success" onclick="if (!confirm('Thêm quyền mới?')) { return false; }">Thêm</button>
-                                        <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                    <div style="text-align:center;" class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button style="text-align: center; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Thêm quyền mới?')) { return false; }">Thêm</button>
+                                                &ensp;
+                                                <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -121,7 +126,7 @@
                                                                     <div class="form-group form-group-default">
                                                                         <label>Tên quyền</label>
                                                                         <input name="maquyen" type="hidden" class="hidden" value="@item.Ma_Quyen">
-                                                                        <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" required pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                                                        <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" required pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-12">
@@ -131,9 +136,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div style="text-align:center;" class="modal-footer no-bd">
-                                                                <button style="width:150px" type="submit" class="btn btn-success" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false; }">Lưu</button>
-                                                                <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                                            <div style="text-align:center;" class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <button style="width: 150px; color: white; text-align: center" type="submit" class="btn btn-search" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false; }">Lưu</button>
+                                                                        &ensp;
+                                                                        <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>

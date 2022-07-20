@@ -4,6 +4,11 @@
     var phong = Session["thongtinphong"] as Phong;
     var maLoaiPhong = phong.Ma_Loai_Phong;
     var dsTienIch = models.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maLoaiPhong)).ToList();
+    string dsTienIchs = "";
+    foreach (var item in phong.Loai_Phong.DS_Tien_Ich)
+    {
+        dsTienIchs += item.Tien_Ich.Ten_Tien_Ich + "; ";
+    }
 }
 @{
     ViewBag.Title = "AddDataOrderRoom";
@@ -26,6 +31,7 @@
     </script>
     Session["error-import-file"] = "empthy";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -43,19 +49,21 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
+                        <p style="width: 100%; font-style: italic ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
+
                         <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
                              style="border-radius:3%; width:100%" class="img-room-profile mb-2">
-                        <p style="margin-top:-10px"></p>
-                        <h2 class="btn btn-search" style="font-weight:bold; width:100%"> @phong.So_Phong </h2>
+                        <p></p>
+                        <h2 class="btn btn-danger" style="font-weight:bold; width:100%"> @phong.So_Phong </h2>
                     </div>
                 </div>
             </div>
-            <div style="font-weight:bold" class="col-lg-8">
+            <div class="col-lg-8">
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Loại Phòng</p>
+                                <p style="font-weight:bold" class="mb-0">Loại Phòng</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">@phong.Loai_Phong.Ten_Loai_Phong</p>
@@ -64,7 +72,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Giá</p>
+                                <p style="font-weight:bold" class="mb-0">Giá</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">@phong.Loai_Phong.Gia.ToString("0,0") VND</p>
@@ -73,7 +81,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Chứa Tối Đa</p>
+                                <p style="font-weight:bold" class="mb-0">Chứa Tối Đa</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">@(phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em) người</p>
@@ -82,7 +90,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Số Giường</p>
+                                <p style="font-weight:bold" class="mb-0">Số Giường</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">@phong.Loai_Phong.So_Giuong giường</p>
@@ -91,18 +99,29 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Mô Tả</p>
+                                <p style="font-weight:bold" class="mb-0">Tiện ích</p>
+                            </div>
+                            <div class="col-sm-9">
+
+                                <p class="text-muted mb-0">@dsTienIchs.Substring(0, (dsTienIchs.Length - 2))</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p style="font-weight:bold" class="mb-0">Mô Tả</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">@phong.Loai_Phong.Mo_Ta</p>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
             </div>
         </div>
-
+        <hr />
+        <br />
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -111,20 +130,24 @@
                         <br />
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
-                                <label class="small mb-1">Ngày đến</label>
-                                <input name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                                <label class="small mb-1">Ở từ ngày</label>
+                                <p style="color:black" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy")</p>
+                                <input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
                             </div>
                             <div class="col-md-3">
-                                <label class="small mb-1">Ngày về</label>
-                                <input name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
+                                <label class="small mb-1">Đến hết ngày</label>
+                                <p style="color:black" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
+                                <input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                             </div>
                             <div class="col-md-3">
                                 <label class="small mb-1">Người lớn</label>
-                                <input name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                <p style="color:black" min="1" max="4" class="form-control">@Session["songuoi-lon"] người</p>
+                                <input hidden name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
                             </div>
                             <div class="col-md-3">
                                 <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
-                                <input name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
+                                <p style="color:black" min="0" max="4" class="form-control">@Session["songuoi-treem"] người</p>
+                                <input hidden name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
@@ -135,14 +158,15 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1">Số tiền cọc (ít nhất 30%)</label>
-                                <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; font-size: 18px; color:red" class="form-control" name="tienCoc" required="required" />
+                                <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <hr />
+        <br />
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -190,12 +214,13 @@
         {
             Html.HiddenFor(m => m[i].Gioi_Tinh);
             Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
-
+            <hr />
+            <br />
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @i </p>
+                            <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
                             <br />
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-4">
@@ -221,40 +246,31 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-4">
-                                    <div>
-                                        <label class="small mb-1">Ngày sinh</label>
-                                        @*<input type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
-                                        @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
-                                        @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div style="margin-top:6px">
-                                        <label class="small mb-1">Giới tính</label>
-                                        @*<select name="Gioi_Tinh" class="form-control">
-                                                <option value="1">Nam</option>
-                                                <option value="0">Nữ</option>
-                                                <option value="2">Khác</option>
-                                            </select>*@
-                                        @*@Html.DropDownListFor(model => Model[i].Gioi_Tinh, (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @placeholder = "Họ và tên", @required = "required", @oninvalid = "this.setCustomValidity('Hãy chọn giới tính')", @oninput = "this.setCustomValidity('')" })*@
-                                        @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
-
-                                    </div>
+                                    <label class="small mb-1">Ngày sinh</label>
+                                    @*<input type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
+                                    @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Giới tính</label>
+                                    @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-4">
                                     <label class="small mb-1">Địa chỉ</label>
                                     @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
-                                    @Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", row = "5", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
                                     @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         }
+        <hr />
+        <br />
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

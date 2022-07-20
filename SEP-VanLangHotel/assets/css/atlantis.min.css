@@ -87,7 +87,7 @@ danger-color : #f3545d
 .alert, .brand, .btn-simple, .h1, .h2, .h3, .h4, .h5, .h6, .navbar, .td-name, a, body, button.close, h1, h2, h3, h4, h5, h6, p, td {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-family: Lato,sans-serif
+    font-family: Arial,Helvetica,sans-serif;
 }
 
 body {
@@ -4995,7 +4995,7 @@ label {
 
 .form-group-default {
     background-color: #fff;
-    border: 1px solid rgba(0,0,0,.07);
+    border: 1px solid #FF7F00;
     border-radius: 4px;
     padding-top: 7px;
     padding-left: 12px;
