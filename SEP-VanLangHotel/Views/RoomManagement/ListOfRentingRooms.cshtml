@@ -67,39 +67,15 @@
                                         <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtAccount", "AccountManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_Phong })" target="_blank">
                                                     <i class="fa fa-info"></i>
                                                 </a>
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateAccount", "AccountManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_Phong })" target="_blank">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                @*@if (item.Quyen.Ten_Quyen.Equals("Quản lý") && !item.Ten_Dang_Nhap.Equals("admin"))
-                                                                {
-                                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" onclick="xoataikhoan()">
-                                                                    <i class="fa fa-times"></i>
-                                                                    <script>
-                                                    function xoataikhoan() {
-                                                        cuteAlert({
-                                                            type: "question",
-                                                            title: "Xóa tài khoản?",
-                                                            message: "Bạn có chắc chắn muốn xóa tài khoản?",
-                                                            confirmText: "Xác nhận", cancelText: "Hủy bỏ"
-                                                        }).then(function (isConfirm) {
-                                                            if (isConfirm) {
-                                                                window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })';
-                                                            } else {
-                                                                return false;
-                                                            }
-                                                        });
-                                                    }
-                                                                    </script>
-                                                                </a>
-                                                                }*@
-
                                             </div>
                                         </td>
                                     </tr>
-
                                 }
                             </tbody>
                         </table>

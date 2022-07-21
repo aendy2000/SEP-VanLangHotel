@@ -90,19 +90,19 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Ở từ ngày</label>
-                                            <p style="text-align: center; font-size: 16px; color: black" type="text" class="form-control">@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")</p>
+                                            <p style="font-weight: bold; text-align: center; font-size: 16px; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")</p>
                                             <input hidden style="text-align: center; font-weight: bold; font-size: 18px; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Đến hết ngày</label>
-                                            <p style="text-align:center; font-size:16px;" type="text" class="form-control">@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")</p>
+                                            <p style="font-weight: bold; text-align: center; font-size: 16px; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")</p>
                                             <input hidden style="text-align:center;font-weight:bold; font-size:18px; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")" type="text" class="form-control"  />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Tổng Thanh Toán (VND)</label>
-                                            <p style="text-align: center; font-weight: bold; font-size: 18px; color:red" type="text" class="form-control">@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))</p>
+                                            <p style="text-align: center; font-weight: bold; font-size: 18px; color: red; background-color: #EEEEEE" type="text" class="form-control">@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))</p>
                                             <input hidden style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))" type="text" class="form-control" />
                                         </div>
                                         <div class="col-md-6">

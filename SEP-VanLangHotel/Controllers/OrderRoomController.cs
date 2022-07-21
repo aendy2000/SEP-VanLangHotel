@@ -20,7 +20,7 @@ namespace SEP_VanLangHotel.Controllers
     public class OrderRoomController : Controller
     {
         SEP25Team09Entities model = new SEP25Team09Entities();
-        // GET: OrderRoom
+        //Lấy thông tin đặt phòng import
         [HttpPost]
         public ActionResult ImportData(HttpPostedFileBase importFileExcel)
         {
@@ -595,6 +595,8 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+
+        //View xem danh sách đề xuất phòng import
         public ActionResult SaveDataImport(List<List<List<string>>> dsDatPhongTamThoi)
         {
             if (Session["user-role"].Equals("Nhân viên"))
@@ -612,6 +614,8 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+
+        //Lưu thông tin đặt phòng import
         [HttpPost]
         public ActionResult SaveDataImport(string hoten, string sotiencoc,
             string cmndcccd, string sdt, DateTime ngaysinh, string gioiTinh, string email,
@@ -741,6 +745,7 @@ namespace SEP_VanLangHotel.Controllers
             return RedirectToAction("Homepage", "Home");
         }
 
+        //Danh sách phòng đề xuất thủ công
         [HttpPost]
         public ActionResult orderRooms(ListTienIch tienIchs, DateTime ngayDen, DateTime ngayVe,
             int soNguoiLon, int soTreEm, int soGiuong)
@@ -941,6 +946,7 @@ namespace SEP_VanLangHotel.Controllers
             return RedirectToAction("Homepage", "Home");
         }
 
+        //Trang thông tin đặt phòng thủ công
         public ActionResult AddDataOrderRoom(string maphong = "")
         {
             if (Session["user-role"].Equals("Nhân viên"))
@@ -978,6 +984,8 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+
+        //Lưu thông tin đặt phòng thủ công
         [HttpPost]
         public ActionResult AddDataOrderRoom(List<Nhan_Than> nhanthans, DateTime ngayDen, DateTime ngayVe,
             int soNguoiLon, int soTreEm, string tongtien, string tienCoc, string hoten, string cmndcccd,
@@ -1060,7 +1068,7 @@ namespace SEP_VanLangHotel.Controllers
                             model.SaveChanges();
                         }
                         Session["error-import-file"] = "Đặt phòng thành công !!";
-                        return RedirectToAction("Homepage", "Home");
+                        return RedirectToAction("DetailtRentingRooms", "RoomManagement", new {id = Session["maphongorder"].ToString() });
                     }
                     catch (Exception e)
                     {
@@ -1079,6 +1087,7 @@ namespace SEP_VanLangHotel.Controllers
             return RedirectToAction("Homepage", "Home");
         }
 
+        //Đặt phòng ở chi tiết phòng trống
         public ActionResult OrderRoomsSateEmpty(string maPhong, DateTime ngayDen, DateTime ngayVe, int soNguoiLon, int soTreEm)
         {
             if (Session["user-role"].Equals("Nhân viên"))

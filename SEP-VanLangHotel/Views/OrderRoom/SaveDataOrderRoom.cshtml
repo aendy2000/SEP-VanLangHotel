@@ -124,7 +124,7 @@
                                                 @for (int i = 0; i < tienIch.Count; i++)
                                                 {
                                                     <label class="selectgroup-item">
-                                                        @Html.CheckBoxFor(t => tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox" })
+                                                        @Html.CheckBoxFor(t => tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox", style = "accent-color: #e74c3c" })
                                                         <span style="border-color:peru;" class="selectgroup-button">@tienIch[i].Ten_Tien_Ich</span>
                                                         @Html.HiddenFor(t => tienIch[i].Ma_Tien_Ich)
                                                         @Html.HiddenFor(t => tienIch[i].Ten_Tien_Ich)

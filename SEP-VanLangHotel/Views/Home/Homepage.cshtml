@@ -103,7 +103,7 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-3">
                                             <label class="small mb-1">Ở từ ngày</label>
-                                            <input name="ngayDen" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                                            <input name="ngayDen" style="color:black;" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
                                         </div>
                                         <div class="col-md-3">
                                             <label class="small mb-1">Đến hết ngày</label>
@@ -132,7 +132,7 @@
                                                 @for (int i = 0; i < Model.tienIch.Count; i++)
                                                 {
                                                     <label class="selectgroup-item">
-                                                        @Html.CheckBoxFor(t => Model.tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox" })
+                                                        @Html.CheckBoxFor(t => Model.tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox", style = "accent-color: #e74c3c" })
                                                         <span style="border-color:peru;" class="selectgroup-button">@Model.tienIch[i].Ten_Tien_Ich</span>
                                                         @Html.HiddenFor(t => Model.tienIch[i].Ma_Tien_Ich)
                                                         @Html.HiddenFor(t => Model.tienIch[i].Ten_Tien_Ich)

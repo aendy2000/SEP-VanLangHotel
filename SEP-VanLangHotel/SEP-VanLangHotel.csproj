@@ -277,6 +277,7 @@
     <Compile Include="Models\DS_Tien_Ich.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GioiTinhModel.cs" />
     <Compile Include="Models\Khach_San.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -898,6 +899,8 @@
     <Content Include="Views\RoomManagement\ListOfRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\ListRoomDueToPay.cshtml" />
     <Content Include="Views\RoomManagement\DetailtEmptyRooms.cshtml" />
+    <Content Include="Views\RoomManagement\DetailtRentingRooms.cshtml" />
+    <Content Include="Views\RoomManagement\UpdateRentingRooms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
