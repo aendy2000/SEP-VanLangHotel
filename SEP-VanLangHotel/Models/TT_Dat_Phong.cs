@@ -34,17 +34,16 @@ namespace SEP_VanLangHotel.Models
         public string Ma_Phong { get; set; }
         public string Ma_Tai_Khoan { get; set; }
         public string Ma_Tour { get; set; }
-        public Nullable<int> Nguoi_Lon { get; set; }
-        public Nullable<int> Tre_Em { get; set; }
-        public Nullable<decimal> Tong_Thanh_Toan { get; set; }
-        public Nullable<decimal> Tien_Coc { get; set; }
-        public Nullable<int> Trang_Thai { get; set; }
+        public int Nguoi_Lon { get; set; }
+        public int Tre_Em { get; set; }
+        public decimal Tong_Thanh_Toan { get; set; }
+        public decimal Tien_Coc { get; set; }
+        public int Trang_Thai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nhan_Than> Nhan_Than { get; set; }
         public virtual Phong Phong { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }
-        public virtual TOUR TOUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
     }

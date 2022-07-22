@@ -144,7 +144,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             <p class="text-muted mb-0">@phong.Loai_Phong.Mo_Ta</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -180,17 +179,78 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <label class="small mb-1">Tổng thanh toán</label>
                             <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                             @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                         </div>
                         <div class="col-md-4">
                             <label class="small mb-1">Số tiền cọc</label>
-                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",",")) &emsp; VND</p>
+                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToInt64(Session["tong-coc"]).ToString("0,0"))) &emsp; VND</p>
+                            @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1">Cần thanh toán</label>
+                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
                             @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
                         </div>
                     </div>
+
+                    <hr />
+                    <br />
+                    <div class="row gx-3 mb-3">
+                        <div style="text-align:center" class="col-md-12">
+                            @if ((ttdatPhong.Nguoi_Lon + ttdatPhong.Tre_Em) <= (phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em))
+                            {
+                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search" data-toggle="modal" data-target="#themnguoi"> <i class="fa fa-plus"></i> &ensp; Thêm Người</a>
+                                <span>&emsp;</span>
+                            }
+                            <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = ttdatPhong.Ma_TT_Dat_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-edit"></i> &ensp; Chỉnh Sửa</a>
+                            @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
+                            &emsp;
+                            <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
+                            @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
+                            &emsp;
+                            <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
+                            <script>
+                                function xacnhanhuybo() {
+                                    let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
+                                    cuteAlert({
+                                        type: "question",
+                                        title: "Thông báo!",
+                                        message: "Xác nhận thanh toán " + info + " VND và trả phòng?",
+                                        confirmText: "Xác nhận",
+                                        cancelText: "Hủy bỏ"
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                }
+
+                                function xacnhandoiphong() {
+                                    cuteAlert({
+                                        type: "question",
+                                        title: "Thông báo!",
+                                        message: "Bạn chắc chắn muốn đổi phòng?",
+                                        confirmText: "Xác nhận",
+                                        cancelText: "Hủy bỏ"
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -333,59 +393,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             </div>
                         </div>
                     }
-                    <hr />
-                    <br />
-                    <br />
-                    <div class="row gx-3 mb-3">
-                        <div style="text-align:center" class="col-md-12">
-                            @if ((ttdatPhong.Nguoi_Lon + ttdatPhong.Tre_Em) <= (phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em))
-                            {
-                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search" data-toggle="modal" data-target="#themnguoi"> <i class="fa fa-plus"></i> &ensp; Thêm Người</a>
-                                <span>&emsp;</span>
-                            }
-                            <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = ttdatPhong.Ma_TT_Dat_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-edit"></i> &ensp; Chỉnh Sửa</a>
-                            @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
-                            &emsp;
-                            <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
-                            @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
-                            &emsp;
-                            <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
-                            <script>
-                                function xacnhanhuybo() {
-                                    let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
-                                    cuteAlert({
-                                        type: "question",
-                                        title: "Thông báo!",
-                                        message: "Xác nhận thanh toán " + info + " VND và trả phòng?",
-                                        confirmText: "Xác nhận",
-                                        cancelText: "Hủy bỏ"
-                                    }).then(function (isConfirm) {
-                                        if (isConfirm) {
-                                            window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
-                                        } else {
-                                            return false;
-                                        }
-                                    });
-                                }
-
-                                function xacnhandoiphong() {
-                                    cuteAlert({
-                                        type: "question",
-                                        title: "Thông báo!",
-                                        message: "Bạn chắc chắn muốn đổi phòng?",
-                                        confirmText: "Xác nhận",
-                                        cancelText: "Hủy bỏ"
-                                    }).then(function (isConfirm) {
-                                        if (isConfirm) {
-                                            window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
-                                        } else {
-                                            return false;
-                                        }
-                                    });
-                                }
-                            </script>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

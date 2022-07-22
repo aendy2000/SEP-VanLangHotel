@@ -14,12 +14,6 @@ namespace SEP_VanLangHotel.Models
     
     public partial class TOUR
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TOUR()
-        {
-            this.TT_Dat_Phong = new HashSet<TT_Dat_Phong>();
-        }
-    
         public string Ma_Tour { get; set; }
         public string Ho_Ten_Chu_Tour { get; set; }
         public string CMND_CCCD { get; set; }
@@ -37,7 +31,6 @@ namespace SEP_VanLangHotel.Models
         public int Trang_Thai { get; set; }
         public string Ma_Tai_Khoan { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TT_Dat_Phong> TT_Dat_Phong { get; set; }
+        public virtual Tai_Khoan Tai_Khoan { get; set; }
     }
 }

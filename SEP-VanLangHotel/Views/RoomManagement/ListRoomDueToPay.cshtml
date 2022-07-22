@@ -67,10 +67,10 @@
                                         <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })" target="_blank">
                                                     <i class="fa fa-info"></i>
                                                 </a>
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })" target="_blank">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </div>

@@ -395,7 +395,7 @@ namespace SEP_VanLangHotel.Controllers
                                 else if (Convert.ToInt32(listDSDatPhong[l][0][7].Trim()) == 2)
                                 {
                                     //Kiểm tra số người
-                                    if ((Convert.ToInt32(SoNguoi[l][0]) == 2 && Convert.ToInt32(SoNguoi[l][1]) <= 4) 
+                                    if ((Convert.ToInt32(SoNguoi[l][0]) == 2 && Convert.ToInt32(SoNguoi[l][1]) <= 4)
                                         || (Convert.ToInt32(SoNguoi[l][0]) == 1 && (Convert.ToInt32(SoNguoi[l][1]) - 1) <= 4))
                                     {
                                         //Loại 2
@@ -664,8 +664,8 @@ namespace SEP_VanLangHotel.Controllers
                     tour.Thoi_Gian_DatPhong_Coc = DateTime.Now;
                     tour.Thoi_Gian_NhanPhong = Convert.ToDateTime(Session["NgayDen"].ToString());
                     tour.Thoi_Gian_TraPhong = Convert.ToDateTime(Session["NgayVe"].ToString());
-                    //tour.So_Tien_Coc = sotiencoc;
-                    tour.Tong_Thanh_Toan = Convert.ToDecimal(Session["tong-thanhtoan"].ToString());
+                    tour.So_Tien_Coc = tongCoc;
+                    tour.Tong_Thanh_Toan = tongThanhToan;
                     tour.Trang_Thai = 0; //0: chờ thanh toán, 1: hoàn thành, 2: đã hủy
                     tour.Ma_Tai_Khoan = Session["user-ma"].ToString();
                     model.TOUR.Add(tour);
@@ -701,7 +701,7 @@ namespace SEP_VanLangHotel.Controllers
 
                                 var maphong = listDSDatPhong[i][indexMaPhong][0];
                                 var phongs = model.Phong.First(p => p.Ma_Phong.Equals(maphong));
-                                phongs.Ma_Trang_Thai = "TT202207110001";
+                                phongs.Ma_Trang_Thai = "TT202207050002";
                                 decimal tongtt = phongs.Loai_Phong.Gia * Convert.ToInt32(Session["SoNgay"].ToString());
 
                                 ttdatphong.Tong_Thanh_Toan = tongtt;
@@ -780,7 +780,7 @@ namespace SEP_VanLangHotel.Controllers
                     if (soGiuong == 1)
                     {
                         //Kiểm tra số người
-                        if ((soNguoiLon == 2 && soTreEm <= 2) 
+                        if ((soNguoiLon == 2 && soTreEm <= 2)
                             || (soNguoiLon == 1 && (soTreEm - 1) <= 2))
                         {
                             //Loại 1
@@ -994,65 +994,65 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
-                if (nhanthans != null)
+                try
                 {
-                    try
+                    decimal dtienCoc = Convert.ToDecimal(tienCoc.Trim().Replace(",", ""));
+                    string tongCocs = Convert.ToDecimal(Session["tong-coc"]).ToString("0,0").Replace(".", ",");
+                    string tongThanhToans = Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0").Replace(".", ",");
+
+                    decimal tongCoc = Convert.ToDecimal(tongCocs.Trim().Replace(",", ""));
+                    decimal dtongThanhToan = Convert.ToDecimal(tongThanhToans.Trim().Replace(",", ""));
+
+
+
+                    if (dtienCoc < tongCoc || dtienCoc > dtongThanhToan)
                     {
-                        decimal dtienCoc = Convert.ToDecimal(tienCoc.Trim().Replace(",", ""));
-                        string tongCocs = Convert.ToDecimal(Session["tong-coc"]).ToString("0,0").Replace(".", ",");
-                        string tongThanhToans = Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0").Replace(".", ",");
+                        List<string> gioitinhs = new List<string>();
+                        gioitinhs.Add("Nam");
+                        gioitinhs.Add("Nữ");
+                        gioitinhs.Add("Khác");
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
+                        ViewBag.gioiTinh = "";
+                        Session["error-import-file"] = "Số tiền cọc không hợp lệ!, tiền cọc ít nhất là 30%:\n" + Convert.ToDecimal(Session["tong-coc"]).ToString("0,0") + " VND\nvà tối đa là:\n" + Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0") + " VND!";
+                        return View(nhanthans);
+                    }
 
-                        decimal tongCoc = Convert.ToDecimal(tongCocs.Trim().Replace(",", ""));
-                        decimal dtongThanhToan = Convert.ToDecimal(tongThanhToans.Trim().Replace(",", ""));
+                    TT_Dat_Phong ttdatphong = new TT_Dat_Phong();
+                    string maTTdp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                    ttdatphong.Ma_TT_Dat_Phong = maTTdp;
+                    ttdatphong.Ho_Ten_KH = hoten.Trim();
+                    ttdatphong.CMND_CCCD_KH = cmndcccd.Trim();
+                    ttdatphong.SDT_KH = sdt.Trim();
+                    ttdatphong.Sinh_Nhat_KH = ngaysinh;
 
+                    if (gioiTinh.Equals("Nam"))
+                        ttdatphong.Gioi_Tinh_KH = 1;
+                    else if (gioiTinh.Equals("Nữ"))
+                        ttdatphong.Gioi_Tinh_KH = 0;
+                    else ttdatphong.Gioi_Tinh_KH = 2;
 
+                    ttdatphong.Dia_Chi_KH = diachi.Trim();
+                    ttdatphong.Doi_Tra = 0;
+                    ttdatphong.Thoi_Gian_Dat = ngayDen;
+                    ttdatphong.Thoi_Gian_Doi_Tra = ngayVe;
+                    ttdatphong.Ma_Phong = Session["maphongorder"].ToString();
+                    ttdatphong.Ma_Tai_Khoan = Session["user-ma"].ToString();
+                    ttdatphong.Nguoi_Lon = soNguoiLon;
+                    ttdatphong.Tre_Em = soTreEm;
+                    ttdatphong.Tong_Thanh_Toan = dtongThanhToan;
+                    ttdatphong.Tien_Coc = tongCoc;
+                    ttdatphong.Trang_Thai = 0;
 
-                        if (dtienCoc < tongCoc || dtienCoc > dtongThanhToan)
-                        {
-                            List<string> gioitinhs = new List<string>();
-                            gioitinhs.Add("Nam");
-                            gioitinhs.Add("Nữ");
-                            gioitinhs.Add("Khác");
-                            ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
-                            ViewBag.gioiTinh = "";
-                            Session["error-import-file"] = "Số tiền cọc không hợp lệ!, tiền cọc ít nhất là 30%:\n" + Convert.ToDecimal(Session["tong-coc"]).ToString("0,0") + " VND\nvà tối đa là:\n" + Convert.ToDecimal(Session["tong-thanhtoan"]).ToString("0,0") + " VND!";
-                            return View(nhanthans);
-                        }
+                    var maphongne = Session["maphongorder"].ToString();
+                    var phongne = model.Phong.Where(p => p.Ma_Phong.Equals(maphongne)).First();
+                    phongne.Ma_Trang_Thai = "TT202207050002";
 
-                        TT_Dat_Phong ttdatphong = new TT_Dat_Phong();
-                        string maTTdp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                        ttdatphong.Ma_TT_Dat_Phong = maTTdp;
-                        ttdatphong.Ho_Ten_KH = hoten.Trim();
-                        ttdatphong.CMND_CCCD_KH = cmndcccd.Trim();
-                        ttdatphong.SDT_KH = sdt.Trim();
-                        ttdatphong.Sinh_Nhat_KH = ngaysinh;
+                    model.TT_Dat_Phong.Add(ttdatphong);
+                    model.Entry(phongne).State = EntityState.Modified;
 
-                        if (gioiTinh.Equals("Nam"))
-                            ttdatphong.Gioi_Tinh_KH = 1;
-                        else if (gioiTinh.Equals("Nữ"))
-                            ttdatphong.Gioi_Tinh_KH = 0;
-                        else ttdatphong.Gioi_Tinh_KH = 2;
-
-                        ttdatphong.Dia_Chi_KH = diachi.Trim();
-                        ttdatphong.Doi_Tra = 0;
-                        ttdatphong.Thoi_Gian_Dat = ngayDen;
-                        ttdatphong.Thoi_Gian_Doi_Tra = ngayVe;
-                        ttdatphong.Ma_Phong = Session["maphongorder"].ToString();
-                        ttdatphong.Ma_Tai_Khoan = Session["user-ma"].ToString();
-                        ttdatphong.Nguoi_Lon = soNguoiLon;
-                        ttdatphong.Tre_Em = soTreEm;
-                        ttdatphong.Tong_Thanh_Toan = dtongThanhToan;
-                        ttdatphong.Tien_Coc = tongCoc;
-                        ttdatphong.Trang_Thai = 0;
-
-                        var maphongne = Session["maphongorder"].ToString();
-                        var phongne = model.Phong.Where(p => p.Ma_Phong.Equals(maphongne)).First();
-                        phongne.Ma_Trang_Thai = "TT202207110001";
-
-                        model.TT_Dat_Phong.Add(ttdatphong);
-                        model.Entry(phongne).State = EntityState.Modified;
-
-                        model.SaveChanges();
+                    model.SaveChanges();
+                    if (nhanthans != null)
+                    {
                         for (int i = 0; i < nhanthans.Count; i++)
                         {
                             string maNT = DateTime.Now.ToString("yyyyMMddHHmmssfff");
@@ -1069,22 +1069,21 @@ namespace SEP_VanLangHotel.Controllers
                             model.Nhan_Than.Add(nhanthans[i]);
                             model.SaveChanges();
                         }
-                        Session["thongbaoSuccess"] = "Đặt phòng thành công !";
-                        return RedirectToAction("DetailtRentingRooms", "RoomManagement", new { id = Session["maphongorder"].ToString() });
                     }
-                    catch (Exception e)
-                    {
-                        List<string> gioitinhs = new List<string>();
-                        gioitinhs.Add("Nam");
-                        gioitinhs.Add("Nữ");
-                        gioitinhs.Add("Khác");
-                        ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
-                        ViewBag.gioiTinh = "";
-                        Session["error-import-file"] = "Lỗi " + e.Message;
-                        return View(nhanthans);
-                    }
+                    Session["thongbaoSuccess"] = "Đặt phòng thành công !";
+                    return RedirectToAction("DetailtRentingRooms", "RoomManagement", new { id = Session["maphongorder"].ToString() });
                 }
-                return RedirectToAction("Homepage", "Home");
+                catch (Exception e)
+                {
+                    List<string> gioitinhs = new List<string>();
+                    gioitinhs.Add("Nam");
+                    gioitinhs.Add("Nữ");
+                    gioitinhs.Add("Khác");
+                    ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
+                    ViewBag.gioiTinh = "";
+                    Session["error-import-file"] = "Lỗi " + e.Message;
+                    return View(nhanthans);
+                }
             }
             return RedirectToAction("Homepage", "Home");
         }

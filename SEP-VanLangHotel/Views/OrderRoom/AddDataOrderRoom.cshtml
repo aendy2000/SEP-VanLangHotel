@@ -205,62 +205,64 @@
                             </div>
                         </div>
 
-
-                        @for (int i = 0; i < Model.Count; i++)
+                        @if (Model != null)
                         {
-                            Html.HiddenFor(m => m[i].Gioi_Tinh);
-                            Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
-                            <hr />
-                            <br />
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                Html.HiddenFor(m => m[i].Gioi_Tinh);
+                                Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
+                                <hr />
+                                <br />
 
-                            <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
-                            <br />
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-4">
-                                    <label class="small mb-1">Họ tên</label>
-                                    @*<input type="text" class="form-control" name="Ho_Ten" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />*@
-                                    @Html.EditorFor(model => Model[i].Ho_Ten, new { htmlAttributes = new { @class = "form-control", placeholder = "Nguyễn Văn A...", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
-                                    @Html.ValidationMessageFor(model => Model[i].Ho_Ten, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="small mb-1">CMND/CCCD</label>
-                                    @*<input type="text" class="form-control" name="CMND_CCCD" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
-                                    @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "070200001111...", @maxlength = "12", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
-                                    @Html.ValidationMessageFor(model => Model[i].CMND_CCCD, "", new { @class = "text-danger" })
-
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="small mb-1">Mối quan hệ</label>
-                                    @*<input type="text" class="form-control" name="Moi_Quan_He" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số mối quan hệ đối với của người đại diện')" oninput="this.setCustomValidity('')" />*@
-                                    @Html.EditorFor(model => Model[i].Moi_Quan_He, new { htmlAttributes = new { @class = "form-control", placeholder = "Bạn bè...", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập mối quan hệ với người đại diện')", @oninput = "this.setCustomValidity('')" } })
-                                    @Html.ValidationMessageFor(model => Model[i].Moi_Quan_He, "", new { @class = "text-danger" })
-
-                                </div>
-                            </div>
-
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-4">
-                                    <div>
-                                        <label class="small mb-1">Ngày sinh</label>
-                                        @*<input type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
-                                        @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
-                                        @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
+                                <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
+                                <br />
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Họ tên</label>
+                                        @*<input type="text" class="form-control" name="Ho_Ten" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />*@
+                                        @Html.EditorFor(model => Model[i].Ho_Ten, new { htmlAttributes = new { @class = "form-control", placeholder = "Nguyễn Văn A...", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
+                                        @Html.ValidationMessageFor(model => Model[i].Ho_Ten, "", new { @class = "text-danger" })
                                     </div>
-                                    <br />
-                                    <div style="margin-top:6px">
-                                        <label class="small mb-1">Giới tính</label>
-                                        @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">CMND/CCCD</label>
+                                        @*<input type="text" class="form-control" name="CMND_CCCD" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
+                                        @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "070200001111...", @maxlength = "12", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                        @Html.ValidationMessageFor(model => Model[i].CMND_CCCD, "", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Mối quan hệ</label>
+                                        @*<input type="text" class="form-control" name="Moi_Quan_He" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số mối quan hệ đối với của người đại diện')" oninput="this.setCustomValidity('')" />*@
+                                        @Html.EditorFor(model => Model[i].Moi_Quan_He, new { htmlAttributes = new { @class = "form-control", placeholder = "Bạn bè...", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập mối quan hệ với người đại diện')", @oninput = "this.setCustomValidity('')" } })
+                                        @Html.ValidationMessageFor(model => Model[i].Moi_Quan_He, "", new { @class = "text-danger" })
+
                                     </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <label class="small mb-1">Địa chỉ</label>
-                                    @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
-                                    @*@Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", rows = "5", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })*@
-                                    @Html.TextAreaFor(model => Model[i].Dia_Chi, new { @class = "form-control", rows = "6", required = "required", placeholder = "1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh...", @maxlength = "200", @oninvalid = "this.setCustomValidity('Hãy nhập địa chỉ, tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" })
-                                    @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
 
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-4">
+                                        <div>
+                                            <label class="small mb-1">Ngày sinh</label>
+                                            @*<input type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
+                                            @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
+                                            @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                        <div style="margin-top:6px">
+                                            <label class="small mb-1">Giới tính</label>
+                                            @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="small mb-1">Địa chỉ</label>
+                                        @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
+                                        @*@Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", rows = "5", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })*@
+                                        @Html.TextAreaFor(model => Model[i].Dia_Chi, new { @class = "form-control", rows = "6", required = "required", placeholder = "1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh...", @maxlength = "200", @oninvalid = "this.setCustomValidity('Hãy nhập địa chỉ, tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" })
+                                        @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
+
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                         <hr />
                         <br />
