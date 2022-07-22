@@ -1,0 +1,171 @@
+﻿@model List<SEP_VanLangHotel.Models.Phong>
+@using SEP_VanLangHotel.Models;
+@{SEP25Team09Entities modelss = new SEP25Team09Entities();
+    var tienIch = modelss.Tien_Ich.ToList();
+    var tiDaCo = tienIch.Where(t => t.Ma_Tien_Ich.Equals("TI202207070001")).First();
+    tienIch.Remove(tiDaCo);
+
+    var ttdatPhong = Session["thongtindatphong"] as TT_Dat_Phong;
+
+
+}
+@{
+    ViewBag.Title = "Đặt phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<title>@ViewBag.Title</title>
+<script>
+    //  document.getElementById('tries').scrollIntoView()
+    window.location.hash = '#tries';
+</script>
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">ĐẶT PHÒNG KHÁCH SẠN</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
+                        <br />
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-3">
+                                <label class="small mb-1">Ở từ ngày</label>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy")</p>
+                                @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Đến hết ngày</label>
+                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
+                                @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Người lớn</label>
+                                <p style="color: black; background-color: #EEEEEE" min="1" max="4" class="form-control">@Session["songuoi-lon"] người</p>
+                                @*<input hidden name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
+                                <p style="color: black; background-color: #EEEEEE" min="0" max="4" class="form-control">@Session["songuoi-treem"] người</p>
+                                @*<input hidden name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-8">
+                                <label class="small mb-1">Tổng thanh toán</label>
+                                <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @ttdatPhong.Phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">Số tiền cọc</label>
+                                <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",",")) &emsp; VND</p>
+                                @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="card-title"><b>Còn @Model.Count phòng trống phù hợp</b></div>
+                        </div>
+                    </div>
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        var maphongg = Model[i].Ma_Phong;
+                        var maloaiphong = Model[i].Ma_Loai_Phong;
+
+                        <div class="card-body">
+                            <div class="col-xl-12">
+                                <div class="row card-item bg">
+                                    <!-- Form Group (Hình ảnh)-->
+                                    <div class="col-md-6 size">
+                                        <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Form Group (Số phòng)-->
+                                        <div class="col-md-6 ml-auto mr-auto range text-center">
+                                            <label class="small-title">
+                                                <b>
+                                                    @Model[i].So_Phong
+                                                </b>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row gx-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="small-item" for="">Số người</label>
+                                                    <input class="form-control" type="text" value="Tối đa @(Model[i].Loai_Phong.So_Nguoi_Lon + Model[i].Loai_Phong.So_Tre_Em) người" disabled style="font-weight:bold;color:black;" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="small-item" for="">Số giường</label>
+                                                    <input class="form-control" type="text" value="@Model[i].Loai_Phong.So_Giuong giường" disabled style="font-weight:bold;color:black;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Form Group(Tiện ích)-->
+                                        <div class="form-group col-md-12 text-center">
+                                            <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
+
+                                                @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maloaiphong)))
+                                                {
+                                                    <label class="selectgroup-item">
+                                                        <input type="checkbox" class="selectgroup-input" disabled>
+                                                        <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
+                                                    </label>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        @using (Html.BeginForm("AddDataOrderRoom", "OrderRoom", FormMethod.Get, new { enctype = "multipart/form-data" }))
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="row gx-3 mb-3">
+                                                    <div class="col-md-8">
+                                                        @*<b class="form-control">
+                                                            <label class="small-footer">
+                                                                <span style="color:red;">
+                                                                    <b>
+                                                                    </b>
+                                                                </span>
+                                                            </label>
+                                                        </b>*@
+                                                        <b><textarea style="margin-top:-5px; color:black; font-weight:bold" readonly rows="2" class="form-control">@ttdatPhong.Phong.Loai_Phong.Mo_Ta</textarea></b>
+                                                    </div>
+
+                                                    @Html.AntiForgeryToken()
+                                                    <div style="float:right; height:100%" class="col-md-4">
+                                                        <input name="maphong" value="@Model[i].Ma_Phong" hidden="hidden" />
+                                                        <button type="submit" style="margin-top: -5px; width: 100%; height: 60px" class="btn btn-search" onclick="if (!confirm('Đặt phòng?') ){ return false; }">Đổi Phòng</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

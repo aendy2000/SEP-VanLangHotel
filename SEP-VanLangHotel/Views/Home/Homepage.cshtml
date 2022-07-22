@@ -23,6 +23,24 @@
     </script>
     Session["error-import-file"] = "empthy";
 }
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
 
 
 <style>

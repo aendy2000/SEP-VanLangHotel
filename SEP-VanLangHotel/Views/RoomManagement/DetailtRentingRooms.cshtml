@@ -33,6 +33,23 @@
     </script>
     Session["error-import-file"] = "empthy";
 }
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "Success",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <style>
@@ -321,23 +338,46 @@
                     <br />
                     <div class="row gx-3 mb-3">
                         <div style="text-align:center" class="col-md-12">
-                            <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = phong.Ma_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-plus"></i> &ensp; Thêm Người</a>
+                            @if ((ttdatPhong.Nguoi_Lon + ttdatPhong.Tre_Em) <= (phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em))
+                            {
+                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search" data-toggle="modal" data-target="#themnguoi"> <i class="fa fa-plus"></i> &ensp; Thêm Người</a>
+                                <span>&emsp;</span>
+                            }
+                            <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = ttdatPhong.Ma_TT_Dat_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-edit"></i> &ensp; Chỉnh Sửa</a>
+                            @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
                             &emsp;
-                            <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = phong.Ma_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-edit"></i> &ensp; Chỉnh Sửa</a>
+                            <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
                             @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
                             &emsp;
                             <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
                             <script>
                                 function xacnhanhuybo() {
+                                    let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
                                     cuteAlert({
                                         type: "question",
-                                        title: "Hủy bỏ đặt phòng?",
-                                        message: "Bạn có chắc chắn muốn hủy bỏ?",
+                                        title: "Thông báo!",
+                                        message: "Xác nhận thanh toán " + info + " VND và trả phòng?",
                                         confirmText: "Xác nhận",
-                                        cancelText: "Không hủy"
+                                        cancelText: "Hủy bỏ"
                                     }).then(function (isConfirm) {
                                         if (isConfirm) {
-                                            window.location.href = '@Url.Action("Homepage", "Home")';
+                                            window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                }
+
+                                function xacnhandoiphong() {
+                                    cuteAlert({
+                                        type: "question",
+                                        title: "Thông báo!",
+                                        message: "Bạn chắc chắn muốn đổi phòng?",
+                                        confirmText: "Xác nhận",
+                                        cancelText: "Hủy bỏ"
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
                                         } else {
                                             return false;
                                         }
@@ -350,6 +390,90 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="themnguoi" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header no-bd">
+                    <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            Thông Tin Đặt Phòng
+                        </span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="@Url.Action("AddMember", "RoomManagement")" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label>họ & Tên</label>
+                                    <input type="text" class="form-control" name="hoten" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ và tên với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>CMND/CCCD</label>
+                                    <input type="text" class="form-control" name="cmndcccd" pattern="[1-9]{,12}" maxlength="12" oninvalid="this.setCustomValidity('Hãy nhập đúng số CMND/CCCD')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Mối quan hệ</label>
+                                    <input type="text" class="form-control" name="moiquanhe" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập mối quan hệ với người đặt phòng, tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Ngày sinh</label>
+                                    <input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy nhập ngày sinh')" oninput="this.setCustomValidity('')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-group-default">
+                                    <label>Giới tính</label>
+                                    @Html.DropDownList("gioiTinh", ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-group-default">
+                                    <label class="small mb-1">Địa chỉ</label>
+                                    <textarea rows="3" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;" class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" name="mattdatphong" hidden value="@ttdatPhong.Ma_TT_Dat_Phong" />
+                                <button style="text-align: center; color: white; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Thêm người?')) { return false; } ">Thêm</button>
+                                &ensp;
+                                <a role="button" style="text-align: center; color: white; width: 150px" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 

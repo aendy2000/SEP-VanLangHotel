@@ -38,7 +38,11 @@ namespace SEP_VanLangHotel.Controllers
                         Session["user-ma"] = user.Ma_Tai_Khoan;
                         Session["user-id"] = user.Ten_Dang_Nhap;
                         if (user.Quyen.Ten_Quyen.Trim().ToLower().Equals("nhân viên"))
+                        {
                             Session["error-import-file"] = "empthy";
+                            Session["thongbaoSuccess"] = "empthy";
+                        }
+
                         Session["user-role"] = user.Quyen.Ten_Quyen;
                         @Session["user-vatatar"] = user.Avatar;
                         return RedirectToAction("Homepage", "Home");

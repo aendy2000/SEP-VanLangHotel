@@ -19,6 +19,7 @@ namespace SEP_VanLangHotel.Models
         public string CMND_CCCD { get; set; }
         public System.DateTime Sinh_Nhat { get; set; }
         public int Gioi_Tinh { get; set; }
+        public string Gioi_Tinh_Name { get; set; }
         public string Dia_Chi { get; set; }
         public string Moi_Quan_He { get; set; }
         public string Ma_TT_Dat_Phong { get; set; }

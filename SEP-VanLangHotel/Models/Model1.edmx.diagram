@@ -4,23 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="24e25763af664ec99186b14f1ea4940b" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="SEP25Team09Model.DS_Tien_Ich" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Khach_San" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Loai_Phong" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Phong" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Quyen" Width="1.5" PointX="3.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Tai_Khoan" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Tien_Ich" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.TOUR" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.TT_Dat_Phong" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.TT_Doi_Phong" Width="1.5" PointX="10.5" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Trang_Thai" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+      <Diagram DiagramId="aad39eeca83f4a8d9bdd992de784c6a3" Name="Diagram1">
+        <EntityTypeShape EntityType="SEP25Team09Model.DS_Tien_Ich" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Khach_San" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Loai_Phong" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Nhan_Than" Width="1.5" PointX="10.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Phong" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Quyen" Width="1.5" PointX="3.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.sysdiagrams" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Tai_Khoan" Width="1.5" PointX="6" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Tien_Ich" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.TOUR" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.TT_Dat_Phong" Width="1.5" PointX="8.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.TT_Doi_Phong" Width="1.5" PointX="13.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team09Model.Trang_Thai" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
         <AssociationConnector Association="SEP25Team09Model.fk_DSTienIch_LoaiPhong" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_DSTienIch_TienIch" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_Phong_KhachSan" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_TaiKhoan_KhachSan" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_Phong_LoaiPhong" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP25Team09Model.fk_TTDatPhong_NhanThan" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_Phong_TrangThai" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_TTDatPhong_Phong" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_TTDoiPhong_Phong" ManuallyRouted="false" />
@@ -29,9 +32,6 @@
         <AssociationConnector Association="SEP25Team09Model.FK_TTDOTPHONG_TAIKHOAN" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.FK_TTDATPHONG_TOUR" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team09Model.fk_TTDoiPhong_TTDatPhong" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SEP25Team09Model.sysdiagrams" Width="1.5" PointX="8.375" PointY="0.75" />
-        <EntityTypeShape EntityType="SEP25Team09Model.Nhan_Than" Width="1.5" PointX="10.5" PointY="12.125" />
-        <AssociationConnector Association="SEP25Team09Model.fk_TTDatPhong_NhanThan" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -353,8 +353,8 @@ namespace SEP_VanLangHotel.Controllers
                                 if (Convert.ToInt32(listDSDatPhong[l][0][7].Trim()) == 1)
                                 {
                                     //Kiểm tra số người
-                                    if (Convert.ToInt32(SoNguoi[l][0]) <= 2 // người lớn <= 2
-                                        && Convert.ToInt32(SoNguoi[l][1]) <= 2) //Trẻ em <= 2
+                                    if ((Convert.ToInt32(SoNguoi[l][0]) == 2 && Convert.ToInt32(SoNguoi[l][1]) <= 2)
+                                        || (Convert.ToInt32(SoNguoi[l][0]) == 1 && (Convert.ToInt32(SoNguoi[l][1]) - 1) <= 2)) //Trẻ em <= 2
                                     {
                                         //Loại 1
                                         foreach (var item in dsLoaiPhongModel)
@@ -395,8 +395,8 @@ namespace SEP_VanLangHotel.Controllers
                                 else if (Convert.ToInt32(listDSDatPhong[l][0][7].Trim()) == 2)
                                 {
                                     //Kiểm tra số người
-                                    if (Convert.ToInt32(SoNguoi[l][0]) <= 2
-                                        && Convert.ToInt32(SoNguoi[l][1]) <= 4)
+                                    if ((Convert.ToInt32(SoNguoi[l][0]) == 2 && Convert.ToInt32(SoNguoi[l][1]) <= 4) 
+                                        || (Convert.ToInt32(SoNguoi[l][0]) == 1 && (Convert.ToInt32(SoNguoi[l][1]) - 1) <= 4))
                                     {
                                         //Loại 2
                                         foreach (var item in dsLoaiPhongModel)
@@ -697,6 +697,7 @@ namespace SEP_VanLangHotel.Controllers
                                 ttdatphong.Ma_Tour = maTour;
                                 ttdatphong.Nguoi_Lon = Convert.ToInt32(soNguoi[i][0]);
                                 ttdatphong.Tre_Em = Convert.ToInt32(soNguoi[i][1]);
+                                ttdatphong.Trang_Thai = 0; //0: Đang ở, 1: Hoàn thành
 
                                 var maphong = listDSDatPhong[i][indexMaPhong][0];
                                 var phongs = model.Phong.First(p => p.Ma_Phong.Equals(maphong));
@@ -727,7 +728,7 @@ namespace SEP_VanLangHotel.Controllers
 
                     }
 
-                    Session["error-import-file"] = "Đặt phòng thành công!";
+                    Session["thongbaoSuccess"] = "Đặt phòng thành công!";
                     return RedirectToAction("Homepage", "Home");
                 }
                 catch (Exception e)
@@ -779,8 +780,8 @@ namespace SEP_VanLangHotel.Controllers
                     if (soGiuong == 1)
                     {
                         //Kiểm tra số người
-                        if (soNguoiLon <= 2
-                            && soTreEm <= 2)
+                        if ((soNguoiLon == 2 && soTreEm <= 2) 
+                            || (soNguoiLon == 1 && (soTreEm - 1) <= 2))
                         {
                             //Loại 1
                             foreach (var item in dsLoaiPhongModel)
@@ -819,7 +820,7 @@ namespace SEP_VanLangHotel.Controllers
                     else if (soGiuong == 2)
                     {
                         //Kiểm tra số người
-                        if (soNguoiLon <= 2 && soTreEm <= 4)
+                        if ((soNguoiLon == 2 && soTreEm <= 4) || (soNguoiLon == 1 && (soTreEm - 1) <= 4))
                         {
                             //Loại 2
                             foreach (var item in dsLoaiPhongModel)
@@ -1042,6 +1043,7 @@ namespace SEP_VanLangHotel.Controllers
                         ttdatphong.Tre_Em = soTreEm;
                         ttdatphong.Tong_Thanh_Toan = dtongThanhToan;
                         ttdatphong.Tien_Coc = tongCoc;
+                        ttdatphong.Trang_Thai = 0;
 
                         var maphongne = Session["maphongorder"].ToString();
                         var phongne = model.Phong.Where(p => p.Ma_Phong.Equals(maphongne)).First();
@@ -1067,8 +1069,8 @@ namespace SEP_VanLangHotel.Controllers
                             model.Nhan_Than.Add(nhanthans[i]);
                             model.SaveChanges();
                         }
-                        Session["error-import-file"] = "Đặt phòng thành công !!";
-                        return RedirectToAction("DetailtRentingRooms", "RoomManagement", new {id = Session["maphongorder"].ToString() });
+                        Session["thongbaoSuccess"] = "Đặt phòng thành công !";
+                        return RedirectToAction("DetailtRentingRooms", "RoomManagement", new { id = Session["maphongorder"].ToString() });
                     }
                     catch (Exception e)
                     {
@@ -1171,7 +1173,6 @@ namespace SEP_VanLangHotel.Controllers
                 return RedirectToAction("ListOfEmptyRooms", "RoomManagement");
             }
             return RedirectToAction("Homepage", "Home");
-
         }
     }
 }

@@ -11,13 +11,6 @@
 
 }
 
-<style>
-    input[type=checkbox] {
-        transform: scale(2);
-        margin-top: 10px;
-        margin-bottom: 7px;
-    }
-</style>
 
 <title>@ViewBag.Title</title>
 <script>
@@ -154,7 +147,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <div class="card-title"><b>Còn @Model.Count phòng trống</b></div>
+                            <div class="card-title"><b>Còn @Model.Count phòng trống phù hợp</b></div>
                         </div>
                     </div>
                     @for (var i = 0; i < Model.Count; i++)

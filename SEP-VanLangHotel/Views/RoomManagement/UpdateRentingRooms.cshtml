@@ -204,15 +204,15 @@
                                     <label class="small mb-1">Giới tính</label>
                                     @if (ttdatPhong.Gioi_Tinh_KH == 0)
                                     {
-                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_Tinh0 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_TinhNu as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                     }
                                     else if (ttdatPhong.Gioi_Tinh_KH == 1)
                                     {
-                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_Tinh1 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_TinhNam as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                     }
                                     else
                                     {
-                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_Tinh2 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                        @Html.DropDownList("gioiTinh", ViewBag.Gioi_TinhKhac as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                     }
                                     @*@Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })*@
                                 </div>
@@ -278,15 +278,15 @@
                                         <label class="small mb-1">Giới tính</label>
                                         @if (@Model[i].Gioi_Tinh == 0)
                                         {
-                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh, ViewBag.Gioi_Tinh0 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh_Name, ViewBag.Gioi_TinhNu as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                         }
                                         else if (@Model[i].Gioi_Tinh == 1)
                                         {
-                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh, ViewBag.Gioi_Tinh1 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh_Name, ViewBag.Gioi_TinhNam as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                         }
                                         else
                                         {
-                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh, ViewBag.Gioi_Tinh2 as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => Model[i].Gioi_Tinh_Name, ViewBag.Gioi_TinhKhac as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                         }
                                     </div>
                                 </div>
@@ -304,10 +304,26 @@
                         <br />
                         <div class="row gx-3 mb-3">
                             <div style="text-align:center" class="col-md-12">
-                                <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false; }" class="btn btn-search">Lưu</button>
+                                <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận lưu chỉnh sửa?')) { return false; }" class="btn btn-search">Lưu</button>
                                 &emsp;
-                                <a href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = phong.Ma_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> Hủy</a>
-
+                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search" onclick="xacnhanhuybo()"> Hủy</a>
+                                <script>
+                                    function xacnhanhuybo() {
+                                        cuteAlert({
+                                            type: "question",
+                                            title: "Thông báo!",
+                                            message: "Xác nhận hủy bỏ thay đổi?",
+                                            confirmText: "Xác nhận",
+                                            cancelText: "Không hủy"
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = ttdatPhong.Ma_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
