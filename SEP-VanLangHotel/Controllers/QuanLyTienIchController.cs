@@ -24,5 +24,32 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+        [HttpPost]
+        public ActionResult AddNewUtilities(string tentienich)
+        {
+            if (Session["user-role"].Equals("Quản lý"))
+            {
+                if (!string.IsNullOrEmpty(tentienich))
+                {
+                    try
+                    {
+                        Tien_Ich newTienIch = new Tien_Ich();
+                        newTienIch.Ma_Tien_Ich = "1";
+                        newTienIch.Ten_Tien_Ich = tentienich;
+                        model.Tien_Ich.Add(newTienIch);
+                        model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Thêm thành công tiện ích: " + newTienIch.Ten_Tien_Ich;
+                        return RedirectToAction("Home");
+                    }
+                    catch (Exception e)
+                    {
+                        Session["thongbao-loi"] = e.Message;
+                        return RedirectToAction("Home");
+                    }
+                }
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
     }
+
 }
