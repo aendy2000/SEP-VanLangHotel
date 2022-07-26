@@ -115,5 +115,23 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+        public ActionResult SearchUtilities(string keyword) //Tìm kiếm tiện ích
+        {
+            if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
+            {
+                if (keyword.Equals("") || keyword == null)
+                {
+                    var tienich = model.Tien_Ich.ToList();
+                    return View("Home", tienich);
+                }
+                else
+                {
+                    var tienich = model.Tien_Ich.Where(t => t.Ten_Tien_Ich.ToUpper().Contains(keyword.ToUpper())).ToList();
+                    ViewBag.Keywork = keyword;
+                    return View("Home",tienich);
+                }
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
     }
 }
