@@ -50,6 +50,51 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
-    }
+        [HttpPost]
+        public ActionResult UpdateUtilities(string matienich, string tentienich)
+        {
+            if (Session["user-role"].Equals("Quản lý"))
+            {
+                if (!string.IsNullOrEmpty(matienich) && !string.IsNullOrEmpty(tentienich))
+                {
+                    var tienIch = model.Tien_Ich.First(t => t.Ma_Tien_Ich.Equals(matienich));
+                    if (tienIch != null)
+                    {
+                        try
+                        {
+                            var lstTienIch = model.Tien_Ich.Where(t => !t.Ma_Tien_Ich.Equals(matienich)).ToList();
+                            bool checkTienIch = false;
+                            foreach (var tienIchs in lstTienIch)
+                            {
+                                if (tienIchs.Ten_Tien_Ich.ToLower().Trim().Equals(tentienich.ToLower().Trim()))
+                                    checkTienIch = true;
+                            }
 
+                            if (checkTienIch == true)
+                            {
+                                Session["thongbao-loi"] = "Tiện ích này đã tồn tại!";
+                                return RedirectToAction("Home");
+                            }
+                            else
+                            {
+                                tienIch.Ten_Tien_Ich = tentienich;
+                                model.Entry(tienIch).State = EntityState.Modified;
+                                model.SaveChanges();
+                                Session["thongbaoSuccess"] = "Chỉnh sửa thành công!";
+                                return RedirectToAction("Home");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Session["thongbao-loi"] = e.Message;
+                            return RedirectToAction("Home");
+                        }
+                    }
+                }
+                return RedirectToAction("Home");
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
+
+    }
 }
