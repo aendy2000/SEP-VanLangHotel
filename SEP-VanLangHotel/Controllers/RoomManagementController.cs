@@ -546,7 +546,7 @@ namespace SEP_VanLangHotel.Controllers
                             model.Entry(phongs).State = EntityState.Modified;
                             model.SaveChanges();
                             Session["thongbaoSuccess"] = "Trả phòng thành công!";
-                            return RedirectToAction("Homepage", "Home");
+                            return RedirectToAction("ListOfRentingRooms");
                         }
                         else
                         {
@@ -556,7 +556,7 @@ namespace SEP_VanLangHotel.Controllers
                             model.Entry(phongs).State = EntityState.Modified;
                             model.SaveChanges();
                             Session["thongbaoSuccess"] = "Trả phòng thành công!";
-                            return RedirectToAction("Homepage", "Home");
+                            return RedirectToAction("ListOfRentingRooms");
                         }
                         //return RedirectToAction("DetailtHistory", new { id = id });
                     }
