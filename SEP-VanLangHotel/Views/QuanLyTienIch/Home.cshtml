@@ -1,0 +1,271 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.Tien_Ich>
+
+@{
+    ViewBag.Title = "QUẢN LÝ TIỆN ÍCH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
+}
+
+
+@if (Convert.ToBoolean(Session["quyen-tontai"]) == true)
+{
+    <body onload="kiemtraquyen()">
+    </body>
+    <script>
+        function kiemtraquyen() {
+            cuteAlert({
+                type: "error",
+                title: "Quyền đã tồn tài!",
+                message: "Quyền đã tồn tại, vui lòng kiểm tra lại!",
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["quyen-tontai"] = null;
+}
+@if (Session["thongbao-loi"] != null)
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["thongbao-loi"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["thongbao-loi"] = null;
+}
+@if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "Success",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <div class="card-title">Danh sách Quyền</div>
+                        <button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                            <i class="fa fa-plus"></i>
+                            Thêm tiện ích mới
+                        </button>
+                        @*<a style="color:white;" type="button" class="btn btn-secondary btn-round ml-auto" href="@Url.Action("AddNewAccount", "AccountManagement")">
+                                <i class="fa fa-plus"></i>
+                                Thêm tài khoản mới
+                            </a>*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Thêm tiện ích-->
+                    <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Thêm tiện ích mới
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="post" action="@Url.Action("AddNewUtilities", "QuanLyTienIch")">
+                                    <div class="modal-body">
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Tên tiện ích</label>
+                                                <input name="tentienich" type="text" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;" class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button style="text-align: center; width: 150px" type="submit" class="btn btn-search" onclick="if (!confirm('Thêm tiện ích mới?')) { return false; }">Thêm</button>
+                                                &ensp;
+                                                <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã tiện ích</th>
+                                    <th>Tên tiện ích</th>
+                                    <th style="width: 3%">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <!-- sửa tiện ích-->
+                                            <div class="modal fade" id="@item.Ma_Tien_Ich" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header no-bd">
+                                                            <h5 class="modal-title">
+                                                                <span class="fw-mediumbold">
+                                                                    Chỉnh tiện ích
+                                                                </span>
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <form method="post" action="@Url.Action("UpdateUtilities", "QuanLyTienIch")">
+                                                            <div class="modal-body">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group form-group-default">
+                                                                        <label>Tên tiện ích</label>
+                                                                        <input name="matienich" type="hidden" class="hidden" value="@item.Ma_Tien_Ich">
+                                                                        <input name="tentienich" type="text" class="form-control" value="@item.Ten_Tien_Ich" required pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào tên tiện ích với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div style="text-align:center;" class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <button style="width: 150px; color: white; text-align: center" type="submit" class="btn btn-search" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false; }">Lưu</button>
+                                                                        &ensp;
+                                                                        <a role="button" style="width:150px; color:white;" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @item.Ma_Tien_Ich
+                                        </td>
+                                        <td>@item.Ten_Tien_Ich</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a data-toggle="modal" data-target="#@item.Ma_Tien_Ich" style="width:1px" role="button" title="Chỉnh sửa quyền" class="btn btn-link btn-info btn-lg" data-original-title="Sửa quyền">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+
+                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tiện ích" onclick="xoaquyen()">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                                @*xác nhận Xóa tiện ích*@
+                                                <script>
+                                                    function xoaquyen() {
+                                                        cuteAlert({
+                                                            type: "question",
+                                                            title: "Xóa tiện ích?",
+                                                            message: "Bạn có chắc chắn muốn xóa tiện ích @item.Ten_Tien_Ich?",
+                                                            confirmText: "Xóa",
+                                                            cancelText: "Hủy"
+
+                                                        }).then(function (isConfirm) {
+                                                            if (isConfirm) {
+                                                                window.location.href = '@Url.Action("DeleteUtilities", "QuanLyTienIch", new { id = item.Ma_Tien_Ich })';
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>
