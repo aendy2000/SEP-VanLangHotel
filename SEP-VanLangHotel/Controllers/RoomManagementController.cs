@@ -83,57 +83,106 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].Equals("Nhân viên"))
             {
                 var phongDangChoThue = model.TT_Dat_Phong.Where(p => p.Trang_Thai == 0).ToList();
+                Session["TT_DOI_PHONG"] = model.TT_Doi_Phong.ToList();
                 return View(phongDangChoThue);
             }
             return RedirectToAction("Homepage", "Home");
         }
         //Xem chi tiết phòng đang cho thuê
-        public ActionResult DetailtRentingRooms(string id)
+        public ActionResult DetailtRentingRooms(string id) //Ma tt dat phòng
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
                 if (!string.IsNullOrEmpty(id))
                 {
                     var ttdatPhong = model.TT_Dat_Phong.FirstOrDefault(t => t.Ma_TT_Dat_Phong.Equals(id));
-                    var phong = ttdatPhong.Phong;
+                    int landoi = ttdatPhong.Doi_Tra;
+                    if (landoi == 0)
+                    {
+                        var phong = ttdatPhong.Phong;
 
-                    var mattDatPhong = ttdatPhong.Ma_TT_Dat_Phong;
-                    var ttNhanThan = model.Nhan_Than.Where(tt => tt.Ma_TT_Dat_Phong.Equals(mattDatPhong)).ToList();
+                        var mattDatPhong = ttdatPhong.Ma_TT_Dat_Phong;
+                        var ttNhanThan = model.Nhan_Than.Where(tt => tt.Ma_TT_Dat_Phong.Equals(mattDatPhong)).ToList();
 
-                    Session["thongtindatphong"] = ttdatPhong;
-                    Session["thongtinphong"] = phong;
+                        Session["thongtindatphong"] = ttdatPhong;
+                        Session["thongtinphong"] = phong;
 
-                    Session["thoigian-den"] = ttdatPhong.Thoi_Gian_Dat;
-                    Session["thoigian-ve"] = ttdatPhong.Thoi_Gian_Doi_Tra;
+                        Session["thoigian-den"] = ttdatPhong.Thoi_Gian_Dat;
+                        Session["thoigian-ve"] = ttdatPhong.Thoi_Gian_Doi_Tra;
 
-                    Session["songuoi-lon"] = ttdatPhong.Nguoi_Lon;
-                    Session["songuoi-treem"] = ttdatPhong.Tre_Em;
-                    Session["sogiuong"] = phong.Loai_Phong.So_Giuong;
+                        Session["songuoi-lon"] = ttdatPhong.Nguoi_Lon;
+                        Session["songuoi-treem"] = ttdatPhong.Tre_Em;
+                        Session["sogiuong"] = phong.Loai_Phong.So_Giuong;
 
-                    int songay = (int)ttdatPhong.Thoi_Gian_Doi_Tra.Subtract(ttdatPhong.Thoi_Gian_Dat).TotalDays + 1;
-                    Session["tong-thanhtoan"] = ttdatPhong.Tong_Thanh_Toan;
-                    Session["tong-coc"] = ttdatPhong.Tien_Coc;
+                        int songay = (int)ttdatPhong.Thoi_Gian_Doi_Tra.Subtract(ttdatPhong.Thoi_Gian_Dat).TotalDays + 1;
+                        Session["tong-thanhtoan"] = ttdatPhong.Tong_Thanh_Toan;
+                        Session["tong-coc"] = ttdatPhong.Tien_Coc;
 
-                    List<string> gioitinhA = new List<string>();
-                    gioitinhA.Add("Nam");
-                    gioitinhA.Add("Nữ");
-                    gioitinhA.Add("Khác");
-                    ViewBag.Gioi_TinhNam = new SelectList(gioitinhA);
-                    ViewBag.Gioi_Tinh = new SelectList(gioitinhA);
+                        List<string> gioitinhA = new List<string>();
+                        gioitinhA.Add("Nam");
+                        gioitinhA.Add("Nữ");
+                        gioitinhA.Add("Khác");
+                        ViewBag.Gioi_TinhNam = new SelectList(gioitinhA);
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinhA);
 
-                    List<string> gioitinhB = new List<string>();
-                    gioitinhB.Add("Nữ");
-                    gioitinhB.Add("Nam");
-                    gioitinhB.Add("Khác");
-                    ViewBag.Gioi_TinhNu = new SelectList(gioitinhB);
+                        List<string> gioitinhB = new List<string>();
+                        gioitinhB.Add("Nữ");
+                        gioitinhB.Add("Nam");
+                        gioitinhB.Add("Khác");
+                        ViewBag.Gioi_TinhNu = new SelectList(gioitinhB);
 
-                    List<string> gioitinhC = new List<string>();
-                    gioitinhC.Add("Khác");
-                    gioitinhC.Add("Nam");
-                    gioitinhC.Add("Nữ");
-                    ViewBag.Gioi_TinhKhac = new SelectList(gioitinhC);
+                        List<string> gioitinhC = new List<string>();
+                        gioitinhC.Add("Khác");
+                        gioitinhC.Add("Nam");
+                        gioitinhC.Add("Nữ");
+                        ViewBag.Gioi_TinhKhac = new SelectList(gioitinhC);
 
-                    return View(ttNhanThan);
+                        return View(ttNhanThan);
+                    }
+                    else
+                    {
+                        var ttdoiphong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id) && t.Lan_Doi == landoi);
+                        var phong = ttdoiphong.Phong;
+
+                        var mattDatPhong = ttdatPhong.Ma_TT_Dat_Phong;
+                        var ttNhanThan = model.Nhan_Than.Where(tt => tt.Ma_TT_Dat_Phong.Equals(mattDatPhong)).ToList();
+
+                        Session["thongtindatphong"] = ttdatPhong;
+                        Session["thongtinphong"] = phong;
+
+                        Session["thoigian-den"] = ttdatPhong.Thoi_Gian_Dat;
+                        Session["thoigian-ve"] = ttdoiphong.TG_Doi_Tra;
+
+                        Session["songuoi-lon"] = ttdatPhong.Nguoi_Lon;
+                        Session["songuoi-treem"] = ttdatPhong.Tre_Em;
+                        Session["sogiuong"] = phong.Loai_Phong.So_Giuong;
+
+                        int songay = (int)ttdoiphong.TG_Doi_Tra.Subtract(ttdatPhong.Thoi_Gian_Dat).TotalDays + 1;
+                        Session["tong-thanhtoan"] = ttdatPhong.Tong_Thanh_Toan;
+                        Session["tong-coc"] = ttdatPhong.Tien_Coc;
+
+                        List<string> gioitinhA = new List<string>();
+                        gioitinhA.Add("Nam");
+                        gioitinhA.Add("Nữ");
+                        gioitinhA.Add("Khác");
+                        ViewBag.Gioi_TinhNam = new SelectList(gioitinhA);
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinhA);
+
+                        List<string> gioitinhB = new List<string>();
+                        gioitinhB.Add("Nữ");
+                        gioitinhB.Add("Nam");
+                        gioitinhB.Add("Khác");
+                        ViewBag.Gioi_TinhNu = new SelectList(gioitinhB);
+
+                        List<string> gioitinhC = new List<string>();
+                        gioitinhC.Add("Khác");
+                        gioitinhC.Add("Nam");
+                        gioitinhC.Add("Nữ");
+                        ViewBag.Gioi_TinhKhac = new SelectList(gioitinhC);
+
+                        return View(ttNhanThan);
+                    }
+
                 }
                 return RedirectToAction("ListOfRentingRooms");
             }
@@ -165,6 +214,16 @@ namespace SEP_VanLangHotel.Controllers
 
                     var ttdatPhong = model.TT_Dat_Phong.FirstOrDefault(t => t.Ma_TT_Dat_Phong.Equals(id));
                     var phong = ttdatPhong.Phong;
+                    int landoi = ttdatPhong.Doi_Tra;
+                    Session["thoigian-ve"] = ttdatPhong.Thoi_Gian_Doi_Tra;
+
+                    if (landoi != 0)
+                    {
+                        var ttdoiphong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id) && t.Lan_Doi == landoi);
+                        phong = ttdoiphong.Phong;
+                        Session["thoigian-ve"] = ttdoiphong.TG_Doi_Tra;
+                    }
+
                     var mattDatPhong = ttdatPhong.Ma_TT_Dat_Phong;
                     var ttNhanThan = model.Nhan_Than.Where(tt => tt.Ma_TT_Dat_Phong.Equals(mattDatPhong)).ToList();
 
@@ -172,7 +231,6 @@ namespace SEP_VanLangHotel.Controllers
                     Session["thongtinphong"] = phong;
 
                     Session["thoigian-den"] = ttdatPhong.Thoi_Gian_Dat;
-                    Session["thoigian-ve"] = ttdatPhong.Thoi_Gian_Doi_Tra;
 
                     Session["songuoi-lon"] = ttdatPhong.Nguoi_Lon;
                     Session["songuoi-treem"] = ttdatPhong.Tre_Em;
@@ -316,20 +374,140 @@ namespace SEP_VanLangHotel.Controllers
             {
                 if (!string.IsNullOrEmpty(id))
                 {
+
                     var TTDatPhong = model.TT_Dat_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id));
-                    var maLoaiPhong = TTDatPhong.Phong.Loai_Phong.Ma_Loai_Phong;
-                    var maPhong = TTDatPhong.Ma_Phong;
-                    var lstPhong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maLoaiPhong) && !p.Ma_Phong.Equals(maPhong)).ToList();
+                    int doitra = TTDatPhong.Doi_Tra;
 
-                    Session["thongtindatphong"] = TTDatPhong;
-                    Session["thoigian-den"] = TTDatPhong.Thoi_Gian_Dat;
-                    Session["thoigian-ve"] = TTDatPhong.Thoi_Gian_Doi_Tra;
-                    Session["songuoi-lon"] = TTDatPhong.Nguoi_Lon;
-                    Session["songuoi-treem"] = TTDatPhong.Tre_Em;
-                    Session["tong-thanhtoan"] = TTDatPhong.Tong_Thanh_Toan;
-                    Session["tong-coc"] = TTDatPhong.Tien_Coc;
+                    if (doitra == 0)
+                    {
+                        var maLoaiPhong = TTDatPhong.Phong.Loai_Phong.Ma_Loai_Phong;
+                        var maPhong = TTDatPhong.Ma_Phong;
+                        var lstPhong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maLoaiPhong) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
 
-                    return View(lstPhong);
+                        Session["thongtindatphong"] = TTDatPhong;
+                        Session["thoigian-den"] = TTDatPhong.Thoi_Gian_Dat;
+                        Session["thoigian-ve"] = TTDatPhong.Thoi_Gian_Doi_Tra;
+                        Session["songuoi-lon"] = TTDatPhong.Nguoi_Lon;
+                        Session["songuoi-treem"] = TTDatPhong.Tre_Em;
+                        Session["tong-thanhtoan"] = TTDatPhong.Tong_Thanh_Toan;
+                        Session["tong-coc"] = TTDatPhong.Tien_Coc;
+                        return View(lstPhong);
+                    }
+                    else
+                    {
+                        string mattdatphongs = TTDatPhong.Ma_TT_Dat_Phong;
+                        var TTDoiPhong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphongs) && t.Lan_Doi == doitra);
+                        var maLoaiPhong = TTDatPhong.Phong.Loai_Phong.Ma_Loai_Phong;
+                        var maPhong = TTDoiPhong.Ma_Phong;
+                        var lstPhong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maLoaiPhong) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
+
+                        Session["thongtindatphong"] = TTDatPhong;
+                        Session["thoigian-den"] = TTDatPhong.Thoi_Gian_Dat;
+                        Session["thoigian-ve"] = TTDatPhong.Thoi_Gian_Doi_Tra;
+                        Session["songuoi-lon"] = TTDatPhong.Nguoi_Lon;
+                        Session["songuoi-treem"] = TTDatPhong.Tre_Em;
+                        Session["tong-thanhtoan"] = TTDatPhong.Tong_Thanh_Toan;
+                        Session["tong-coc"] = TTDatPhong.Tien_Coc;
+                        return View(lstPhong);
+
+                    }
+                }
+                return RedirectToAction("ListOfRentingRooms");
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
+
+        public ActionResult SaveDataChangeRooms(string maphong, string mattdatphong) //Mã TT dat phòng
+        {
+            if (Session["user-role"].Equals("Nhân viên"))
+            {
+                if (!string.IsNullOrEmpty(maphong) && !string.IsNullOrEmpty(mattdatphong))
+                {
+                    try
+                    {
+                        var ttdatphong = model.TT_Dat_Phong.First(p => p.Ma_TT_Dat_Phong.Equals(mattdatphong));
+                        int doitra = ttdatphong.Doi_Tra;
+                        if (doitra == 0)
+                        {
+                            string maphongcu = ttdatphong.Ma_Phong;
+
+                            int landoi = ttdatphong.Doi_Tra + 1;
+                            DateTime ngaytraphong = ttdatphong.Thoi_Gian_Doi_Tra;
+                            DateTime thoigiandoi = DateTime.Now;
+
+                            ttdatphong.Doi_Tra = landoi;
+                            ttdatphong.Thoi_Gian_Doi_Tra = thoigiandoi;
+
+                            var phongCu = model.Phong.First(p => p.Ma_Phong.Equals(maphongcu));
+                            phongCu.Ma_Trang_Thai = "TT202207050001";
+
+                            var phongMoi = model.Phong.First(p => p.Ma_Phong.Equals(maphong));
+                            phongMoi.Ma_Trang_Thai = "TT202207050002";
+
+                            model.Entry(phongCu).State = EntityState.Modified;
+                            model.Entry(phongMoi).State = EntityState.Modified;
+                            model.Entry(ttdatphong).State = EntityState.Modified;
+                            model.Entry(ttdatphong).State = EntityState.Modified;
+
+                            TT_Doi_Phong ttdoiphong = new TT_Doi_Phong();
+                            ttdoiphong.Ma_TT_Doi_Phong = "1";
+                            ttdoiphong.Lan_Doi = landoi;
+                            ttdoiphong.Doi_Tra = 0;
+                            ttdoiphong.TG_Nhan_Phong = thoigiandoi;
+                            ttdoiphong.TG_Doi_Tra = ngaytraphong;
+                            ttdoiphong.Ma_TT_Dat_Phong = mattdatphong;
+                            ttdoiphong.Ma_Phong = maphong;
+                            ttdoiphong.Ma_Tai_Khoan = Session["user-ma"].ToString();
+
+                            model.TT_Doi_Phong.Add(ttdoiphong);
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Đổi phòng thành công !";
+                        }
+                        else
+                        {
+                            var ttdoiphong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == doitra);
+                            string maphongcu = ttdoiphong.Ma_Phong;
+
+                            int landoi = doitra + 1;
+                            DateTime ngaytraphong = ttdoiphong.TG_Doi_Tra;
+                            DateTime thoigiandoi = DateTime.Now;
+
+                            ttdatphong.Doi_Tra = landoi;
+                            ttdoiphong.TG_Doi_Tra = thoigiandoi;
+                            ttdoiphong.Doi_Tra = 1;
+
+                            var phongCu = model.Phong.First(p => p.Ma_Phong.Equals(maphongcu));
+                            phongCu.Ma_Trang_Thai = "TT202207050001";
+
+                            var phongMoi = model.Phong.First(p => p.Ma_Phong.Equals(maphong));
+                            phongMoi.Ma_Trang_Thai = "TT202207050002";
+
+                            model.Entry(phongCu).State = EntityState.Modified;
+                            model.Entry(phongMoi).State = EntityState.Modified;
+                            model.Entry(ttdatphong).State = EntityState.Modified;
+                            model.Entry(ttdoiphong).State = EntityState.Modified;
+
+                            TT_Doi_Phong ttdoiphongMoi = new TT_Doi_Phong();
+                            ttdoiphongMoi.Ma_TT_Doi_Phong = "1";
+                            ttdoiphongMoi.Lan_Doi = landoi;
+                            ttdoiphongMoi.Doi_Tra = 0;
+                            ttdoiphongMoi.TG_Nhan_Phong = thoigiandoi;
+                            ttdoiphongMoi.TG_Doi_Tra = ngaytraphong;
+                            ttdoiphongMoi.Ma_TT_Dat_Phong = mattdatphong;
+                            ttdoiphongMoi.Ma_Phong = maphong;
+                            ttdoiphongMoi.Ma_Tai_Khoan = Session["user-ma"].ToString();
+
+                            model.TT_Doi_Phong.Add(ttdoiphongMoi);
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Đổi phòng thành công !";
+                        }
+                        return RedirectToAction("DetailtRentingRooms", new { id = mattdatphong });
+                    }
+                    catch (Exception e)
+                    {
+                        Session["error-import-file"] = "Lỗi " + e.Message;
+                        return RedirectToAction("DetailtRentingRooms", new { id = mattdatphong });
+                    }
                 }
                 return RedirectToAction("ListOfRentingRooms");
             }
@@ -347,7 +525,7 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
-        public ActionResult CheckOutRooms(string id)
+        public ActionResult CheckOutRooms(string id) //ma tt dat phong
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
@@ -360,12 +538,26 @@ namespace SEP_VanLangHotel.Controllers
                         model.Entry(TTDatPhong).State = EntityState.Modified;
                         model.SaveChanges();
 
-                        var phongs = TTDatPhong.Phong;
-                        phongs.Ma_Trang_Thai = "TT202207050001";
-                        model.Entry(phongs).State = EntityState.Modified;
-                        model.SaveChanges();
-                        Session["thongbaoSuccess"] = "Trả phòng thành công!";
-                        return RedirectToAction("Homepage", "Home");
+                        int landoi = TTDatPhong.Doi_Tra;
+                        if(landoi == 0)
+                        {
+                            var phongs = TTDatPhong.Phong;
+                            phongs.Ma_Trang_Thai = "TT202207050001";
+                            model.Entry(phongs).State = EntityState.Modified;
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Trả phòng thành công!";
+                            return RedirectToAction("Homepage", "Home");
+                        }
+                        else
+                        {
+                            var ttdoiphong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id) && t.Lan_Doi == landoi);
+                            var phongs = ttdoiphong.Phong;
+                            phongs.Ma_Trang_Thai = "TT202207050001";
+                            model.Entry(phongs).State = EntityState.Modified;
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Trả phòng thành công!";
+                            return RedirectToAction("Homepage", "Home");
+                        }
                         //return RedirectToAction("DetailtHistory", new { id = id });
                     }
                     catch (Exception e)

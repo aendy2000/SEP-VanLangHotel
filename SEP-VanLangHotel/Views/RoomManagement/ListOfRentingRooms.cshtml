@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.TT_Dat_Phong>
-
+@using SEP_VanLangHotel.Models
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    var ttdoiphong = Session["TT_DOI_PHONG"] as List<TT_Doi_Phong>;
+}
 @{
     ViewBag.Title = "QUẢN LÝ PHÒNG ĐANG CHO THUÊ";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -44,9 +47,17 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-
+                                    var mattdatphong = item.Ma_TT_Dat_Phong;
+                                    var landoi = item.Doi_Tra;
                                     <tr>
-                                        <td>@item.Phong.So_Phong</td>
+                                        @if (item.Doi_Tra == 0)
+                                        {
+                                            <td>@item.Phong.So_Phong</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).Phong.So_Phong</td>
+                                        }
                                         <td>@item.Ho_Ten_KH</td>
                                         <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
                                         @if (item.Gioi_Tinh_KH == 1)
@@ -64,7 +75,15 @@
                                         }
                                         <td>@item.SDT_KH</td>
                                         <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                        @if (item.Doi_Tra == 0)
+                                        {
+                                            <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+
+                                        }
+                                        else
+                                        {
+                                    <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })" target="_blank">

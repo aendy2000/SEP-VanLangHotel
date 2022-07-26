@@ -1049,8 +1049,8 @@ namespace SEP_VanLangHotel.Controllers
 
                     model.TT_Dat_Phong.Add(ttdatphong);
                     model.Entry(phongne).State = EntityState.Modified;
-
                     model.SaveChanges();
+
                     if (nhanthans != null)
                     {
                         for (int i = 0; i < nhanthans.Count; i++)
@@ -1071,7 +1071,7 @@ namespace SEP_VanLangHotel.Controllers
                         }
                     }
                     Session["thongbaoSuccess"] = "Đặt phòng thành công !";
-                    return RedirectToAction("DetailtRentingRooms", "RoomManagement", new { id = Session["maphongorder"].ToString() });
+                    return RedirectToAction("DetailtRentingRooms", "RoomManagement", new { id = maTTdp });
                 }
                 catch (Exception e)
                 {

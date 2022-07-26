@@ -134,7 +134,7 @@
 
                                             </div>
                                         </div>
-                                        @using (Html.BeginForm("AddDataOrderRoom", "OrderRoom", FormMethod.Get, new { enctype = "multipart/form-data" }))
+                                        @using (Html.BeginForm("SaveDataChangeRooms", "RoomManagement", FormMethod.Get, new { enctype = "multipart/form-data" }))
                                         {
                                             <div class="col-md-12">
                                                 <div class="row gx-3 mb-3">
@@ -151,10 +151,11 @@
                                                     </div>
 
                                                     @Html.AntiForgeryToken()
-                                                    <div style="float:right; height:100%" class="col-md-4">
-                                                        <input name="maphong" value="@Model[i].Ma_Phong" hidden="hidden" />
-                                                        <button type="submit" style="margin-top: -5px; width: 100%; height: 60px" class="btn btn-search" onclick="if (!confirm('Đặt phòng?') ){ return false; }">Đổi Phòng</button>
-                                                    </div>
+                                                <div style="float:right; height:100%" class="col-md-4">
+                                                    <input name="mattdatphong" value="@ttdatPhong.Ma_TT_Dat_Phong" hidden="hidden" />
+                                                    <input name="maphong" value="@Model[i].Ma_Phong" hidden="hidden" />
+                                                    <button type="submit" style="margin-top: -5px; width: 100%; height: 60px" class="btn btn-search" onclick="if (!confirm('Đổi phòng?') ){ return false; }">Đổi Phòng</button>
+                                                </div>
 
                                                 </div>
                                             </div>
