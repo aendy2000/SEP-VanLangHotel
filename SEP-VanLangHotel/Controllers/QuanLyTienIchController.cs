@@ -95,6 +95,25 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
-
+        public ActionResult DeleteUtilities(string id)
+        {
+            if (Session["user-role"].Equals("Quản lý"))
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var tienIch = model.Tien_Ich.First(t => t.Ma_Tien_Ich.Equals(id));
+                    if (tienIch != null)
+                    {
+                        string tentienIch = tienIch.Ten_Tien_Ich;
+                        model.Tien_Ich.Remove(tienIch);
+                        model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Đã xóa tiện ích " + tentienIch;
+                        return RedirectToAction("Home");
+                    }
+                }
+                return RedirectToAction("Home");
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
     }
 }
