@@ -262,6 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountManagementController.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Controllers\AuthoritiesManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderRoomController.cs" />
+    <Compile Include="Controllers\QuanLyTrangThaiController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -901,9 +903,11 @@
     <Content Include="Views\RoomManagement\DetailtRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\UpdateRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\ChangeRooms.cshtml" />
+    <Content Include="Views\QuanLyTrangThai\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
     <Folder Include="Views\BookRoom\" />
   </ItemGroup>
   <ItemGroup>
