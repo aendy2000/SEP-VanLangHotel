@@ -33,13 +33,23 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     try
                     {
-                        Tien_Ich newTienIch = new Tien_Ich();
-                        newTienIch.Ma_Tien_Ich = "1";
-                        newTienIch.Ten_Tien_Ich = tentienich;
-                        model.Tien_Ich.Add(newTienIch);
-                        model.SaveChanges();
-                        Session["thongbaoSuccess"] = "Thêm thành công tiện ích: " + newTienIch.Ten_Tien_Ich;
-                        return RedirectToAction("Home");
+                        var tienich = model.Tien_Ich.ToList();
+                        foreach (var item in tienich)
+                        {
+                            if (item.Ten_Tien_Ich.ToLower().Equals(tentienich.ToLower().Trim()))
+                            {
+                                Session["thongbao-loi"] = "Tiện ích đã tồn tại!";
+                                return RedirectToAction("Home");
+                            }
+                        }
+                            Tien_Ich newTienIch = new Tien_Ich();
+                            newTienIch.Ma_Tien_Ich = "1";
+                            newTienIch.Ten_Tien_Ich = tentienich;
+                            model.Tien_Ich.Add(newTienIch);
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Thêm thành công tiện ích: " + newTienIch.Ten_Tien_Ich;
+                            return RedirectToAction("Home");
+                        
                     }
                     catch (Exception e)
                     {
@@ -128,7 +138,7 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     var tienich = model.Tien_Ich.Where(t => t.Ten_Tien_Ich.ToUpper().Contains(keyword.ToUpper())).ToList();
                     ViewBag.Keywork = keyword;
-                    return View("Home",tienich);
+                    return View("Home", tienich);
                 }
             }
             return RedirectToAction("Homepage", "Home");
