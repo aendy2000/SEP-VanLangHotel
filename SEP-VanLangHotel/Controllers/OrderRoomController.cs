@@ -725,9 +725,9 @@ namespace SEP_VanLangHotel.Controllers
                                 nhanthan.Ma_TT_Dat_Phong = maTTdp;
                                 model.Nhan_Than.Add(nhanthan);
                                 model.SaveChanges();
+                                Thread.Sleep(1);
                             }
                         }
-
                     }
 
                     Session["thongbaoSuccess"] = "Đặt phòng thành công!";
@@ -735,7 +735,7 @@ namespace SEP_VanLangHotel.Controllers
                 }
                 catch (Exception e)
                 {
-                    Session["error-import-file"] = "Lỗi: " + e.Message.ToString() + ": " + e.HResult;
+                    Session["error-import-file"] = "Lỗi: " + e.Message.ToString();
                     List<string> gioitinhs = new List<string>();
                     gioitinhs.Add("Nam");
                     gioitinhs.Add("Nữ");
@@ -981,7 +981,6 @@ namespace SEP_VanLangHotel.Controllers
                         nhanThan.Moi_Quan_He = null;
                         nhanThans.Add(nhanThan);
                     }
-
                     return View(nhanThans);
                 }
             }
@@ -1070,6 +1069,7 @@ namespace SEP_VanLangHotel.Controllers
                             nhanthans[i].Ma_TT_Dat_Phong = maTTdp;
                             model.Nhan_Than.Add(nhanthans[i]);
                             model.SaveChanges();
+                            Thread.Sleep(1);
                         }
                     }
                     Session["thongbaoSuccess"] = "Đặt phòng thành công !";
