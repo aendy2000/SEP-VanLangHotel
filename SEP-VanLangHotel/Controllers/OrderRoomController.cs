@@ -590,7 +590,9 @@ namespace SEP_VanLangHotel.Controllers
                 }
                 catch (Exception e)
                 {
-                    Session["error-import-file"] = "Lỗi " + e.Message.ToString();
+                    Session["error-import-file"] = "Lỗi: " + e.Message.ToString();
+                    return RedirectToAction("Homepage", "Home");
+
                 }
             }
             return RedirectToAction("Homepage", "Home");
@@ -699,8 +701,8 @@ namespace SEP_VanLangHotel.Controllers
                                 ttdatphong.Tre_Em = Convert.ToInt32(soNguoi[i][1]);
                                 ttdatphong.Trang_Thai = 0; //0: Đang ở, 1: Hoàn thành
 
-                                var maphong = listDSDatPhong[i][indexMaPhong][0];
-                                var phongs = model.Phong.First(p => p.Ma_Phong.Equals(maphong));
+                                string maphong = listDSDatPhong[i][indexMaPhong][0].Trim().ToUpper();
+                                var phongs = model.Phong.Where(p => p.Ma_Phong.Equals(maphong)).First();
                                 phongs.Ma_Trang_Thai = "TT202207050002";
                                 decimal tongtt = phongs.Loai_Phong.Gia * Convert.ToInt32(Session["SoNgay"].ToString());
 
@@ -733,7 +735,7 @@ namespace SEP_VanLangHotel.Controllers
                 }
                 catch (Exception e)
                 {
-                    Session["error-import-file"] = "Lỗi " + e.Message.ToString();
+                    Session["error-import-file"] = "Lỗi: " + e.Message.ToString() + ": " + e.HResult;
                     List<string> gioitinhs = new List<string>();
                     gioitinhs.Add("Nam");
                     gioitinhs.Add("Nữ");
@@ -939,7 +941,7 @@ namespace SEP_VanLangHotel.Controllers
                 }
                 catch (Exception e)
                 {
-                    Session["error-import-file"] = "lỗi " + e.Message.ToString();
+                    Session["error-import-file"] = "lỗi: " + e.Message.ToString();
                     return RedirectToAction("Homepage", "Home");
                 }
 
@@ -1081,7 +1083,7 @@ namespace SEP_VanLangHotel.Controllers
                     gioitinhs.Add("Khác");
                     ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
                     ViewBag.gioiTinh = "";
-                    Session["error-import-file"] = "Lỗi " + e.Message;
+                    Session["error-import-file"] = "Lỗi: " + e.Message;
                     return View(nhanthans);
                 }
             }
@@ -1165,7 +1167,7 @@ namespace SEP_VanLangHotel.Controllers
                     }
                     catch (Exception e)
                     {
-                        Session["error-import-file"] = "Lỗi " + e.Message;
+                        Session["error-import-file"] = "Lỗi: " + e.Message;
                         return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
                     }
                 }
