@@ -254,6 +254,12 @@ namespace SEP_VanLangHotel.Controllers
             {
                 try
                 {
+                    if(cmndcccd.Length != 9 && cmndcccd.Length != 12)
+                    {
+                        Session["error-import-file"] = "Số CMND/CCCD chưa đúng!";
+                        return RedirectToAction("UpdateRentingRooms", new { id = maTTDatPhong });
+                    }
+
                     var ttDatPhong = model.TT_Dat_Phong.FirstOrDefault(t => t.Ma_TT_Dat_Phong.Equals(maTTDatPhong));
                     ttDatPhong.Ho_Ten_KH = hoten;
                     ttDatPhong.CMND_CCCD_KH = cmndcccd;
@@ -289,12 +295,12 @@ namespace SEP_VanLangHotel.Controllers
                         }
                     }
                     Session["thongbaoSuccess"] = "Chỉnh sửa thành công!";
-                    return RedirectToAction("DetailtRentingRooms", new { id = ttDatPhong.Ma_Phong });
+                    return RedirectToAction("DetailtRentingRooms", new { id = maTTDatPhong });
                 }
                 catch (Exception e)
                 {
                     Session["error-import-file"] = e.Message;
-                    return RedirectToAction("ListOfRentingRooms");
+                    return RedirectToAction("DetailtRentingRooms", new { id = maTTDatPhong });
                 }
             }
             return RedirectToAction("Homepage", "Home");
@@ -352,15 +358,13 @@ namespace SEP_VanLangHotel.Controllers
                             model.SaveChanges();
                             Session["thongbaoSuccess"] = "Thêm thành công, phí phụ thu là 100.000đ/ngày đã được cộng vào tổng thanh toán!";
                         }
-                        var maPhong = TTDatPhong.Ma_Phong;
 
-                        return RedirectToAction("DetailtRentingRooms", new { id = maPhong });
+                        return RedirectToAction("DetailtRentingRooms", new { id = mattdatphong });
                     }
                     catch (Exception e)
                     {
                         Session["error-import-file"] = e.Message;
-                        var maPhong = model.TT_Dat_Phong.First(p => p.Ma_TT_Dat_Phong.Equals(mattdatphong)).Ma_Phong;
-                        return RedirectToAction("DetailtRentingRooms", new { id = maPhong });
+                        return RedirectToAction("DetailtRentingRooms", new { id = mattdatphong });
                     }
                 }
                 return RedirectToAction("ListOfRentingRooms");
@@ -563,8 +567,7 @@ namespace SEP_VanLangHotel.Controllers
                     catch (Exception e)
                     {
                         Session["error-import-file"] = e.Message;
-                        var maPhong = model.TT_Dat_Phong.First(p => p.Ma_TT_Dat_Phong.Equals(id)).Ma_Phong;
-                        return RedirectToAction("DetailtRentingRooms", new { id = maPhong });
+                        return RedirectToAction("DetailtRentingRooms", new { id = id });
                     }
                 }
             }

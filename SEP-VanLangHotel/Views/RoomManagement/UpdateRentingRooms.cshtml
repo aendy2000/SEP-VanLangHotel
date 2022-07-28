@@ -182,11 +182,11 @@
                             <div class="col-md-4">
                                 <label class="small mb-1">Họ tên</label>
                                 <input value="@ttdatPhong.Ma_TT_Dat_Phong" name="maTTDatPhong" hidden />
-                                <input value="@ttdatPhong.Ho_Ten_KH" type="text" class="form-control" name="hoten" pattern="[a-zA-Z]{1, 30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người đặt phòng với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                <input value="@ttdatPhong.Ho_Ten_KH" type="text" class="form-control" name="hoten" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người đặt phòng với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1">CMND/CCCD</label>
-                                <input value="@ttdatPhong.CMND_CCCD_KH" type="text" class="form-control" name="cmndcccd" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập đúng số CMND/CCCD của người đặt phòng')" oninput="this.setCustomValidity('')" />
+                                <input value="@ttdatPhong.CMND_CCCD_KH" type="text" class="form-control" name="cmndcccd" required="required" pattern="[0-9]{9,12}" oninvalid="this.setCustomValidity('Hãy nhập đúng số CMND/CCCD của người đặt phòng')" oninput="this.setCustomValidity('')" />
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1">Số điện thoại</label>
@@ -253,7 +253,7 @@
                                         {
                                             <p style="background-color: #EEEEEE" class="form-control">@Model[i].CMND_CCCD</p>
                                         }*@
-                                    @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @maxlength = "12", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                    @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", pattern = "[0-9]{0,12}", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
                                     @Html.ValidationMessageFor(model => Model[i].CMND_CCCD, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="col-md-4">

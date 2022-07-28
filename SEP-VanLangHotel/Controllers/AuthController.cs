@@ -95,18 +95,17 @@ namespace SEP_VanLangHotel.Controllers
                     //Khởi tạo nội dung gửi mail
                     MailMessage mailmea = new MailMessage();
                     mailmea.To.Add(taikhoan.Email);
-                    mailmea.From = new MailAddress(@"vanlanghotel@gmail.com");
+                    mailmea.From = new MailAddress(@"vanlanghotel@hotmail.com");
                     mailmea.Subject = "Đặt lại mật khẩu - Văn Lang Hotel";
                     mailmea.IsBodyHtml = true;
                     mailmea.Body = "<font size=5>Mã xác nhận của bạn là: </font><br>" + "<font size=20><b>   " + code + "</b></font>";
 
                     //Phương thức gửi mail
-                    SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                    SmtpClient smtp = new SmtpClient("smtp-mail.outlook.com", 587);
                     smtp.UseDefaultCredentials = true;
                     smtp.EnableSsl = true;
-                    smtp.Port = 25;
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.Credentials = new NetworkCredential(@"vanlanghotel@gmail.com", "gqhyxnzkauoxoetx"); //Email, mật khẩu ứng dụng
+                    smtp.Credentials = new NetworkCredential(@"vanlanghotel@hotmail.com", "Aendy3010dvt.2kkk"); //Email, mật khẩu ứng dụng
                     try
                     {
                         smtp.Send(mailmea);
