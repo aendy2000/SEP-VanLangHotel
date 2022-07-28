@@ -56,7 +56,7 @@
                                         <td>@item.Trang_Thai.Ten_Trang_Thai</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <a style="width:1px; margin-top:2px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtEmptyRooms", "RoomManagement", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px; margin-top:2px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtEmptyRooms", "RoomManagement", new { id = item.Ma_Phong })">
                                                     <i class="fa fa-info"></i>
                                                 </a>
                                                 <a style="width:1px;" title="Đặt phòng" class="btn btn-link btn-primary btn-lg" data-toggle="modal" data-target="#@item.Ma_Phong">
@@ -99,7 +99,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-body">
+                                                            <div class="modal-body" style="margin-top: -1.7rem;">
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="form-group form-group-default">

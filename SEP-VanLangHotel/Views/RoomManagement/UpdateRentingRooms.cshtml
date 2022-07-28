@@ -129,7 +129,6 @@
             <div class="card">
                 <div class="card-body">
                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
-                    <br />
                     <div class="row gx-3 mb-3">
                         <div class="col-md-3">
                             <label class="small mb-1">Ở từ ngày</label>
@@ -164,6 +163,7 @@
                             @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
                         </div>
                     </div>
+                    <br />
                 </div>
             </div>
         </div>
@@ -177,7 +177,6 @@
                 <div class="card">
                     <div class="card-body">
                         <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN NGƯỜI ĐẶT PHÒNG</p>
-                        <br />
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                                 <label class="small mb-1">Họ tên</label>
@@ -199,8 +198,7 @@
                                     <label class="small mb-1">Ngày sinh</label>
                                     <input value="@ttdatPhong.Sinh_Nhat_KH.ToString("yyyy-MM-dd")" type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người đặt phòng')" oninput="this.setCustomValidity('')" />
                                 </div>
-                                <br />
-                                <div style="margin-top:6px">
+                                <div style="margin-top: -0.4rem">
                                     <label class="small mb-1">Giới tính</label>
                                     @if (ttdatPhong.Gioi_Tinh_KH == 0)
                                     {
@@ -221,7 +219,7 @@
                                 <label class="small mb-1">Địa chỉ</label>
                                 @*<textarea rows="7" style="background-color: #EEEEEE" class="form-control">@ttdatPhong.Dia_Chi_KH</textarea>*@
                                 @*@Html.TextAreaFor(m => ttdatPhong.Dia_Chi_KH, new { @class = "form-control", @rows = "7" })*@
-                                <textarea rows="6" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')">@ttdatPhong.Dia_Chi_KH</textarea>
+                                <textarea rows="5" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')">@ttdatPhong.Dia_Chi_KH</textarea>
                             </div>
                         </div>
 
@@ -229,11 +227,9 @@
                         {
                             @Html.HiddenFor(model => Model[i].Ma_Nhan_Than);
                             @Html.HiddenFor(model => Model[i].Ma_TT_Dat_Phong);
+                            <br />
                             <hr />
-                            <br />
-
                             <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
-                            <br />
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-4">
                                     <label class="small mb-1">Họ tên</label>
@@ -246,13 +242,13 @@
                                     <label class="small mb-1">CMND/CCCD</label>
                                     @*<input type="text" class="form-control" name="CMND_CCCD" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
                                     @*@if (string.IsNullOrEmpty(Model[i].CMND_CCCD))
-                                        {
-                                            <p style="background-color: #EEEEEE; color: darkgray" class="form-control">Không có</p>
-                                        }
-                                        else
-                                        {
-                                            <p style="background-color: #EEEEEE" class="form-control">@Model[i].CMND_CCCD</p>
-                                        }*@
+                    {
+                        <p style="background-color: #EEEEEE; color: darkgray" class="form-control">Không có</p>
+                    }
+                    else
+                    {
+                        <p style="background-color: #EEEEEE" class="form-control">@Model[i].CMND_CCCD</p>
+                    }*@
                                     @Html.EditorFor(model => Model[i].CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", pattern = "[0-9]{0,12}", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
                                     @Html.ValidationMessageFor(model => Model[i].CMND_CCCD, "", new { @class = "text-danger" })
                                 </div>
@@ -273,8 +269,7 @@
                                         @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
                                         @*<input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
                                     </div>
-                                    <br />
-                                    <div style="margin-top:6px">
+                                    <div style="margin-top: -0.4rem">
                                         <label class="small mb-1">Giới tính</label>
                                         @if (@Model[i].Gioi_Tinh == 0)
                                         {
@@ -294,15 +289,14 @@
                                     <label class="small mb-1">Địa chỉ</label>
                                     @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
                                     @*<textarea readonly rows="7" style="background-color: #EEEEEE" class="form-control">@Model[i].Dia_Chi</textarea>*@
-                                    @Html.TextAreaFor(model => Model[i].Dia_Chi, new { placeholder = "Địa chỉ nhà", @rows = "6", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')", @class = "form-control" })
+                                    @Html.TextAreaFor(model => Model[i].Dia_Chi, new { placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')", @class = "form-control" })
                                     @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         }
+                        <br />
                         <hr />
-                        <br />
-                        <br />
-                        <div class="row gx-3 mb-3">
+                        <div class="row gx-3 mb-3" style="margin-top:1.7rem">
                             <div style="text-align:center" class="col-md-12">
                                 <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận lưu chỉnh sửa?')) { return false; }" class="btn btn-search">Lưu</button>
                                 &emsp;
@@ -317,7 +311,7 @@
                                             cancelText: "Không hủy"
                                         }).then(function (isConfirm) {
                                             if (isConfirm) {
-                                                window.location.href = '@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = ttdatPhong.Ma_Phong})';
+                                                window.location.href = '@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
                                             } else {
                                                 return false;
                                             }
@@ -326,6 +320,7 @@
                                 </script>
                             </div>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>

@@ -55,18 +55,17 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
                                             <label class="small mb-1">Họ tên</label>
-                                            <input type="text" class="form-control" name="hoten" pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" placeholder="Nguyễn Văn A..." class="form-control" name="hoten" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">CMND/CCCD</label>
-                                            <input type="text" class="form-control" name="cmndcccd" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" placeholder="070200001234..." class="form-control" name="cmndcccd" pattern="[1-9]{9, 12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Số điện thoại</label>
-                                            <input type="text" class="form-control" name="sdt" pattern="[0-9]{10}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số điện thoại của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" placeholder="0987654321..." class="form-control" name="sdt" pattern="[0-9]{10}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số điện thoại của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
-
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
                                             <label class="small mb-1">Ngày sinh</label>
@@ -78,38 +77,41 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Email</label>
-                                            <input type="email" class="form-control" name="Email" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào Email của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                            <input type="email" placeholder="example@("@")email.com.vn..." class="form-control" name="Email" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào Email của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1">Địa chỉ</label>
-                                        <textarea rows="4" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                        <textarea rows="4"  placeholder="Số 17/20 Nguyễn Văn Cần, Phường 7, Q. Phú Nhuận, TP Hồ Chí Minh..." class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
                                     </div>
-                                    <hr />
                                     <br />
-                                    <div class="row gx-3 mb-3">
+                                    <hr />
+                                    <div class="row gx-3 mb-3" style="margin-top:-1rem">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Ở từ ngày</label>
-                                            <p style="font-weight: bold; text-align: center; font-size: 16px; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")</p>
-                                            <input hidden style="text-align: center; font-weight: bold; font-size: 18px; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")</p>
+                                            <input hidden style="text-align: center; font-weight: bold; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Đến hết ngày</label>
-                                            <p style="font-weight: bold; text-align: center; font-size: 16px; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")</p>
-                                            <input hidden style="text-align:center;font-weight:bold; font-size:18px; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")" type="text" class="form-control"  />
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")</p>
+                                            <input hidden style="text-align:center;font-weight:bold; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Tổng Thanh Toán (VND)</label>
-                                            <p style="text-align: center; font-weight: bold; font-size: 18px; color: red; background-color: #EEEEEE" type="text" class="form-control">@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))</p>
+                                            <p style="text-align: center; font-weight: bold; color: red; background-color: #EEEEEE" type="text" class="form-control">@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))</p>
                                             <input hidden style="text-align: center; color: red; font-weight: bold; font-size: 18px" value="@((Convert.ToInt64(Session["tong-thanhtoan"]).ToString("0,0")).Replace(".",","))" type="text" class="form-control" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Số tiền cọc  (VND - từ 30% trở lên)</label>
-                                            <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; font-size: 18px; color:red" class="form-control" name="sotiencoc" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
+                                            <input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="sotiencoc" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
+                                    <br />
+                                    <hr />
+                                    <br />
                                     <div class="row gx-3 mb-3">
                                         <div style="text-align:right" class="col-md-6">
                                             <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Hoàn Tất</button>
@@ -136,6 +138,7 @@
                                             </script>
                                         </div>
                                     </div>
+                                    <br />
                                 </div>
                             </div>
                         </div>
@@ -189,7 +192,7 @@
                                                 </div>
                                             </div>
                                             <!--Form Group(Tiện ích)-->
-                                            <div class="form-group col-md-12 text-center">
+                                            <div class="form-group col-md-12 text-center"  style="margin-top: 2.5rem">
                                                 <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
                                                     @foreach (var item in modelss.Phong.Where(p => p.Ma_Phong.Equals(maphong)))
                                                     {

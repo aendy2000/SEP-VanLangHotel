@@ -24,20 +24,17 @@
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">ĐẶT PHÒNG KHÁCH SẠN</h2>
+                    <h2 class="text-white pb-2 fw-bold">ĐỔI PHÒNG KHÁCH SẠN</h2>
                 </div>
             </div>
         </div>
     </div>
     <div class="page-inner mt--5">
-
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
-                        <br />
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <label class="small mb-1">Ở từ ngày</label>
@@ -72,6 +69,7 @@
                                 @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
                             </div>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>
@@ -121,7 +119,7 @@
                                             </div>
                                         </div>
                                         <!--Form Group(Tiện ích)-->
-                                        <div class="form-group col-md-12 text-center">
+                                        <div class="form-group col-md-12 text-center" style="margin-top: 2.5rem">
                                             <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
 
                                                 @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maloaiphong)))

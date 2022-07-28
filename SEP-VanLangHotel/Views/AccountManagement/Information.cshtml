@@ -34,7 +34,7 @@
             <!-- Account details card-->
             <div class="card mb-4">
                 <div class="card-header"><b>Thông tin chi tiết</b></div>
-                <div class="card-body">
+                <div class="card-body"style="margin-top: -1.8rem">
                     <form>
                         <!-- Form Group (username)-->
                         <div class="mb-3">
@@ -98,10 +98,11 @@
                             <input style="color:black" type="text" class="form-control" value="@Model.Quyen.Ten_Quyen" disabled>
                         </div>
                         <!-- Save changes button-->
+                        <br />
                         <hr />
                         @if (Session["user-role"].Equals("Quản lý"))
                         {
-                            <div style="text-align:center;" class="mb-3">
+                            <div style="text-align: center; margin-top:1.8rem" class="mb-3">
                                 <a style="width: 180px;color:white;" class="btn btn-search" role="button" href="@Url.Action("UpdateAccount", "AccountManagement", new {id = Model.Ma_Tai_Khoan})">
                                     Chỉnh sửa TT
                                 </a>
@@ -110,14 +111,16 @@
                                     Đổi mật khẩu
                                 </a>
                             </div>
+                            <br />
                         }
                         else if (Session["user-role"].Equals("Nhân viên"))
                         {
-                            <div style="text-align:center;" class="mb-3">
+                            <div style="text-align: center; margin-top: 1.8rem" class="mb-3">
                                 <a style="width: 180px;color:white;" class="btn btn-search" role="button" href="@Url.Action("ChangePassword", "AccountManagement", new {id = Model.Ten_Dang_Nhap})" target="_blank">
                                     Đổi mật khẩu
                                 </a>
                             </div>
+                            <br />
                         }
                     </form>
                 </div>

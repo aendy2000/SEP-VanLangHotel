@@ -78,12 +78,12 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <p style="width: 100%; font-style: italic ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
-
+                    <p style="width: 100%; font-style: italic; margin-top:0.1rem ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
+                    <br>
                     <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
                          style="border-radius:3%; width:100%" class="img-room-profile mb-2">
                     <p></p>
-                    <h2 class="btn btn-danger" style="font-weight:bold; width:100%"> @phong.So_Phong </h2>
+                    <h2 class="btn btn-danger" style="font-weight:bold; width:100%; margin-top:1rem"> @phong.So_Phong </h2>
                 </div>
             </div>
         </div>
@@ -155,7 +155,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             <div class="card">
                 <div class="card-body">
                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
-                    <br />
                     <div class="row gx-3 mb-3">
                         <div class="col-md-3">
                             <label class="small mb-1">Ở từ ngày</label>
@@ -195,10 +194,9 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
                         </div>
                     </div>
-
-                    <hr />
                     <br />
-                    <div class="row gx-3 mb-3">
+                    <hr />
+                    <div class="row gx-3 mb-3" style="margin-top: 2rem;">
                         <div style="text-align:center" class="col-md-12">
                             @if ((ttdatPhong.Nguoi_Lon + ttdatPhong.Tre_Em) <= (phong.Loai_Phong.So_Nguoi_Lon + phong.Loai_Phong.So_Tre_Em))
                             {
@@ -248,9 +246,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             </script>
                         </div>
                     </div>
-
-
-
+                    <br />
                 </div>
             </div>
         </div>
@@ -262,7 +258,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             <div class="card">
                 <div class="card-body">
                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN NGƯỜI ĐẶT PHÒNG</p>
-                    <br />
                     <div class="row gx-3 mb-3">
                         <div class="col-md-4">
                             <label class="small mb-1">Họ tên</label>
@@ -287,8 +282,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 <p style="background-color: #EEEEEE" class="form-control">@ttdatPhong.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</p>
                                 @*<input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
                             </div>
-                            <br />
-                            <div style="margin-top:6px">
+                            <div style="margin-top: -0.4rem">
                                 <label class="small mb-1">Giới tính</label>
                                 @if (ttdatPhong.Gioi_Tinh_KH == 0)
                                 {
@@ -307,7 +301,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         </div>
                         <div class="col-md-8">
                             <label class="small mb-1">Địa chỉ</label>
-                            <textarea readonly rows="7" style="background-color: #EEEEEE" class="form-control">@ttdatPhong.Dia_Chi_KH</textarea>
+                            <textarea readonly rows="5" style="background-color: #EEEEEE" class="form-control">@ttdatPhong.Dia_Chi_KH</textarea>
                             @*@Html.TextAreaFor(m => ttdatPhong.Dia_Chi_KH, new { @class = "form-control", @rows = "7" })*@
                             @*<textarea rows="6" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
                         </div>
@@ -324,11 +318,10 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         Html.HiddenFor(m => m[i].Dia_Chi);
                         Html.HiddenFor(m => m[i].Moi_Quan_He);
                         Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
-                        <hr />
-                        <br />
 
-                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
                         <br />
+                        <hr />
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                                 <label class="small mb-1">Họ tên</label>
@@ -366,8 +359,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                     <p style="background-color: #EEEEEE" class="form-control">@Model[i].Sinh_Nhat.ToString("dd/MM/yyyy")</p>
                                     @*<input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />*@
                                 </div>
-                                <br />
-                                <div style="margin-top:6px">
+                                <div style="margin-top: -0.4rem">
                                     <label class="small mb-1">Giới tính</label>
                                     @if (@Model[i].Gioi_Tinh == 0)
                                     {
@@ -387,13 +379,14 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             <div class="col-md-8">
                                 <label class="small mb-1">Địa chỉ</label>
                                 @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
-                                <textarea readonly rows="7" style="background-color: #EEEEEE" class="form-control">@Model[i].Dia_Chi</textarea>
+                                <textarea readonly rows="5" style="background-color: #EEEEEE" class="form-control">@Model[i].Dia_Chi</textarea>
                                 @*@Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", row = "5", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
                                     @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                     }
                 </div>
+                <br>
             </div>
         </div>
     </div>
@@ -422,7 +415,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="margin-top: -1.7rem; ">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-group-default">
@@ -439,7 +432,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
 
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="margin-top: -1.7rem; ">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-group-default">
@@ -455,12 +448,12 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="margin-top: -1.7rem;">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label class="small mb-1">Địa chỉ</label>
-                                    <textarea rows="3" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                    <label >Địa chỉ</label>
+                                    <textarea rows="4" class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
                                 </div>
                             </div>
                         </div>

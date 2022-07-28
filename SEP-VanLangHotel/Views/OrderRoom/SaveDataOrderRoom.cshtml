@@ -114,8 +114,9 @@
                                             <input name="soGiuong" value="@Session["sogiuong"]" style="color:black" type="number" min="1" max="2" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng giường của phòng tối đa 2 giường')" oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
+                                    <br />
                                     <hr />
-                                    <div class="form-group col-md-12 text-center">
+                                    <div class="form-group col-md-12 text-center" style="margin-top: -2rem">
                                         <label style="text-align:center" class="small-title mb-1" for="">Tiện ích loại phòng</label>
                                     </div>
                                     <div class="row gx-3 mb-3">
@@ -141,6 +142,7 @@
                                             Tìm kiếm
                                         </button>
                                     </div>
+                                    <br />
                                 }
                             </div>
                         </div>
@@ -191,7 +193,7 @@
                                             </div>
                                         </div>
                                         <!--Form Group(Tiện ích)-->
-                                        <div class="form-group col-md-12 text-center">
+                                        <div class="form-group col-md-12 text-center" style="margin-top: 2.5rem">
                                             <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
 
                                                 @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maloaiphong)))

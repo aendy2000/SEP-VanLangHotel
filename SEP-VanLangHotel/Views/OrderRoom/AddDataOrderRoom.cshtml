@@ -49,12 +49,12 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <p style="width: 100%; font-style: italic ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
-
+                        <p style="width: 100%; font-style: italic; margin-top: 0.1rem ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
+                        <br>
                         <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
                              style="border-radius:3%; width:100%" class="img-room-profile mb-2">
                         <p></p>
-                        <h2 class="btn btn-danger" style="font-weight:bold; width:100%"> @phong.So_Phong </h2>
+                        <h2 class="btn btn-danger" style="font-weight: bold; width: 100%; margin-top: 1rem"> @phong.So_Phong </h2>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,6 @@
                 <div class="card">
                     <div class="card-body">
                         <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
-                        <br />
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <label class="small mb-1">Ở từ ngày</label>
@@ -162,6 +161,7 @@
                             </div>
                         </div>
                     </div>
+                    <br />
                 </div>
             </div>
         </div>
@@ -172,7 +172,6 @@
                 <div class="card">
                     <div class="card-body">
                         <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN NGƯỜI ĐẶT PHÒNG</p>
-                        <br />
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                                 <label class="small mb-1">Họ tên</label>
@@ -193,15 +192,14 @@
                                     <label class="small mb-1">Ngày sinh</label>
                                     <input type="date" class="form-control" name="ngaysinh" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                 </div>
-                                <br />
-                                <div style="margin-top:6px">
+                                <div style="margin-top:-0.4rem">
                                     <label class="small mb-1">Giới tính</label>
                                     @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <label class="small mb-1">Địa chỉ</label>
-                                <textarea rows="6" placeholder="1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh..." class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                <textarea rows="5" placeholder="1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh..." class="form-control" name="diachi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
                             </div>
                         </div>
 
@@ -211,11 +209,10 @@
                             {
                                 Html.HiddenFor(m => m[i].Gioi_Tinh);
                                 Html.HiddenFor(m => m[i].Ma_TT_Dat_Phong);
-                                <hr />
                                 <br />
+                                <hr />
 
                                 <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN KHÁCH HÀNG THỨ @(2 + i) </p>
-                                <br />
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4">
                                         <label class="small mb-1">Họ tên</label>
@@ -247,8 +244,7 @@
                                             @Html.EditorFor(model => Model[i].Sinh_Nhat, new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Ngày/Tháng/Năm", @required = "required", @oninvalid = "this.setCustomValidity('ngày sinh không được bỏ trống')", @oninput = "this.setCustomValidity('')" } })
                                             @Html.ValidationMessageFor(model => Model[i].Sinh_Nhat, "", new { @class = "text-danger" })
                                         </div>
-                                        <br />
-                                        <div style="margin-top:6px">
+                                        <div style="margin-top: -0.4rem">
                                             <label class="small mb-1">Giới tính</label>
                                             @Html.DropDownListFor(model => Model[i].Ma_Nhan_Than, ViewBag.Gioi_Tinh as IEnumerable<SelectListItem>, new { @class = "form-control" })
                                         </div>
@@ -257,16 +253,15 @@
                                         <label class="small mb-1">Địa chỉ</label>
                                         @*<textarea rows="6" class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>*@
                                         @*@Html.EditorFor(model => Model[i].Dia_Chi, new { type = "textarea", rows = "5", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })*@
-                                        @Html.TextAreaFor(model => Model[i].Dia_Chi, new { @class = "form-control", rows = "6", required = "required", placeholder = "1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh...", @maxlength = "200", @oninvalid = "this.setCustomValidity('Hãy nhập địa chỉ, tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" })
+                                        @Html.TextAreaFor(model => Model[i].Dia_Chi, new { @class = "form-control", rows = "5", required = "required", placeholder = "1/2/3 Dương Quảng Hàm, P.15, Q.Gò vấp, TP.Hồ Chí Minh...", @maxlength = "200", @oninvalid = "this.setCustomValidity('Hãy nhập địa chỉ, tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" })
                                         @Html.ValidationMessageFor(model => Model[i].Dia_Chi, "", new { @class = "text-danger" })
 
                                     </div>
                                 </div>
                             }
                         }
-                        <hr />
                         <br />
-
+                        <hr />
                         <br />
                         <div class="row gx-3 mb-3">
                             <div style="text-align:right" class="col-md-6">
@@ -294,6 +289,7 @@
                                 </script>
                             </div>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>

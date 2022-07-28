@@ -134,7 +134,7 @@ else
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header"><b>Thông tin tài khoản</b></div>
-                    <div class="card-body">
+                    <div class="card-body"style="margin-top: -1.8rem">
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
                             @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
@@ -179,8 +179,9 @@ else
                             @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
                         </div>
+                        <br />
                         <hr />
-                        <div style="text-align:center;" class="mb-3">
+                        <div style="text-align: center; margin-top:1.8rem" class="mb-3">
                             <button style="width:180px" type="submit" class="btn btn-search" onclick="if (!confirm('Lưu chỉnh sửa?')) { return false }">
                                 Lưu
                             </button>
@@ -231,6 +232,7 @@ else
                                 </script>
                             }
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>
