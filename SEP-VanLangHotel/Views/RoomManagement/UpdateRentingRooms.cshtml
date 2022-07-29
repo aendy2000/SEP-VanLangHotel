@@ -130,36 +130,45 @@
                 <div class="card-body">
                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
                     <div class="row gx-3 mb-3">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="small mb-1">Ở từ ngày</label>
                             <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy")</p>
                             @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                         </div>
-                        <div class="col-md-3">
-                            <label class="small mb-1">Đến hết ngày</label>
-                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
-                            @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
-                        </div>
-                        <div class="col-md-3">
+
+                        <div class="col-md-4">
                             <label class="small mb-1">Người lớn</label>
                             <p style="color: black; background-color: #EEEEEE" min="1" max="4" class="form-control">@Session["songuoi-lon"] người</p>
                             @*<input hidden name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">*@
                         </div>
-                        <div class="col-md-3">
-                            <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
-                            <p style="color: black; background-color: #EEEEEE" min="0" max="4" class="form-control">@Session["songuoi-treem"] người</p>
-                            @*<input hidden name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">*@
-                        </div>
-                    </div>
-                    <div class="row gx-3 mb-3">
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <label class="small mb-1">Tổng thanh toán</label>
                             <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                             @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                         </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="small mb-1">Đến hết ngày</label>
+                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
+                            @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
+                            <p style="color: black; background-color: #EEEEEE" min="0" max="4" class="form-control">@Session["songuoi-treem"] người</p>
+                            @*<input hidden name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">*@
+                        </div>
                         <div class="col-md-4">
                             <label class="small mb-1">Số tiền cọc</label>
-                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",",")) &emsp; VND</p>
+                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToInt64(Session["tong-coc"]).ToString("0,0"))) &emsp; VND</p>
+                            @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            <label class="small mb-1">Cần thanh toán</label>
+                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
                             @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
                         </div>
                     </div>
@@ -300,7 +309,7 @@
                             <div style="text-align:center" class="col-md-12">
                                 <button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận lưu chỉnh sửa?')) { return false; }" class="btn btn-search">Lưu</button>
                                 &emsp;
-                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search" onclick="xacnhanhuybo()"> Hủy</a>
+                                <a role="button" style="text-align: center; width: 180px; color:white" class="btn btn-danger" onclick="xacnhanhuybo()"> Hủy</a>
                                 <script>
                                     function xacnhanhuybo() {
                                         cuteAlert({

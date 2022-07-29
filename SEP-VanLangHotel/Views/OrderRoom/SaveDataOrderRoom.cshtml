@@ -92,6 +92,9 @@
                             <div class="col-xl-12">
                                 @using (Html.BeginForm("orderRooms", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
+                                    <div class="form-group col-md-12 text-center" style="margin-top: -2rem">
+                                        <label style="text-align:center" class="small-title mb-1" for="">Thông Tin đặt phòng</label>
+                                    </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-3">
                                             <label class="small mb-1">Ở từ ngày</label>
@@ -116,9 +119,6 @@
                                     </div>
                                     <br />
                                     <hr />
-                                    <div class="form-group col-md-12 text-center" style="margin-top: -2rem">
-                                        <label style="text-align:center" class="small-title mb-1" for="">Tiện ích loại phòng</label>
-                                    </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="form-group col-md-12 text-center">
                                             <div class="selectgroup selectgroup-pills">
