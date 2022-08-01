@@ -269,6 +269,7 @@
     <Compile Include="Controllers\AuthoritiesManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderRoomController.cs" />
+    <Compile Include="Controllers\QuanLyLichSuPhongController.cs" />
     <Compile Include="Controllers\QuanLyTienIchController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -903,6 +904,7 @@
     <Content Include="Views\RoomManagement\UpdateRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\ChangeRooms.cshtml" />
     <Content Include="Views\QuanLyTienIch\Home.cshtml" />
+    <Content Include="Views\QuanLyLichSuPhong\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
