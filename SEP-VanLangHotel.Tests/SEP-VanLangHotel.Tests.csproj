@@ -234,12 +234,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SEP-VanLangHotel\SEP-VanLangHotel.csproj">
-      <Project>{8E12FBAA-81E7-47CD-AFB3-F492F9E0C81D}</Project>
-      <Name>SEP-VanLangHotel</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
