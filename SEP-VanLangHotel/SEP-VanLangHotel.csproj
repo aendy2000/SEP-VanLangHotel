@@ -265,6 +265,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountManagementController.cs" />
+    <Compile Include="Controllers\AdminManagementRoomController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\AuthoritiesManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -901,6 +902,10 @@
     <Content Include="Views\RoomManagement\DetailtRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\UpdateRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\ChangeRooms.cshtml" />
+    <Content Include="Views\AdminManagementRoom\Home.cshtml" />
+    <Content Include="Views\AdminManagementRoom\AddRoom.cshtml" />
+    <Content Include="Views\AdminManagementRoom\DetailRoom.cshtml" />
+    <Content Include="Views\AdminManagementRoom\UpdateRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

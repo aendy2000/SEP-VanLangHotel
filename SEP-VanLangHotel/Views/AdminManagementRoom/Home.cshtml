@@ -1,0 +1,183 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.Phong>
+
+@{
+    ViewBag.Title = "Quản lý phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <div class="card-title">Danh sách phòng</div>
+                        @*<button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                <i class="fa fa-plus"></i>
+                                Thêm phòng mới
+                            </button>*@
+                        <a style="color:white;" type="button" class="btn btn-secondary btn-round ml-auto" href="@Url.Action("AddRoom", "AdminManagementRoom")">
+                            <i class="fa fa-plus"></i>
+                            Thêm phòng mới
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Modal -->
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Hình ảnh</th>
+                                    <th>Số phòng</th>
+                                    <th>Tên khách sạn</th>
+                                    <th>Loại phòng</th>
+                                    <th>Trạng thái</th>
+                                    <th style="width: 3%">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="@item.Hinh_Anh" style="height:100px;width:100px;"/>
+                                        </td>
+                                        <td>@item.So_Phong</td>
+                                        <td>@item.Khach_San.Ten_Khach_San</td>
+                                        <td>@item.Loai_Phong.Ten_Loai_Phong</td>
+                                        <td>@item.Trang_Thai.Ten_Trang_Thai</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Thông tin phòng" href="@Url.Action("DetailRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">
+                                                    <i class="fa fa-info"></i>
+                                                </a>
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Sửa thông tin phòng" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa phòng" onclick="if (!confirm('Bạn có muốn xóa phòng @item.So_Phong?')) { return false; } else { window.location.href = '@Url.Action("DeleteRoom", "AdminManagementRoom", new { id = item.Ma_Phong })';}">
+                                                    <i class="fa fa-times"></i>
+                                                    <script>
+                                                                function xoataikhoan() {
+                                                                    cuteAlert({
+                                                                        type: "question",
+                                                                        title: "Xóa phòng?",
+                                                                        message: "Bạn có chắc chắn muốn xóa phòng?",
+                                                                        confirmText: "Xác nhận", cancelText: "Hủy bỏ"
+                                                                    }).then(function (isConfirm) {
+                                                                        if (isConfirm) {
+                                                                            window.location.href = '@Url.Action("DeleteRoom", "AdminManagementRoom", new { id = item.Ma_Phong })';
+                                                                        } else {
+                                                                            return false;
+                                                                        }
+                                                                    });
+                                                                }
+                                                    </script>
+                                                </a>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        //Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>
+
