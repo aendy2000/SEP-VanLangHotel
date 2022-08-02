@@ -1,0 +1,70 @@
+﻿@model SEP_VanLangHotel.Models.Phong
+
+@{
+    ViewBag.Title = "Thông tin chi tiết phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header"><b>Thông tin phòng</b></div>
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label class="small mb-1">Số phòng</label>
+                            @*//ReadOnly = true*@
+                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Tên khách sạn</label>
+                            @Html.EditorFor(model => model.Khach_San.Ten_Khach_San, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Loại phòng</label>
+                            @Html.EditorFor(model => model.Loai_Phong.Ten_Loai_Phong, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Trạng thái</label>
+                            @Html.EditorFor(model => model.Trang_Thai.Ten_Trang_Thai, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Hình ảnh</label><br />
+                            <img src="@Model.Hinh_Anh" style="height:300px;width:300px;" />
+                        </div>
+                        <hr />
+                        <div style="text-align:center;" class="mb-3">
+                            @*<button style="width: 180px; color: white;" type="submit" class="btn btn-search" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})" ">
+                                Chỉnh sửa thông tin
+                            </button>*@
+                            <a style="width: 180px; color: white; " class="btn btn-search" role="button" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})" id="btn-edit__lock">
+                                Chỉnh sửa thông tin
+                            </a>
+                            &emsp;
+                            <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huythemphong()">
+                                Xóa phòng
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Ma_Phong }) |
+    @Html.ActionLink("Back to List", "Home")
+</p>
