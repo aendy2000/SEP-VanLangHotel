@@ -270,6 +270,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderRoomController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
+    <Compile Include="Controllers\TourManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -901,6 +902,8 @@
     <Content Include="Views\RoomManagement\DetailtRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\UpdateRentingRooms.cshtml" />
     <Content Include="Views\RoomManagement\ChangeRooms.cshtml" />
+    <Content Include="Views\TourManagement\Home.cshtml" />
+    <Content Include="Views\TourManagement\DetailtTour.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,387 @@
+﻿@model SEP_VanLangHotel.Models.TOUR
+@using SEP_VanLangHotel.Models;
+@{
+    SEP25Team09Entities modelss = new SEP25Team09Entities();
+    List<TT_Dat_Phong> ttdatphong = Session["tt-tour"] as List<TT_Dat_Phong>;
+}
+@{
+    ViewBag.Title = "Chi Tiết Tour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
+
+<title>@ViewBag.Title</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">THÔNG TIN ĐẶT PHÒNG THEO TOUR</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+
+        @using (Html.BeginForm("SaveDataImport", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-title col-md-12">
+                                    @if (Model.Trang_Thai == 0)
+                                    {
+                                        <p class="btn btn-warning" style="float:right; font-weight:bold;">Đã Cọc: @Model.Thoi_Gian_DatPhong_Coc</p>
+                                    }
+                                    else if (Model.Trang_Thai == 1)
+                                    {
+                                        <p class="btn btn-success" style="float: right; font-weight: bold;">Đã Thanh Toán: @Model.Thoi_Gian_ThanhToan_Huy</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="btn btn-danger" style="float: right; font-weight: bold;">Đã Hủy: @Model.Thoi_Gian_ThanhToan_Huy</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row card-item bg">
+                                <div class="col-xl-12">
+                                    <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN CÁ NHÂN</p>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Họ tên</label>
+                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.Ho_Ten_Chu_Tour</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">CMND/CCCD</label>
+                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.CMND_CCCD</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Số điện thoại</label>
+                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.SDT</p>
+                                        </div>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Ngày sinh</label>
+                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.Sinh_Nhat.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Giới tính</label>
+                                            @*@if (Model.Gioi_Tinh == 1)
+                {
+                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNam, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                }
+                else if (Model.Gioi_Tinh == 0)
+                {
+                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNu, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                }
+                else
+                {
+                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhKhac, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                }*@
+
+                                            @if (Model.Gioi_Tinh == 1)
+                                            {
+                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Nam</p>
+                                            }
+                                            else if (Model.Gioi_Tinh == 0)
+                                            {
+                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Nữ</p>
+                                            }
+                                            else
+                                            {
+                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Khác</p>
+                                            }
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="small mb-1">Email</label>
+                                            <p type="text" style="color: black; background-color: #EEEEEE" class="form-control">@Model.Email</p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1">Địa chỉ</label>
+                                        <textarea readonly style="color:black;" rows="4" placeholder="Số 17/20 Nguyễn Văn Cần, Phường 7, Q. Phú Nhuận, TP Hồ Chí Minh..." class="form-control">@Model.Dia_Chi</textarea>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN THANH TOÁN</p>
+                                    <br />
+                                    <div class="row gx-3 mb-3" style="margin-top:-1rem">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Ở từ ngày</label>
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_NhanPhong.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Đến hết ngày</label>
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_TraPhong.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Tổng Thanh Toán (VND)</label>
+                                            <p style="text-align: center; font-weight: bold; color: red; background-color: #EEEEEE" type="text" class="form-control">@Model.Tong_Thanh_Toan.ToString("0,0") &emsp; VND</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1">Số tiền cọc  (VND - từ 30% trở lên)</label>
+                                            <p style="text-align: center; font-weight: bold; color: red; background-color: #EEEEEE" class="form-control" type="text">@Model.So_Tien_Coc.ToString("0,0") &emsp; VND</p>
+                                        </div>
+                                    </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-12">
+                                            <label class="small mb-1">Số tiền cần thanh toán</label>
+                                            <p style="text-align: center; font-weight: bold; color: red; background-color: #EEEEEE" type="text" class="form-control">@((Model.Tong_Thanh_Toan - Model.So_Tien_Coc).ToString("0,0")) &emsp; VND</p>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <hr />
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p style="font-weight:bold" class="mb-0">Đặt Phòng</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_DatPhong_Coc,&emsp; Bởi Nhân viên: @ttdatphong[0].Tai_Khoan.Ho_Va_Ten (@ttdatphong[0].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                        </div>
+                                    </div>
+                                    @if (Model.Trang_Thai == 1)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Thanh Toán</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy,&emsp; Bởi Nhân viên: @Model.Tai_Khoan.Ho_Va_Ten (@Model.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.Trang_Thai == 2)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đã Hủy</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy,&emsp; Bởi Nhân viên: @Model.Tai_Khoan.Ho_Va_Ten (@Model.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    <br />
+                                    @if (Model.Trang_Thai == 0)
+                                    {
+                                        <hr />
+                                        <br />
+
+                                        <div class="row gx-3 mb-3">
+                                            <div style="text-align:right" class="col-md-6">
+
+                                                <a style="text-align: center; width: 180px; color:white;" role="button" onclick="thanhtoan()" class="btn btn-search">Thanh Toán</a>
+                                                <script>
+                                                function thanhtoan() {
+                                                    cuteAlert({
+                                                        type: "question",
+                                                        title: "Thông báo",
+                                                        message: "Xác nhận thanh toán @((Model.Tong_Thanh_Toan - Model.So_Tien_Coc).ToString("0,0")) VND và trả phòng Tour?",
+                                                        confirmText: "Xác nhận",
+                                                        cancelText: "Hủy bỏ"
+
+                                                }).then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.href = '@Url.Action("PaymentTour", "TourManagement", new { id = Model.Ma_Tour })';
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                });
+                                            }
+                                                </script>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a style="color: white; width: 180px;" class="btn btn-danger" onclick="xacnhanhuybo()" role="button"> Hủy Tour </a>
+                                                <script>
+                                                function xacnhanhuybo() {
+                                                    cuteAlert({
+                                                    type: "question",
+                                                    title: "Thông báo",
+                                                    message: "Bạn có chắc chắn muốn hủy Tour?",
+                                                        confirmText: "Xác nhận",
+                                                    cancelText: "Không hủy"
+
+                                                    }).then(function (isConfirm) {
+                                                        if (isConfirm) {
+                                                            window.location.href = '@Url.Action("UnOrderTour", "TourManagement", new { id = Model.Ma_Tour })';
+                                                        } else {
+                                                            return false;
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-title"><b>DANH SÁCH CÁC PHÒNG ĐƯỢC ĐẶT</b></div>
+                            </div>
+                        </div>
+                        @foreach (var item in ttdatphong)
+                        {
+                            var maphong = item.Ma_Phong;
+
+                            <div class="card-body" onclick="window.open('@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = item.Ma_TT_Dat_Phong})', '_blank')">
+                                <div class="col-xl-12">
+                                    <div class="row card-item bg">
+                                        <!-- Form Group (Hình ảnh)-->
+                                        <div class="col-md-6 size">
+                                            <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Form Group (Số phòng)-->
+                                            <div class="col-md-6 ml-auto mr-auto range text-center">
+                                                <label class="small-title">
+                                                    <b>
+                                                        @item.Phong.So_Phong
+                                                    </b>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row gx-3 mb-3">
+                                                    <div class="col-md-6">
+                                                        <label class="small-item" for="">Họ & Tên</label>
+                                                        <input class="form-control" type="text" value="@item.Ho_Ten_KH" disabled style="font-weight:bold;color:black;" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="small-item" for="">Số điện thoại</label>
+                                                        <input class="form-control" type="text" value="@item.SDT_KH" disabled style="font-weight:bold;color:black;" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Form Group(Tiện ích)-->
+                                            <div class="form-group col-md-12 text-center" style="margin-top: 2.5rem">
+                                                <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
+
+                                                    @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(item.Phong.Ma_Loai_Phong)))
+                                                    {
+                                                        <label class="selectgroup-item">
+                                                            <input type="checkbox" class="selectgroup-input" disabled>
+                                                            <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
+                                                        </label>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <div class="col text-center layout-footer">
+
+                                                <label class="small-footer">
+                                                    @item.Phong.Loai_Phong.Gia.ToString("0,0") &emsp;×&emsp; @Session["SoNgay"] ngày &emsp;=&emsp; @((item.Phong.Loai_Phong.Gia * (Convert.ToInt32(Session["SoNgay"]))).ToString("0,0"))
+                                                </label>
+
+                                                &emsp;
+                                                <label class="small-footer">VND</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $("#testinput").on("keydown", function (e) {
+        var keycode = (event.which) ? event.which : event.keyCode;
+        if (e.shiftKey == true || e.ctrlKey == true) return false;
+        if ([8, 110, 39, 37, 46].indexOf(keycode) >= 0 || // allow tab, dot, left and right arrows, delete keys
+            (keycode == 190 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode == 110 && this.value.indexOf('.') === -1) || // allow dot if not exists in the value
+            (keycode >= 48 && keycode <= 57) || // allow numbers
+            (keycode >= 96 && keycode <= 105)) { // allow numpad numbers
+            // check for the decimals after dot and prevent any digits
+            var parts = this.value.split('.');
+            if (parts.length > 1 && // has decimals
+                parts[1].length >= 2 && // should limit this
+                (
+                    (keycode >= 48 && keycode <= 57) || (keycode >= 96 && keycode <= 105)
+                ) // requested key is a digit
+            ) {
+                return false;
+            } else {
+                if (keycode == 110) {
+                    this.value += ".";
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }).on("keyup", function () {
+        var parts = this.value.split('.');
+        parts[0] = parts[0].replace(/,/g, '').replace(/^0+/g, '');
+        if (parts[0] == "") parts[0] = "0";
+        var calculated = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        if (parts.length >= 2) calculated += "." + parts[1].substring(0, 2);
+        this.value = calculated;
+        if (this.value == "NaN" || this.value == "") this.value = 0;
+    });
+</script>

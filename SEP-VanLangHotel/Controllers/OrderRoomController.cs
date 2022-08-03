@@ -672,6 +672,7 @@ namespace SEP_VanLangHotel.Controllers
                     tour.Ma_Tai_Khoan = Session["user-ma"].ToString();
                     model.TOUR.Add(tour);
                     model.SaveChanges();
+                    Thread.Sleep(1);
 
                     List<List<string>> soNguoi = Session["nguoilon0treem1"] as List<List<string>>;
                     for (int i = 0; i < listDSDatPhong.Count; i++)
@@ -714,6 +715,7 @@ namespace SEP_VanLangHotel.Controllers
                             }
                             else
                             {
+                                Thread.Sleep(1);
                                 Nhan_Than nhanthan = new Nhan_Than();
                                 nhanthan.Ma_Nhan_Than = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                                 nhanthan.Ho_Ten = listDSDatPhong[i][j][1];
@@ -725,9 +727,9 @@ namespace SEP_VanLangHotel.Controllers
                                 nhanthan.Ma_TT_Dat_Phong = maTTdp;
                                 model.Nhan_Than.Add(nhanthan);
                                 model.SaveChanges();
-                                Thread.Sleep(1);
                             }
                         }
+
                     }
 
                     Session["thongbaoSuccess"] = "Đặt phòng thành công!";
@@ -750,20 +752,22 @@ namespace SEP_VanLangHotel.Controllers
 
         //Danh sách phòng đề xuất thủ công
         [HttpPost]
-        public ActionResult orderRooms(ListTienIch tienIchs, DateTime ngayDen, DateTime ngayVe,
+        public ActionResult orderRooms(ListTienIch tienIchs, DateTime ngayVe,
             int soNguoiLon, int soTreEm, int soGiuong)
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
                 try
                 {
-                    int ngaynay = (int)ngayDen.Subtract(DateTime.Now).TotalDays + 1;
+                    DateTime ngayDen = DateTime.Now;
+                    DateTime ngaydenTemp = Convert.ToDateTime(ngayDen.ToString("yyyy/MM/dd"));
+                    int ngaynay = (int)ngaydenTemp.Subtract(DateTime.Now).TotalDays + 1;
                     if (ngaynay < 1)
                     {
                         Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày hiện tại!";
                         return RedirectToAction("Homepage", "Home");
                     }
-                    int songay = (int)ngayVe.Subtract(ngayDen).TotalDays + 1;
+                    int songay = (int)ngayVe.Subtract(ngaydenTemp).TotalDays + 1;
                     if (songay < 1)
                     {
                         Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày kết thúc!";
@@ -930,6 +934,7 @@ namespace SEP_VanLangHotel.Controllers
                     decimal giaphong = phong[0].Loai_Phong.Gia;
                     Session["thoigian-den"] = ngayDen;
                     Session["thoigian-ve"] = ngayVe;
+                    Session["songay"] = songay;
 
                     Session["songuoi-lon"] = soNguoiLon;
                     Session["songuoi-treem"] = soTreEm;
@@ -981,6 +986,7 @@ namespace SEP_VanLangHotel.Controllers
                         nhanThan.Moi_Quan_He = null;
                         nhanThans.Add(nhanThan);
                     }
+
                     return View(nhanThans);
                 }
             }
@@ -989,7 +995,7 @@ namespace SEP_VanLangHotel.Controllers
 
         //Lưu thông tin đặt phòng thủ công
         [HttpPost]
-        public ActionResult AddDataOrderRoom(List<Nhan_Than> nhanthans, DateTime ngayDen, DateTime ngayVe,
+        public ActionResult AddDataOrderRoom(List<Nhan_Than> nhanthans, DateTime ngayVe,
             int soNguoiLon, int soTreEm, string tongtien, string tienCoc, string hoten, string cmndcccd,
             string sdt, DateTime ngaysinh, string gioiTinh, string diachi)
         {
@@ -1034,14 +1040,14 @@ namespace SEP_VanLangHotel.Controllers
 
                     ttdatphong.Dia_Chi_KH = diachi.Trim();
                     ttdatphong.Doi_Tra = 0;
-                    ttdatphong.Thoi_Gian_Dat = ngayDen;
+                    ttdatphong.Thoi_Gian_Dat = Convert.ToDateTime(Session["thoigian-den"]);
                     ttdatphong.Thoi_Gian_Doi_Tra = ngayVe;
                     ttdatphong.Ma_Phong = Session["maphongorder"].ToString();
                     ttdatphong.Ma_Tai_Khoan = Session["user-ma"].ToString();
                     ttdatphong.Nguoi_Lon = soNguoiLon;
                     ttdatphong.Tre_Em = soTreEm;
                     ttdatphong.Tong_Thanh_Toan = dtongThanhToan;
-                    ttdatphong.Tien_Coc = tongCoc;
+                    ttdatphong.Tien_Coc = dtienCoc;
                     ttdatphong.Trang_Thai = 0;
 
                     var maphongne = Session["maphongorder"].ToString();
@@ -1056,6 +1062,7 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         for (int i = 0; i < nhanthans.Count; i++)
                         {
+                            Thread.Sleep(1);
                             string maNT = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                             string gioitinh = nhanthans[i].Ma_Nhan_Than;
                             nhanthans[i].Ma_Nhan_Than = maNT;
@@ -1069,7 +1076,6 @@ namespace SEP_VanLangHotel.Controllers
                             nhanthans[i].Ma_TT_Dat_Phong = maTTdp;
                             model.Nhan_Than.Add(nhanthans[i]);
                             model.SaveChanges();
-                            Thread.Sleep(1);
                         }
                     }
                     Session["thongbaoSuccess"] = "Đặt phòng thành công !";
@@ -1091,7 +1097,7 @@ namespace SEP_VanLangHotel.Controllers
         }
 
         //Đặt phòng ở chi tiết phòng trống
-        public ActionResult OrderRoomsSateEmpty(string maPhong, DateTime ngayDen, DateTime ngayVe, int soNguoiLon, int soTreEm)
+        public ActionResult OrderRoomsSateEmpty(string maPhong, DateTime ngayVe, int soNguoiLon, int soTreEm)
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
@@ -1099,14 +1105,16 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     try
                     {
+                        DateTime ngayDen = DateTime.Now;
+                        DateTime ngaydenTemp = Convert.ToDateTime(ngayDen.ToString("yyyy/MM/dd"));
                         var phong = model.Phong.FirstOrDefault(p => p.Ma_Phong.Equals(maPhong));
-                        int ngaynay = (int)ngayDen.Subtract(DateTime.Now).TotalDays + 1;
+                        int ngaynay = (int)ngaydenTemp.Subtract(DateTime.Now).TotalDays + 1;
                         if (ngaynay < 1)
                         {
                             Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày hiện tại!";
                             return RedirectToAction("DetailtEmptyRooms", "RoomManagement", new { id = maPhong });
                         }
-                        int songay = (int)ngayVe.Subtract(ngayDen).TotalDays + 1;
+                        int songay = (int)ngayVe.Subtract(ngaydenTemp).TotalDays + 1;
                         if (songay < 1)
                         {
                             Session["error-import-file"] = "Ngày bắt đầu không thể thấp hơn ngày kết thúc!";
@@ -1141,6 +1149,8 @@ namespace SEP_VanLangHotel.Controllers
 
                         Session["thoigian-ve"] = ngayVe;
                         Session["thoigian-den"] = ngayDen;
+
+
                         Session["tong-thanhtoan"] = songay * phong.Loai_Phong.Gia;
                         Session["tong-coc"] = (songay * phong.Loai_Phong.Gia) * Convert.ToDecimal(0.3);
 

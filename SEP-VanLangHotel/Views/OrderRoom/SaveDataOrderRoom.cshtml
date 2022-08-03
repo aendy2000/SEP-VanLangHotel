@@ -97,22 +97,18 @@
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-3">
-                                            <label class="small mb-1">Ở từ ngày</label>
-                                            <input name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="small mb-1">Đến hết ngày</label>
+                                            <label class="small mb-1">Trả phòng sau ngày</label>
                                             <input name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="small mb-1">Số người lớn</label>
                                             <input name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="small mb-1">Số trẻ em (dưới 14 tuổi)</label>
                                             <input name="soTreEm" value="@Session["songuoi-treem"]" style="color:black" type="number" min="0" max="5" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng trẻ em tối đa 4 người')" oninput="this.setCustomValidity('')">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="small mb-1">Số giường</label>
                                             <input name="soGiuong" value="@Session["sogiuong"]" style="color:black" type="number" min="1" max="2" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng giường của phòng tối đa 2 giường')" oninput="this.setCustomValidity('')">
                                         </div>
@@ -169,7 +165,7 @@
                                 <div class="row card-item bg">
                                     <!-- Form Group (Hình ảnh)-->
                                     <div class="col-md-6 size">
-                                        <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                        <img class="img-book-room" src="@Model[i].Hinh_Anh" alt="">
                                     </div>
                                     <div class="col-md-6">
                                         <!-- Form Group (Số phòng)-->
@@ -215,7 +211,7 @@
                                                             <label class="small-footer">
                                                                 <span style="color:red;">
                                                                     <b>
-                                                                        @Model[i].Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))
+                                                                        @Model[i].Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy/MM/dd")).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))
                                                                     </b>
                                                                 </span>
                                                             </label>

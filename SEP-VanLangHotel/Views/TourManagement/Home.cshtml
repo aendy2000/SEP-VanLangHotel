@@ -1,0 +1,164 @@
+﻿@model IEnumerable<SEP_VanLangHotel.Models.TOUR>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
+}
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <div class="card-title">Danh sách phòng trống</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Modal -->
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã Tour</th>
+                                    <th>Họ & Tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ở từ ngày</th>
+                                    <th>Đến hết ngày</th>
+                                    <th>Trạng thái</th>
+                                    <th style="width: 3%">Chi tiết</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Ma_Tour</td>
+                                        <td>@item.Ho_Ten_Chu_Tour</td>
+                                        <td>@item.SDT</td>
+                                        <td>@item.Thoi_Gian_NhanPhong.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Thoi_Gian_TraPhong.ToString("dd/MM/yyyy")</td>
+                                        @if (@item.Trang_Thai == 0)
+                                        {
+                                            <td style="text-align: center; width: 100px; background-color: #ffc107; color: white;">Đã cọc</td>
+                                        }
+                                        else if (@item.Trang_Thai == 1)
+                                        {
+                                            <td style="text-align: center; width: 100px; background-color:limegreen; color:white;">Đã Thanh Toán</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="text-align: center; width: 100px; background-color: #f25961; color: white;">Đã Hủy</td>
+                                        }
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a style="width:1px; margin-top:2px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtTour", "TourManagement", new { id = item.Ma_Tour })">
+                                                    <i class="fa fa-info"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        //Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>

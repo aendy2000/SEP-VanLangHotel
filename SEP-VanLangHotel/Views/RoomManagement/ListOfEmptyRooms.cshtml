@@ -47,7 +47,7 @@
                                     <tr>
                                         <td style="width: 15%; text-align: center;">
                                             <br />
-                                            <img style="height:100%; width:100px; margin-bottom:15px" class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
+                                            <img style="height:100%; width:100px; margin-bottom:15px" class="img-book-room" src="@item.Hinh_Anh" alt="">
                                         </td>
                                         <td>@item.So_Phong</td>
                                         <td>@item.Loai_Phong.Gia.ToString("0,0")</td>
@@ -85,15 +85,9 @@
                                                         <form action="@Url.Action("OrderRoomsSateEmpty", "OrderRoom")" method="post">
                                                             <div class="modal-body">
                                                                 <div class="row">
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-12">
                                                                         <div class="form-group form-group-default">
-                                                                            <label>Ở từ</label>
-                                                                            <input name="ngayDen" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group form-group-default">
-                                                                            <label>Đến hết</label>
+                                                                            <label>Ở hết ngày</label>
                                                                             <input name="ngayVe" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                                                                         </div>
                                                                     </div>

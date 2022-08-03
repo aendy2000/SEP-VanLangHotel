@@ -143,7 +143,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="small mb-1">Tổng thanh toán</label>
-                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                             @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                         </div>
 

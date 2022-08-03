@@ -51,7 +51,7 @@
                     <div class="card-body text-center">
                         <p style="width: 100%; font-style: italic; margin-top: 0.1rem ">Phòng đang @phong.Trang_Thai.Ten_Trang_Thai </p>
                         <br>
-                        <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
+                        <img src="@phong.Hinh_Anh" alt="avatar"
                              style="border-radius:3%; width:100%" class="img-room-profile mb-2">
                         <p></p>
                         <h2 class="btn btn-danger" style="font-weight: bold; width: 100%; margin-top: 1rem"> @phong.So_Phong </h2>
@@ -129,9 +129,9 @@
                         <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
-                                <label class="small mb-1">Ở từ ngày</label>
-                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy")</p>
-                                <input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
+                                <label class="small mb-1">Ngày đặt phòng</label>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString()</p>
+                                @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString()" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1">Người lớn</label>
@@ -140,13 +140,13 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1">Tổng thanh toán</label>
-                                <p type="text" style=" text-align:center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToDecimal(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Session["thoigian-den"].ToString())).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                <p type="text" style=" text-align:center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy/MM/dd")).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                                 @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
-                                <label class="small mb-1">Đến hết ngày</label>
+                                <label class="small mb-1">Trả phòng sau ngày</label>
                                 <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
                                 <input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                             </div>

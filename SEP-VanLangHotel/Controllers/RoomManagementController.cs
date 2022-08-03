@@ -539,14 +539,14 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         var TTDatPhong = model.TT_Dat_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id));
                         TTDatPhong.Trang_Thai = 1; //Đã hoàn thành
-                        model.Entry(TTDatPhong).State = EntityState.Modified;
-                        model.SaveChanges();
 
                         int landoi = TTDatPhong.Doi_Tra;
                         if(landoi == 0)
                         {
+                            TTDatPhong.Thoi_Gian_Doi_Tra = DateTime.Now;
                             var phongs = TTDatPhong.Phong;
                             phongs.Ma_Trang_Thai = "TT202207050001";
+                            model.Entry(TTDatPhong).State = EntityState.Modified;
                             model.Entry(phongs).State = EntityState.Modified;
                             model.SaveChanges();
                             Session["thongbaoSuccess"] = "Trả phòng thành công!";
@@ -555,8 +555,11 @@ namespace SEP_VanLangHotel.Controllers
                         else
                         {
                             var ttdoiphong = model.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(id) && t.Lan_Doi == landoi);
+                            ttdoiphong.TG_Doi_Tra = DateTime.Now;
                             var phongs = ttdoiphong.Phong;
                             phongs.Ma_Trang_Thai = "TT202207050001";
+                            model.Entry(TTDatPhong).State = EntityState.Modified;
+                            model.Entry(ttdoiphong).State = EntityState.Modified;
                             model.Entry(phongs).State = EntityState.Modified;
                             model.SaveChanges();
                             Session["thongbaoSuccess"] = "Trả phòng thành công!";
