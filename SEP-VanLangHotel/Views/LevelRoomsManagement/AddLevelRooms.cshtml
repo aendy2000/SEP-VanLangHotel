@@ -1,0 +1,208 @@
+﻿@model SEP_VanLangHotel.Models.ListTienIch
+@using SEP_VanLangHotel.Models
+@{
+    ViewBag.Title = "Thêm loại phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
+}
+
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
+
+<style>
+    input[type=checkbox] {
+        transform: scale(2);
+        margin-top: 10px;
+        margin-bottom: 7px;
+    }
+</style>
+
+<div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("AddLevelRooms", "LevelRoomsManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="page-inner mt--5">
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- Account details card-->
+                <div class="card mb-6">
+                    <div class="card-header"><b>Thêm loại phòng khách sạn</b></div>
+                    <div class="card-body">
+                        <!-- Form Group (Loại phòng)-->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
+                            @Html.Editor("tenloaiphong", new { htmlAttributes = new { @class = "form-control", @placeholder = "A1.001", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập tên loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+                        <!-- Form Group (Số người lớn) -->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="inputNumberHuman">Số người lớn</label>
+                            @Html.Editor("songuoilon", new { htmlAttributes = new { @class = "form-control", @placeholder = "1, 2, 3, 4...", @type = "number", @required = "required", @min = "1", @max = "4", @oninvalid = "this.setCustomValidity('Hãy nhập số người lớn')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+                        <!-- Form Group (Số trẻ em) -->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="inputNumberHuman">Số trẻ em</label>
+                            @Html.Editor("sotreem", new { htmlAttributes = new { @class = "form-control", @placeholder = "0, 1, 2, 3, 4, 5...", @type = "number", @required = "required", @min = "1", @max = "4", @oninvalid = "this.setCustomValidity('Hãy nhập số trẻ em')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+                        <!-- Form Group (Số giường) -->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="inputLocation">Số giường</label>
+                            @Html.Editor("sogiuong", new { htmlAttributes = new { @class = "form-control", @placeholder = "1, 2...", @type = "number", @required = "required", @min = "1", @max = "2", @oninvalid = "this.setCustomValidity('Hãy nhập số giường')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+                        <!-- Form Group (Gía phòng)-->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="">Gía phòng</label>
+                            @Html.Editor("gia", new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "000000", @type = "number", @min = "0", @oninvalid = "this.setCustomValidity('Hãy nhập giá loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+                        <!-- Form Group (Mô tả)-->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <label class="small mb-1" for="inputEmailAddress">Mô tả</label>
+                            @Html.Editor("mota", new { type = "textarea", htmlAttributes = new { @class = "form-control", @placeholder = "Mô tả", @row = "10", @maxlength = "200", @required = "required", pattern = "{200}", @oninvalid = "this.setCustomValidity('Hãy nhập mô tả loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                        </div>
+
+                        <!-- Form Group (Tiện ích)-->
+                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                            <div class="form-group col-md-12 text-center">
+                                <div class="selectgroup selectgroup-pills">
+                                    @for (int i = 0; i < Model.tienIch.Count; i++)
+                                    {
+                                        <label class="selectgroup-item">
+                                            @Html.CheckBoxFor(t => Model.tienIch[i].IsChecks, new { @class = "form-control", type = "checkbox", style = "accent-color: #e74c3c" })
+                                            <span style="border-color:peru;" class="selectgroup-button">@Model.tienIch[i].Ten_Tien_Ich</span>
+                                            @Html.HiddenFor(t => Model.tienIch[i].Ma_Tien_Ich)
+                                            @Html.HiddenFor(t => Model.tienIch[i].Ten_Tien_Ich)
+
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div style="text-align:center;" class="mb-3">
+                            <button style="width:180px" type="submit" class="btn btn-success">
+                                Lưu
+                            </button>
+                            &emsp;
+                            <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huythemloaiphong()">
+                                Hủy
+                            </a>
+                            <script>
+                                function huythemloaiphong() {
+                                    cuteAlert({
+                                        type: "question",
+                                        title: "Hủy bỏ?",
+                                        message: "Bạn có chắc chắn muốn hủy thêm loại phòng?",
+                                        confirmText: "Xác nhận", cancelText: "Hủy"
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            window.location.href = '@Url.Action("Home", "LevelRoomsManagement")';
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="~/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+    });</script>
+
+
+
+
+
