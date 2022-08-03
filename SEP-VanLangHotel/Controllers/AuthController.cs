@@ -117,11 +117,9 @@ namespace SEP_VanLangHotel.Controllers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
+                        Session["thongbao-loi"] = ex.Message;
                     }
-
                     return RedirectToAction("VerifyEmail", new { id = taikhoan.Ma_Tai_Khoan });
-
 
                 }
                 Session["thongbao-taikhoan-incorrect"] = true;

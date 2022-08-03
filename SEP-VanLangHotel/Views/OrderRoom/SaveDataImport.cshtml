@@ -164,8 +164,11 @@
                                     <div class="row card-item bg">
                                         <!-- Form Group (Hình ảnh)-->
                                         <div class="col-md-6 size">
-                                            <img class="img-book-room" src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="">
-                                        </div>
+                                            @foreach (var item in modelss.Phong.Where(c => c.Ma_Phong.Equals(maphong)))
+                                            {
+                                                <img class="img-book-room" src="@item.Hinh_Anh" alt="">
+                                            }
+                                            </div>
                                         <div class="col-md-6">
                                             <!-- Form Group (Số phòng)-->
                                             <div class="col-md-6 ml-auto mr-auto range text-center">

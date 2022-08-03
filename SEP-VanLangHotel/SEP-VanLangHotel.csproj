@@ -273,6 +273,7 @@
     <Compile Include="Controllers\QuanLyLichSuPhongController.cs" />
     <Compile Include="Controllers\QuanLyTienIchController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
+    <Compile Include="Controllers\TourManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -911,6 +912,8 @@
     <Content Include="Views\AdminManagementRoom\AddRoom.cshtml" />
     <Content Include="Views\AdminManagementRoom\DetailRoom.cshtml" />
     <Content Include="Views\AdminManagementRoom\UpdateRoom.cshtml" />
+    <Content Include="Views\TourManagement\Home.cshtml" />
+    <Content Include="Views\TourManagement\DetailtTour.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
