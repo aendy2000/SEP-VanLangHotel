@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.TOUR>
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "QUẢN LÝ TOUR";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -55,7 +55,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách phòng trống</div>
+                        <div style="font-weight: bold; color: orangered; margin-left: 10px; " class="card-title">Danh Sách Tour</div>
                     </div>
                 </div>
                 <div class="card-body">

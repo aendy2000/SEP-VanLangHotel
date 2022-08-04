@@ -5,7 +5,7 @@
     List<TT_Dat_Phong> ttdatphong = Session["tt-tour"] as List<TT_Dat_Phong>;
 }
 @{
-    ViewBag.Title = "Chi Tiết Tour";
+    ViewBag.Title = "THÔNG TIN TOUR";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -53,7 +53,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">THÔNG TIN ĐẶT PHÒNG THEO TOUR</h2>
+                    <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
                 </div>
             </div>
         </div>
@@ -69,19 +69,26 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <div class="card-title col-md-12">
-                                    @if (Model.Trang_Thai == 0)
-                                    {
-                                        <p class="btn btn-warning" style="float:right; font-weight:bold;">Đã Cọc: @Model.Thoi_Gian_DatPhong_Coc</p>
-                                    }
-                                    else if (Model.Trang_Thai == 1)
-                                    {
-                                        <p class="btn btn-success" style="float: right; font-weight: bold;">Đã Thanh Toán: @Model.Thoi_Gian_ThanhToan_Huy</p>
-                                    }
-                                    else
-                                    {
-                                        <p class="btn btn-danger" style="float: right; font-weight: bold;">Đã Hủy: @Model.Thoi_Gian_ThanhToan_Huy</p>
-                                    }
+                                <div class="col-xl-12">
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-8">
+                                            <div style="font-weight: bold; color: orangered;" class="card-title">Thông Tin Đặt Phòng Theo Tour</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if (Model.Trang_Thai == 0)
+                                            {
+                                                <p class="btn btn-warning ml-auto" style="color: white; text-align:right; float: right; font-weight: bold;">Đã Cọc: @Model.Thoi_Gian_DatPhong_Coc</p>
+                                            }
+                                            else if (Model.Trang_Thai == 1)
+                                            {
+                                                <p class="btn btn-success" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Thanh Toán: @Model.Thoi_Gian_ThanhToan_Huy</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="btn btn-danger" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Hủy: @Model.Thoi_Gian_ThanhToan_Huy</p>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,17 +118,17 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         <div class="col-md-4">
                                             <label class="small mb-1">Giới tính</label>
                                             @*@if (Model.Gioi_Tinh == 1)
-                {
-                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNam, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                }
-                else if (Model.Gioi_Tinh == 0)
-                {
-                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNu, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                }
-                else
-                {
-                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhKhac, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                }*@
+                                                {
+                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNam, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                                }
+                                                else if (Model.Gioi_Tinh == 0)
+                                                {
+                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNu, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhKhac, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
+                                                }*@
 
                                             @if (Model.Gioi_Tinh == 1)
                                             {
