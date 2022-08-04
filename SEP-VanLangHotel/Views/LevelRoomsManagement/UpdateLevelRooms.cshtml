@@ -1,13 +1,13 @@
 ﻿@model SEP_VanLangHotel.Models.ListTienIch
 @using SEP_VanLangHotel.Models
-@{ 
+@{
     SEP25Team09Entities models = new SEP25Team09Entities();
     var malp = Session["updateLoaiPhong"].ToString();
     var loaiphong = models.Loai_Phong.FirstOrDefault(l => l.Ma_Loai_Phong.Equals(malp));
 }
 
 @{
-    ViewBag.Title = "Chỉnh sửa loại phòng";
+    ViewBag.Title = "CẬP NHẬT LOẠI PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -70,44 +70,49 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     @Html.AntiForgeryToken()
     <div class="page-inner mt--5">
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-10">
                 <!-- Account details card-->
-                <div class="card mb-6">
-                    <div class="card-header"><b>Thêm loại phòng khách sạn</b></div>
+                <div class="card mb-10">
+                    <div class="card-header"><b>Thông Tin Loại Phòng Cần Sửa</b></div>
                     <div class="card-body">
                         <!-- Form Group (Loại phòng)-->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN LOẠI PHÒNG</p>
+                        <!-- Form Group (Loại phòng)-->
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
-                            <input value = "@loaiphong.Ten_Loai_Phong" name="tenloaiphong" class = "form-control" placeholder = "A1.001" required = "required" oninvalid = "this.setCustomValidity('Hãy nhập tên loại phòng')" oninput = "this.setCustomValidity('')" />
+                            <input value="@loaiphong.Ten_Loai_Phong" name="tenloaiphong" class="form-control" placeholder="A1.001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số người lớn) -->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputNumberHuman">Số người lớn</label>
-                            <input value = "@loaiphong.So_Nguoi_Lon" name="songuoilon" class = "form-control" placeholder = "1, 2, 3, 4..." type = "number" required = "required" min = "1" max = "4" oninvalid = "this.setCustomValidity('Hãy nhập số người lớn')" oninput = "this.setCustomValidity('')" />
+                            <input value="@loaiphong.So_Nguoi_Lon" name="songuoilon" class="form-control" placeholder="1, 2, 3, 4..." type="number" required="required" min="1" max="4" oninvalid="this.setCustomValidity('Hãy nhập số người lớn')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số trẻ em) -->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputNumberHuman">Số trẻ em</label>
-                            <input value = "@loaiphong.So_Tre_Em" name="sotreem" class = "form-control" placeholder = "0, 1, 2, 3, 4, 5..." type = "number" required = "required" min = "1" max = "4" oninvalid = "this.setCustomValidity('Hãy nhập số trẻ em')" oninput = "this.setCustomValidity('')" />
+                            <input value="@loaiphong.So_Tre_Em" name="sotreem" class="form-control" placeholder="0, 1, 2, 3, 4, 5..." type="number" required="required" min="1" max="4" oninvalid="this.setCustomValidity('Hãy nhập số trẻ em')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số giường) -->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLocation">Số giường</label>
-                            <input value = "@loaiphong.So_Giuong" name="sogiuong" class = "form-control" placeholder = "1, 2..." type = "number" required = "required" min = "1" max = "2" oninvalid = "this.setCustomValidity('Hãy nhập số giường')" oninput = "this.setCustomValidity('')" />
+                            <input value="@loaiphong.So_Giuong" name="sogiuong" class="form-control" placeholder="1, 2..." type="number" required="required" min="1" max="2" oninvalid="this.setCustomValidity('Hãy nhập số giường')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Gía phòng)-->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="">Gía phòng</label>
-                            <input value = "@loaiphong.Gia" name="gia" class = "form-control" required = "required" placeholder = "000000" type = "number" min = "0" oninvalid = "this.setCustomValidity('Hãy nhập giá loại phòng')" oninput = "this.setCustomValidity('')" />
+                            <input value="@loaiphong.Gia" name="gia" class="form-control" required="required" placeholder="000000" type="number" min="0" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Mô tả)-->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputEmailAddress">Mô tả</label>
-                            <textarea class = "form-control" name="mota" placeholder = "Mô tả" rows = "7" maxlength = "200" required = "required" pattern = "{200}" oninvalid = "this.setCustomValidity('Hãy nhập mô tả loại phòng')" oninput = "this.setCustomValidity('')">@loaiphong.Mo_Ta</textarea>
+                            <textarea class="form-control" name="mota" placeholder="Mô tả" rows="7" maxlength="200" required="required" pattern="{200}" oninvalid="this.setCustomValidity('Hãy nhập mô tả loại phòng')" oninput="this.setCustomValidity('')">@loaiphong.Mo_Ta</textarea>
                         </div>
-
+                        <br />
+                        <hr />
+                        <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">TIỆN ÍCH CHO LOẠI PHÒNG</p>
+                        <br />
                         <!-- Form Group (Tiện ích)-->
-                        <div class="col-md-9 mb-3 ml-auto mr-auto">
+                        <div class="col-md-12 mb-3 ml-auto mr-auto">
                             <div class="form-group col-md-12 text-center">
                                 <div class="selectgroup selectgroup-pills">
                                     @for (int i = 0; i < Model.tienIch.Count; i++)
@@ -123,14 +128,14 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 </div>
                             </div>
                         </div>
-
                         <hr>
+                        <br />
                         <div style="text-align:center;" class="mb-3">
-                            <input hidden name="maloaiphong" value="@loaiphong.Ma_Loai_Phong" type="text"/>
+                            <input hidden name="maloaiphong" value="@loaiphong.Ma_Loai_Phong" type="text" />
                             <button style="width:180px" type="submit" class="btn btn-search">
                                 Lưu
                             </button>
-                            &emsp;
+                            &emsp; &emsp;
                             <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huythemloaiphong()">
                                 Hủy
                             </a>
@@ -151,6 +156,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 }
                             </script>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>

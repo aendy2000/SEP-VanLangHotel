@@ -111,7 +111,7 @@ namespace SEP_VanLangHotel.Controllers
                     }
                     else
                     {
-                        phongs.Hinh_Anh = "HinhAnh.png";
+                        phongs.Hinh_Anh = "https://firebasestorage.googleapis.com/v0/b/sep-project-2022-6fbfd.appspot.com/o/images%2Fjessica-jeansoulin-icon-hotel-ortho.jpg?alt=media&token=2f27626f-ef94-44be-b7e8-cdfe0616c38a";
                     }
                     phongs.Ma_Phong = "1";
                     phongs.Ma_Khach_San = "KS202207010001";

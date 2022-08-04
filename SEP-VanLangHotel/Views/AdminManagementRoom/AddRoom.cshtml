@@ -1,7 +1,7 @@
 ﻿@model SEP_VanLangHotel.Models.Phong
 
 @{
-    ViewBag.Title = "Thêm phòng mới";
+    ViewBag.Title = "THÊM PHÒNG MỚI";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -40,6 +40,8 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     </script>
     Session["thongbaoSuccess"] = "empthy";
 }
+
+<title>@ViewBag.Title</title>
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -56,32 +58,40 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     @Html.HiddenFor(model => model.Ma_Trang_Thai)
     <div class="page-inner mt--5">
         <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header"><b>Ảnh Phòng</b></div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img src="https://firebasestorage.googleapis.com/v0/b/sep-project-2022-6fbfd.appspot.com/o/images%2Fjessica-jeansoulin-icon-hotel-ortho.jpg?alt=media&token=2f27626f-ef94-44be-b7e8-cdfe0616c38a" alt="avatar"
+                             style="border-radius:3%; width:75%" class="img-room-profile mb-2" id="previewImage">
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-2"> Chọn hình ảnh phòng - ảnh vuông, dưới 5MB</div>
+                        <input role="button" class="btn btn-primary" type="file" name="file" accept="image/*" onchange="ShowImageUpload(this, document.getElementById('previewImage'))" />
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-8">
                 <div class="card mb-4">
-                    <div class="card-header"><b>Thông tin phòng</b></div>
-                    <div class="card-body">
-
+                    <div class="card-header"><b>Thông tin tài khoản</b></div>
+                    <div class="card-body" style="margin-top: -1.8rem">
+                        <br />
                         <div class="mb-3">
                             <label class="small mb-1">Số phòng</label>
                             @*//ReadOnly = true*@
-                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { @class = "form-control", @pattern = ".{1,10}", @required = "required", @oninvalid = "this.setCustomValidity('Số phòng nhập tối đa 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { placeholder = "Phong 1A.0000...", @class = "form-control", @pattern = ".{1,10}", @required = "required", @oninvalid = "this.setCustomValidity('Số phòng nhập tối đa 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.So_Phong, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Mã loại phòng</label>
+                            <label class="small mb-1">Loại phòng</label>
                             @Html.DropDownListFor(model => model.Ma_Loai_Phong, null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Ma_Loai_Phong, "", new { @class = "text-danger" })
-
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Hình ảnh</label><br />
-                            <input role="button" class="btn btn-primary" type="file" name="file" accept="image/*" onchange="ShowImageUpload(this, document.getElementById('previewImage'))" />
-                        </div>
-                        <div class="mb-3">
-                            <img class="img-upload-preview" id="previewImage">
-                        </div>
+                        <br />
+                        <br />
                         <hr />
-                        <div style="text-align:center;" class="mb-3">
+                        <div style="text-align: center; margin-top: 1.8rem" class="mb-3">
                             <button style="width: 180px; color: white;" type="submit" class="btn btn-search" onclick="if (!confirm('Thêm phòng?')) { return false }">
                                 Thêm
                             </button>
@@ -90,13 +100,14 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 Hủy
                             </a>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 }
-
+<link rel="stylesheet" href="~/assets/css/profiles.css">
 <script>
     function huythemphong() {
        cuteAlert({
@@ -113,7 +124,3 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
        });
    }
 </script>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

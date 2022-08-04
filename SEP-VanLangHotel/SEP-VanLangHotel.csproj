@@ -267,11 +267,11 @@
     <Compile Include="Controllers\AdminManagementRoomController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\AuthoritiesManagementController.cs" />
+    <Compile Include="Controllers\HistoryOrderRoomsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelRoomsManagementController.cs" />
     <Compile Include="Controllers\OrderRoomController.cs" />
     <Compile Include="Controllers\QuanLyTrangThaiController.cs" />
-    <Compile Include="Controllers\QuanLyLichSuPhongController.cs" />
     <Compile Include="Controllers\QuanLyTienIchController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
     <Compile Include="Controllers\TourManagementController.cs" />
@@ -908,7 +908,6 @@
     <Content Include="Views\RoomManagement\ChangeRooms.cshtml" />
     <Content Include="Views\QuanLyTrangThai\Home.cshtml" />
     <Content Include="Views\QuanLyTienIch\Home.cshtml" />
-    <Content Include="Views\QuanLyLichSuPhong\Home.cshtml" />
     <Content Include="Views\AdminManagementRoom\Home.cshtml" />
     <Content Include="Views\AdminManagementRoom\AddRoom.cshtml" />
     <Content Include="Views\AdminManagementRoom\DetailRoom.cshtml" />
@@ -919,11 +918,11 @@
     <Content Include="Views\LevelRoomsManagement\AddLevelRooms.cshtml" />
     <Content Include="Views\LevelRoomsManagement\DetailLevelRooms.cshtml" />
     <Content Include="Views\LevelRoomsManagement\UpdateLevelRooms.cshtml" />
+    <Content Include="Views\HistoryOrderRooms\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\BookRoom\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

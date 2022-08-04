@@ -202,7 +202,7 @@
                             </li>
                             <li class="nav-item active">
                                 <a data-toggle="collapse" href="#abc">
-                                    <i class="fas fa-hospital"></i>
+                                    <i class="fas fa-door-open"></i>
                                     <p>Quản lý phòng</p>
                                     <span class="caret"></span>
                                 </a>
@@ -213,6 +213,11 @@
                                                 <span class="sub-item">Danh sách phòng</span>
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="@Url.Action("AddRoom", "AdminManagementRoom")">
+                                                <span class="sub-item">Thêm phòng</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -220,7 +225,7 @@
                             </li>
                             <li class="nav-item active">
                                 <a data-toggle="collapse" href="#sidebarTienIch">
-                                    <i class="fas fa-key"></i>
+                                    <i class="fas fa-lightbulb"></i>
                                     <p>Quản lý tiện ích</p>
                                     <span class="caret"></span>
                                 </a>
@@ -283,7 +288,7 @@
                         {
                             <li class="nav-item active">
                                 <a data-toggle="collapse" href="#sidebarLayouts">
-                                    <i class="fas fa-key"></i>
+                                    <i class="fas fa-door-open"></i>
                                     <p>Quản lý phòng</p>
                                     <span class="caret"></span>
                                 </a>
@@ -310,27 +315,8 @@
                             <li class="nav-section">
                             </li>
                             <li class="nav-item active">
-                                <a data-toggle="collapse" href="#sidebarLayoutsTour">
-                                    <i class="fas fa-info-circle"></i>
-                                    <p>Quản lý tour</p>
-                                    <span class="caret"></span>
-                                </a>
-                                <div class="collapse" id="sidebarLayoutsTour">
-                                    <ul class="nav nav-collapse">
-                                        <li>
-                                            <a href="@Url.Action("Home", "QuanLyTour")">
-                                                <span class="sub-item">Danh sách tour</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <hr />
-                            <li class="nav-section">
-                            </li>
-                            <li class="nav-item active">
                                 <a data-toggle="collapse" href="#slibarTour">
-                                    <i class="fas fa-key"></i>
+                                    <i class="fas fa-bus-alt"></i>
                                     <p>Quản lý Tour</p>
                                     <span class="caret"></span>
                                 </a>
@@ -344,13 +330,29 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li class="nav-section">
+                            </li>
+                            <li class="nav-item active">
+                                <a data-toggle="collapse" href="#slibarHistory">
+                                    <i class="fas fa-history"></i>
+                                    <p>Lịch sử thuê phòng</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="slibarHistory">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("Home", "HistoryOrderRooms")">
+                                                <span class="sub-item">Danh sách lịch sử</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <hr />
                             <li class="nav-section">
                             </li>
-
-
                         }
-                        <li align="bottom" class="nav-item active">
+                        <li class="nav-item active">
                             <a class="collapsed" aria-expanded="false" onclick="xacnhandangxuat()">
                                 <i class="fas icon-logout"></i>
                                 <p>Đăng Xuất</p>
@@ -391,14 +393,14 @@
                     <nav class="pull-left">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Van Lang Hotel
+                                <a class="nav-link" href="@Url.Action("Homepage", "Home")">
+                                    <i class="fa fa-hotel text-danger"></i> &ensp; Van Lang Hotel
                                 </a>
                             </li>
                         </ul>
                     </nav>
                     <div class="copyright ml-auto">
-                        2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">VanLang Hotel</a>
+                        SEP PROJECT - 2022 &ensp;<i class="fa fa-heart heart text-danger"></i> &ensp;<a href="@Url.Action("Homepage", "Home")">VanLang Hotel</a>
                     </div>
                 </div>
             </footer>

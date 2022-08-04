@@ -2,7 +2,7 @@
 @using SEP_VanLangHotel.Models;
 @{SEP25Team09Entities db = new SEP25Team09Entities(); }
 @{
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = "VĂN LANG HOTEL";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -56,7 +56,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">ĐẶT PHÒNG KHÁCH SẠN</h2>
+                    <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
                 </div>
             </div>
         </div>
@@ -67,6 +67,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
+                            <div style="font-weight: bold; color: orangered; margin-left: 10px; " class="card-title">Đặt Phòng Khách Sạn</div>
                             <label for="import"></label>
                             <button style="color:white;" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
                                 <i class="fas fa-file-import"></i> &ensp;

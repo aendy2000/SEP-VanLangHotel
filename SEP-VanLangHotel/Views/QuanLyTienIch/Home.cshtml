@@ -75,15 +75,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách Quyền</div>
+                        <div style="font-weight: bold; color: orangered; margin-left: 10px; " class="card-title">Danh Sách Tiện Ích</div>
                         <button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                             <i class="fa fa-plus"></i>
                             Thêm tiện ích mới
                         </button>
                         @*<a style="color:white;" type="button" class="btn btn-secondary btn-round ml-auto" href="@Url.Action("AddNewAccount", "AccountManagement")">
-                                <i class="fa fa-plus"></i>
-                                Thêm tài khoản mới
-                            </a>*@
+            <i class="fa fa-plus"></i>
+            Thêm tài khoản mới
+        </a>*@
                     </div>
                 </div>
                 <div class="card-body">
@@ -182,32 +182,13 @@
                                         <td>@item.Ten_Tien_Ich</td>
                                         <td>
                                             <div class="form-button-action">
-                                                <a data-toggle="modal" data-target="#@item.Ma_Tien_Ich" style="width:1px" role="button" title="Chỉnh sửa quyền" class="btn btn-link btn-info btn-lg" data-original-title="Sửa quyền">
+                                                <a data-toggle="modal" data-target="#@item.Ma_Tien_Ich" style="width:1px" role="button" title="Chỉnh sửa quyền" class="btn btn-link btn-info btn-lg" data-original-title="Sửa tiện ích">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
-                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tiện ích" onclick="xoaquyen()">
+                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tiện ích"  onclick="if (!confirm('Bạn có muốn xóa tiện ích @item.Ten_Tien_Ich?')) { return false; } else { window.location.href = '@Url.Action("DeleteUtilities", "QuanLyTienIch", new { id = item.Ma_Tien_Ich })'; }">
                                                     <i class="fa fa-times"></i>
                                                 </a>
-                                                @*xác nhận Xóa tiện ích*@
-                                                <script>
-                                                    function xoaquyen() {
-                                                        cuteAlert({
-                                                            type: "question",
-                                                            title: "Xóa tiện ích?",
-                                                            message: "Bạn có chắc chắn muốn xóa tiện ích @item.Ten_Tien_Ich?",
-                                                            confirmText: "Xóa",
-                                                            cancelText: "Hủy"
-
-                                                        }).then(function (isConfirm) {
-                                                            if (isConfirm) {
-                                                                window.location.href = '@Url.Action("DeleteUtilities", "QuanLyTienIch", new { id = item.Ma_Tien_Ich })';
-                                                            } else {
-                                                                return false;
-                                                            }
-                                                        });
-                                                    }
-                                                </script>
                                             </div>
                                         </td>
                                     </tr>

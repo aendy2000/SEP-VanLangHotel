@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.Phong>
 
 @{
-    ViewBag.Title = "Quản lý phòng";
+    ViewBag.Title = "QUẢN LÝ PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Layouts = true;
 }
 @if (!Session["error-import-file"].Equals("empthy"))
 {
@@ -43,7 +44,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+                <h3 style="font-weight: bold; color: #fd7e14" class="text-white pb-2 fw-bold">@ViewBag.Title</h3>
             </div>
         </div>
     </div>
@@ -54,7 +55,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách phòng</div>
+                        <div style="font-weight: bold; color: orangered; margin-left: 10px; " class="card-title">Danh Sách Phòng</div>
                         @*<button class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                                 <i class="fa fa-plus"></i>
                                 Thêm phòng mới
@@ -84,8 +85,9 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>
-                                            <img src="@item.Hinh_Anh" style="height:100px;width:100px;"/>
+                                        <td style="width: 15%; text-align: center;">
+                                            <br />
+                                            <img style="height:100%; width:100px; margin-bottom:15px" class="img-book-room" src="@item.Hinh_Anh" alt="">
                                         </td>
                                         <td>@item.So_Phong</td>
                                         <td>@item.Khach_San.Ten_Khach_San</td>
@@ -96,27 +98,11 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                                 <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Thông tin phòng" href="@Url.Action("DetailRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">
                                                     <i class="fa fa-info"></i>
                                                 </a>
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Sửa thông tin phòng" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Sửa phòng" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa phòng" onclick="if (!confirm('Bạn có muốn xóa phòng @item.So_Phong?')) { return false; } else { window.location.href = '@Url.Action("DeleteRoom", "AdminManagementRoom", new { id = item.Ma_Phong })';}">
                                                     <i class="fa fa-times"></i>
-                                                    <script>
-                                                                function xoataikhoan() {
-                                                                    cuteAlert({
-                                                                        type: "question",
-                                                                        title: "Xóa phòng?",
-                                                                        message: "Bạn có chắc chắn muốn xóa phòng?",
-                                                                        confirmText: "Xác nhận", cancelText: "Hủy bỏ"
-                                                                    }).then(function (isConfirm) {
-                                                                        if (isConfirm) {
-                                                                            window.location.href = '@Url.Action("DeleteRoom", "AdminManagementRoom", new { id = item.Ma_Phong })';
-                                                                        } else {
-                                                                            return false;
-                                                                        }
-                                                                    });
-                                                                }
-                                                    </script>
                                                 </a>
 
                                             </div>

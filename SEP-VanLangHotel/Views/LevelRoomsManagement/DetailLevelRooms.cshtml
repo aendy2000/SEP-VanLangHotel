@@ -9,7 +9,7 @@
 }
 
 @{
-    ViewBag.Title = "Thông tin chi tiết loại phòng";
+    ViewBag.Title = "CHI TIẾT LOẠI PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -60,53 +60,55 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
 </div>
 <div class="page-inner mt--5">
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-10">
             <!-- Account details card-->
-            <div class="card mb-6">
-                <div class="card-header"><b>Thông tin chi tiết loại phòng</b></div>
+            <div class="card mb-10">
+                <div class="card-header"><b>Thông Tin Chi Tiết Loại Phòng</b></div>
                 <div class="card-body">
+                    <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN LOẠI PHÒNG</p>
                     <!-- Form Group (Loại phòng)-->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.Ten_Loai_Phong" disabled>
                     </div>
                     <!-- Form Group (Số người lớn) -->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputNumberHuman">Số người lớn</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.So_Nguoi_Lon" disabled>
                     </div>
                     <!-- Form Group (Số trẻ em) -->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputNumberHuman">Số trẻ em</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.So_Tre_Em" disabled>
                     </div>
                     <!-- Form Group (Số giường) -->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputLocation">Số giường</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.So_Giuong" disabled>
                     </div>
                     <!-- Form Group (Gía phòng)-->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="">Gía phòng</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.Gia.ToString("0,0") VND" disabled>
                     </div>
                     <!-- Form Group (Mô tả)-->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputEmailAddress">Mô tả</label>
                         <input style="color:black" type="text" class="form-control" value="@Model.Mo_Ta" disabled>
                     </div>
                     <!-- Form Group (Tiện ích)-->
-                    <div class="col-md-9 mb-3 ml-auto mr-auto">
+                    <div class="col-md-10 mb-3 ml-auto mr-auto">
                         <label class="small mb-1" for="inputEmailAddress">Tiện ích</label>
                         <input style="color:black" type="text" class="form-control" value="@dsTienIch.Substring(0, (dsTienIch.Length - 2))" disabled>
                     </div>
-
-                    <hr>
+                    <br />
+                    <hr />
+                    <br />
                     <div style="text-align:center;" class="mb-3">
                         <a style="width: 180px; color: white; " class="btn btn-search" role="button" href="@Url.Action("UpdateLevelRooms", "LevelRoomsManagement", new {id = Model.Ma_Loai_Phong})" id="btn-edit__lock">
                             Chỉnh sửa thông tin
                         </a>
-                        &emsp;
+                        &emsp; &emsp;
                         <a style="width: 180px;color:white;" class="btn btn-danger" role="button" onclick="xoaloaiphong()" id="btn-edit__lock">
                             Xóa loại phòng
                         </a>
@@ -127,6 +129,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 }
                         </script>
                     </div>
+                    <br />
                 </div>
             </div>
         </div>

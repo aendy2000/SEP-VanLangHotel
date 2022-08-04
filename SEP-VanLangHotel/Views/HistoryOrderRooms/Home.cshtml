@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.TT_Dat_Phong>
-
+@using SEP_VanLangHotel.Models
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    var ttdoiphong = Session["TT_DOI_PHONG"] as List<TT_Doi_Phong>;
+}
 @{
-    ViewBag.Title = "QUẢN LÝ LỊCH SỬ THUÊ PHÒNG";
+    ViewBag.Title = "LỊCH SỬ ĐẶT PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -21,7 +24,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách lịch sử thuê phòng</div>
+                        <div class="card-title">Danh sách lịch sử thuê</div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -30,11 +33,13 @@
                         <table id="add-row" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>HỌ VÀ TÊN</th>
-                                    <th>CMND/CCCD</th>
-                                    <th>NGÀY SINH</th>
-                                    <th>GIỚI TÍNH</th>
-                                    <th>SỐ ĐIỆN THOẠI</th>
+                                    <th>Số phòng</th>
+                                    <th>Họ & Tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ở từ ngày</th>
+                                    <th>Đến hết ngày</th>
                                     <th style="width: 3%">Hành động</th>
                                 </tr>
                             </thead>
@@ -42,10 +47,18 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-
+                                    var mattdatphong = item.Ma_TT_Dat_Phong;
+                                    var landoi = item.Doi_Tra;
                                     <tr>
+                                        @if (item.Doi_Tra == 0)
+                                        {
+                                            <td>@item.Phong.So_Phong</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).Phong.So_Phong</td>
+                                        }
                                         <td>@item.Ho_Ten_KH</td>
-                                        <td>@item.CMND_CCCD_KH</td>
                                         <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
                                         @if (item.Gioi_Tinh_KH == 1)
                                         {
@@ -61,17 +74,27 @@
                                             <td>Khác</td>
                                         }
                                         <td>@item.SDT_KH</td>
-                                        
+                                        <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
+                                        @if (item.Doi_Tra == 0)
+                                        {
+                                            <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+
+                                        }
+                                        else
+                                        {
+                                            <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })" target="_blank">
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
                                                     <i class="fa fa-info"></i>
                                                 </a>
-                                               
+                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
-
                                 }
                             </tbody>
                         </table>

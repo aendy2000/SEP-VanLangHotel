@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.Loai_Phong>
 
 @{
-    ViewBag.Title = "Quản lý loại phòng";
+    ViewBag.Title = "QUẢN LÝ LOẠI PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -57,7 +57,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <div class="card-title">Danh sách loại phòng</div>
+                        <div style="font-weight: bold; color: orangered; margin-left: 10px; " class="card-title">Danh Sách Loại Phòng</div>
                         <a style="color:white;" type="button" class="btn btn-secondary btn-round ml-auto" href="@Url.Action("AddLevelRooms", "LevelRoomsManagement")">
                             <i class="fa fa-plus"></i>
                             Thêm loại phòng mới

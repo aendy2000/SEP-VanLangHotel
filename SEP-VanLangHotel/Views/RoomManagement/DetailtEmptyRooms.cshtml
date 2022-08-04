@@ -8,7 +8,7 @@
     }
 }
 @{
-    ViewBag.Title = "Chi tiết phòng còn trống";
+    ViewBag.Title = "CHI TIẾT PHÒNG TRỐNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -47,7 +47,7 @@
                 <div class="card-body text-center">
                     <p style="width: 100%; font-style: italic; margin-top: 0.1rem ">Phòng đang @Model.Trang_Thai.Ten_Trang_Thai </p>
                     <br>
-                    <img src="https://cdn.yeudulich.com/media/cms/f2/dd/3943-dc57-4832-ab7c-3c23dce3e5ea.jpg" alt="avatar"
+                    <img src="@Model.Hinh_Anh" alt="avatar"
                          style="border-radius:3%; width:100%" class="img-room-profile mb-2">
                     <p></p>
                     <h2 class="btn btn-danger" style="font-weight: bold; width: 100%; margin-top: 1rem"> @Model.So_Phong </h2>

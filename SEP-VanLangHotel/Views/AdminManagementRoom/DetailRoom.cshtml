@@ -1,62 +1,145 @@
 ﻿@model SEP_VanLangHotel.Models.Phong
-
+@using SEP_VanLangHotel.Models
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    string dsTienIch = "";
+    foreach (var item in Model.Loai_Phong.DS_Tien_Ich)
+    {
+        dsTienIch += item.Tien_Ich.Ten_Tien_Ich + "; ";
+    }
+}
 @{
-    ViewBag.Title = "Thông tin chi tiết phòng";
+    ViewBag.Title = "THÔNG TIN PHÒNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+                <h2 class="text-white pb-2 fw-bold">THÔNG TIN PHÒNG</h2>
             </div>
         </div>
     </div>
 </div>
-<div>
+<div class="page-inner mt--5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <p style="width: 100%; font-style: italic; margin-top: 0.1rem ">Phòng đang @Model.Trang_Thai.Ten_Trang_Thai </p>
+                    <br>
+                    <img src="@Model.Hinh_Anh" alt="avatar"
+                         style="border-radius:3%; width:100%" class="img-room-profile mb-2">
+                    <p></p>
+                    <h2 class="btn btn-danger" style="font-weight: bold; width: 100%; margin-top: 1rem"> @Model.So_Phong </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Loại Phòng</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Ten_Loai_Phong</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Giá</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Gia.ToString("0,0") VND</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Chứa Tối Đa</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@(Model.Loai_Phong.So_Nguoi_Lon + Model.Loai_Phong.So_Tre_Em) người</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Số Giường</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.So_Giuong giường</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Tiện ích</p>
+                        </div>
+                        <div class="col-sm-9">
 
-
-    <div class="page-inner mt--5">
-        <div class="row">
-            <div class="col-xl-8">
-                <div class="card mb-4">
-                    <div class="card-header"><b>Thông tin phòng</b></div>
-                    <div class="card-body">
-
-                        <div class="mb-3">
-                            <label class="small mb-1">Số phòng</label>
-                            @*//ReadOnly = true*@
-                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                            <p class="text-muted mb-0">@dsTienIch.Substring(0, (dsTienIch.Length - 2))</p>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Tên khách sạn</label>
-                            @Html.EditorFor(model => model.Khach_San.Ten_Khach_San, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p style="font-weight:bold" class="mb-0">Mô Tả</p>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Loại phòng</label>
-                            @Html.EditorFor(model => model.Loai_Phong.Ten_Loai_Phong, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">@Model.Loai_Phong.Mo_Ta</p>
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Trạng thái</label>
-                            @Html.EditorFor(model => model.Trang_Thai.Ten_Trang_Thai, new { htmlAttributes = new { @class = "form-control", ReadOnly = true } })
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Hình ảnh</label><br />
-                            <img src="@Model.Hinh_Anh" style="height:300px;width:300px;" />
-                        </div>
-                        <hr />
-                        <div style="text-align:center;" class="mb-3">
-                            @*<button style="width: 180px; color: white;" type="submit" class="btn btn-search" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})" ">
-                                Chỉnh sửa thông tin
-                            </button>*@
-                            <a style="width: 180px; color: white; " class="btn btn-search" role="button" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})" id="btn-edit__lock">
-                                Chỉnh sửa thông tin
-                            </a>
-                            &emsp;
-                            <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="huythemphong()">
-                                Xóa phòng
-                            </a>
+                    </div>
+                    <hr>
+                    <div style="text-align:center;" class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a style="width: 180px; color: white; " class="btn btn-search" role="button" href="@Url.Action("UpdateRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})" id="btn-edit__lock">
+                                    Chỉnh sửa
+                                </a>
+                                <span>&emsp;&emsp;</span>
+                                <a style="width:180px; color:white;" role="button" class="btn btn-danger" onclick="xoaphong()">
+                                    Xóa phòng
+                                </a>
+                                <script>
+                                    function xoaphong() {
+                                        cuteAlert({
+                                            type: "question",
+                                            title: "Thông báo!",
+                                            message: "Bạn chắc chắn muốn xóa phòng @Model.So_Phong?",
+                                            confirmText: "Xác nhận",
+                                            cancelText: "Hủy bỏ"
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("DeleteRoom", "AdminManagementRoom", new {id = Model.Ma_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                </script>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,7 +147,3 @@
         </div>
     </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Ma_Phong }) |
-    @Html.ActionLink("Back to List", "Home")
-</p>
