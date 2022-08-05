@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SEP25Team09Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Coc_Phong">
+          <Key>
+            <PropertyRef Name="Ma_Coc_Phong" />
+          </Key>
+          <Property Name="Ma_Coc_Phong" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ma_Tour" Type="nvarchar" MaxLength="20" />
+          <Property Name="Ma_TT_Dat_Phong" Type="varchar" MaxLength="20" />
+          <Property Name="Ma_Phong" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ngay_Bat_Dau" Type="datetime" Nullable="false" />
+          <Property Name="Ngay_Ket_Thuc" Type="datetime" Nullable="false" />
+          <Property Name="Trang_Thai" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DS_Tien_Ich">
           <Key>
             <PropertyRef Name="Ma_DS_Tien_Ich" />
@@ -65,6 +77,19 @@
           <Property Name="Ten_Quyen" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="Mo_Ta" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="Sao_Ke">
+          <Key>
+            <PropertyRef Name="Ma_Sao_Ke" />
+          </Key>
+          <Property Name="Ma_Sao_Ke" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ma_TT_Dat_Phong" Type="varchar" MaxLength="20" />
+          <Property Name="Ma_Tour" Type="nvarchar" MaxLength="20" />
+          <Property Name="Ma_Tai_Khoan" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="So_Tien" Type="money" Nullable="false" />
+          <Property Name="Ngay_Giao_Dich" Type="datetime" Nullable="false" />
+          <Property Name="Coc_or_ThanhToan" Type="int" />
+          <Property Name="Note" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -115,14 +140,15 @@
           <Property Name="Gioi_Tinh" Type="int" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="255" />
           <Property Name="Dia_Chi" Type="nvarchar" MaxLength="255" />
-          <Property Name="Thoi_Gian_DatPhong_Coc" Type="date" Nullable="false" />
-          <Property Name="Thoi_Gian_NhanPhong" Type="date" Nullable="false" />
-          <Property Name="Thoi_Gian_TraPhong" Type="date" Nullable="false" />
-          <Property Name="Thoi_Gian_ThanhToan_Huy" Type="date" />
+          <Property Name="Thoi_Gian_DatPhong_Coc" Type="datetime" />
+          <Property Name="Thoi_Gian_NhanPhong" Type="datetime" />
+          <Property Name="Thoi_Gian_TraPhong" Type="datetime" />
+          <Property Name="Thoi_Gian_ThanhToan_Huy" Type="datetime" />
           <Property Name="So_Tien_Coc" Type="money" Nullable="false" />
           <Property Name="Tong_Thanh_Toan" Type="money" Nullable="false" />
           <Property Name="Trang_Thai" Type="int" Nullable="false" />
           <Property Name="Ma_Tai_Khoan" Type="varchar" MaxLength="20" />
+          <Property Name="TaiKhoanThanhToanOrHuy" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="TT_Dat_Phong">
           <Key>
@@ -146,6 +172,8 @@
           <Property Name="Tong_Thanh_Toan" Type="money" Nullable="false" />
           <Property Name="Tien_Coc" Type="money" Nullable="false" />
           <Property Name="Trang_Thai" Type="int" Nullable="false" />
+          <Property Name="TaiKhoanThanhToanOrHuy" Type="varchar" MaxLength="20" />
+          <Property Name="Thoi_Gian_ThanhToan" Type="datetime" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -168,6 +196,78 @@
           <Property Name="Ten_Trang_Thai" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="Mo_Ta_Trang_Thai" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <Association Name="FK__Coc_Phong__Ma_Ph__4924D839">
+          <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
+          <End Role="Coc_Phong" Type="Self.Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coc_Phong__Ma_To__473C8FC7">
+          <End Role="TOUR" Type="Self.TOUR" Multiplicity="0..1" />
+          <End Role="Coc_Phong" Type="Self.Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOUR">
+              <PropertyRef Name="Ma_Tour" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coc_Phong__Ma_TT__4830B400">
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="0..1" />
+          <End Role="Coc_Phong" Type="Self.Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sao_Ke__Ma_Tai_K__361203C5">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sao_Ke__Ma_Tour__351DDF8C">
+          <End Role="TOUR" Type="Self.TOUR" Multiplicity="0..1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOUR">
+              <PropertyRef Name="Ma_Tour" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sao_Ke__Ma_TT_Da__3429BB53">
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="0..1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_DSTienIch_LoaiPhong">
           <End Role="Loai_Phong" Type="Self.Loai_Phong" Multiplicity="1" />
           <End Role="DS_Tien_Ich" Type="Self.DS_Tien_Ich" Multiplicity="*" />
@@ -264,6 +364,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaiKhoanThanhToanOrHuy_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TT_Dat_Phong">
+              <PropertyRef Name="TaiKhoanThanhToanOrHuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TOUR" Type="Self.TOUR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TOUR">
+              <PropertyRef Name="TaiKhoanThanhToanOrHuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TOUR_TAIKHOAN">
           <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
           <End Role="TOUR" Type="Self.TOUR" Multiplicity="*" />
@@ -337,12 +461,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SEP25Team09ModelStoreContainer">
+          <EntitySet Name="Coc_Phong" EntityType="Self.Coc_Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DS_Tien_Ich" EntityType="Self.DS_Tien_Ich" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Khach_San" EntityType="Self.Khach_San" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loai_Phong" EntityType="Self.Loai_Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nhan_Than" EntityType="Self.Nhan_Than" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Phong" EntityType="Self.Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sao_Ke" EntityType="Self.Sao_Ke" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tai_Khoan" EntityType="Self.Tai_Khoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tien_Ich" EntityType="Self.Tien_Ich" Schema="dbo" store:Type="Tables" />
@@ -350,6 +476,30 @@
           <EntitySet Name="TT_Dat_Phong" EntityType="Self.TT_Dat_Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TT_Doi_Phong" EntityType="Self.TT_Doi_Phong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trang_Thai" EntityType="Self.Trang_Thai" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Coc_Phong__Ma_Ph__4924D839" Association="Self.FK__Coc_Phong__Ma_Ph__4924D839">
+            <End Role="Phong" EntitySet="Phong" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coc_Phong__Ma_To__473C8FC7" Association="Self.FK__Coc_Phong__Ma_To__473C8FC7">
+            <End Role="TOUR" EntitySet="TOUR" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coc_Phong__Ma_TT__4830B400" Association="Self.FK__Coc_Phong__Ma_TT__4830B400">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_Tai_K__361203C5" Association="Self.FK__Sao_Ke__Ma_Tai_K__361203C5">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_Tour__351DDF8C" Association="Self.FK__Sao_Ke__Ma_Tour__351DDF8C">
+            <End Role="TOUR" EntitySet="TOUR" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_TT_Da__3429BB53" Association="Self.FK__Sao_Ke__Ma_TT_Da__3429BB53">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
           <AssociationSet Name="fk_DSTienIch_LoaiPhong" Association="Self.fk_DSTienIch_LoaiPhong">
             <End Role="Loai_Phong" EntitySet="Loai_Phong" />
             <End Role="DS_Tien_Ich" EntitySet="DS_Tien_Ich" />
@@ -381,6 +531,14 @@
           <AssociationSet Name="fk_TaiKhoan_Quyen" Association="Self.fk_TaiKhoan_Quyen">
             <End Role="Quyen" EntitySet="Quyen" />
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoanThanhToanOrHuy_TaiKhoan" Association="Self.FK_TaiKhoanThanhToanOrHuy_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan" Association="Self.FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TOUR" EntitySet="TOUR" />
           </AssociationSet>
           <AssociationSet Name="FK_TOUR_TAIKHOAN" Association="Self.FK_TOUR_TAIKHOAN">
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
@@ -474,6 +632,7 @@
           <NavigationProperty Name="Trang_Thai" Relationship="Self.fk_Phong_TrangThai" FromRole="Phong" ToRole="Trang_Thai" />
           <NavigationProperty Name="TT_Dat_Phong" Relationship="Self.fk_TTDatPhong_Phong" FromRole="Phong" ToRole="TT_Dat_Phong" />
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.fk_TTDoiPhong_Phong" FromRole="Phong" ToRole="TT_Doi_Phong" />
+          <NavigationProperty Name="Coc_Phong" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_Ph__4924D839" FromRole="Phong" ToRole="Coc_Phong" />
         </EntityType>
         <EntityType Name="Quyen">
           <Key>
@@ -483,6 +642,22 @@
           <Property Name="Ten_Quyen" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Mo_Ta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tai_Khoan" Relationship="Self.fk_TaiKhoan_Quyen" FromRole="Quyen" ToRole="Tai_Khoan" />
+        </EntityType>
+        <EntityType Name="Sao_Ke">
+          <Key>
+            <PropertyRef Name="Ma_Sao_Ke" />
+          </Key>
+          <Property Name="Ma_Sao_Ke" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ma_TT_Dat_Phong" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ma_Tour" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Ma_Tai_Khoan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="So_Tien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Ngay_Giao_Dich" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Coc_or_ThanhToan" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tai_Khoan" Relationship="Self.FK__Sao_Ke__Ma_Tai_K__361203C5" FromRole="Sao_Ke" ToRole="Tai_Khoan" />
+          <NavigationProperty Name="TOUR" Relationship="Self.FK__Sao_Ke__Ma_Tour__351DDF8C" FromRole="Sao_Ke" ToRole="TOUR" />
+          <NavigationProperty Name="TT_Dat_Phong" Relationship="Self.FK__Sao_Ke__Ma_TT_Da__3429BB53" FromRole="Sao_Ke" ToRole="TT_Dat_Phong" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -516,8 +691,11 @@
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Khach_San" Relationship="Self.fk_TaiKhoan_KhachSan" FromRole="Tai_Khoan" ToRole="Khach_San" />
           <NavigationProperty Name="Quyen" Relationship="Self.fk_TaiKhoan_Quyen" FromRole="Tai_Khoan" ToRole="Quyen" />
-          <NavigationProperty Name="TOUR" Relationship="Self.FK_TOUR_TAIKHOAN" FromRole="Tai_Khoan" ToRole="TOUR" />
-          <NavigationProperty Name="TT_Dat_Phong" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="Tai_Khoan" ToRole="TT_Dat_Phong" />
+          <NavigationProperty Name="Sao_Ke" Relationship="Self.FK__Sao_Ke__Ma_Tai_K__361203C5" FromRole="Tai_Khoan" ToRole="Sao_Ke" />
+          <NavigationProperty Name="TT_Dat_Phong" Relationship="Self.FK_TaiKhoanThanhToanOrHuy_TaiKhoan" FromRole="Tai_Khoan" ToRole="TT_Dat_Phong" />
+          <NavigationProperty Name="TOUR" Relationship="Self.FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan" FromRole="Tai_Khoan" ToRole="TOUR" />
+          <NavigationProperty Name="TOUR1" Relationship="Self.FK_TOUR_TAIKHOAN" FromRole="Tai_Khoan" ToRole="TOUR" />
+          <NavigationProperty Name="TT_Dat_Phong1" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="Tai_Khoan" ToRole="TT_Dat_Phong" />
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.FK_TTDOTPHONG_TAIKHOAN" FromRole="Tai_Khoan" ToRole="TT_Doi_Phong" />
         </EntityType>
         <EntityType Name="Tien_Ich">
@@ -540,15 +718,19 @@
           <Property Name="Gioi_Tinh" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Dia_Chi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Thoi_Gian_DatPhong_Coc" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Thoi_Gian_NhanPhong" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Thoi_Gian_TraPhong" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Thoi_Gian_ThanhToan_Huy" Type="DateTime" Precision="0" />
+          <Property Name="Thoi_Gian_DatPhong_Coc" Type="DateTime" Precision="3" />
+          <Property Name="Thoi_Gian_NhanPhong" Type="DateTime" Precision="3" />
+          <Property Name="Thoi_Gian_TraPhong" Type="DateTime" Precision="3" />
+          <Property Name="Thoi_Gian_ThanhToan_Huy" Type="DateTime" Precision="3" />
           <Property Name="So_Tien_Coc" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Tong_Thanh_Toan" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Trang_Thai" Type="Int32" Nullable="false" />
           <Property Name="Ma_Tai_Khoan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tai_Khoan" Relationship="Self.FK_TOUR_TAIKHOAN" FromRole="TOUR" ToRole="Tai_Khoan" />
+          <Property Name="TaiKhoanThanhToanOrHuy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sao_Ke" Relationship="Self.FK__Sao_Ke__Ma_Tour__351DDF8C" FromRole="TOUR" ToRole="Sao_Ke" />
+          <NavigationProperty Name="Tai_Khoan" Relationship="Self.FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan" FromRole="TOUR" ToRole="Tai_Khoan" />
+          <NavigationProperty Name="Tai_Khoan1" Relationship="Self.FK_TOUR_TAIKHOAN" FromRole="TOUR" ToRole="Tai_Khoan" />
+          <NavigationProperty Name="Coc_Phong" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_To__473C8FC7" FromRole="TOUR" ToRole="Coc_Phong" />
         </EntityType>
         <EntityType Name="TT_Dat_Phong">
           <Key>
@@ -572,10 +754,15 @@
           <Property Name="Tong_Thanh_Toan" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Tien_Coc" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Trang_Thai" Type="Int32" Nullable="false" />
+          <Property Name="TaiKhoanThanhToanOrHuy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Nhan_Than" Relationship="Self.FK_NHANTHAN_TTDATPHONG" FromRole="TT_Dat_Phong" ToRole="Nhan_Than" />
           <NavigationProperty Name="Phong" Relationship="Self.fk_TTDatPhong_Phong" FromRole="TT_Dat_Phong" ToRole="Phong" />
-          <NavigationProperty Name="Tai_Khoan" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="TT_Dat_Phong" ToRole="Tai_Khoan" />
+          <NavigationProperty Name="Sao_Ke" Relationship="Self.FK__Sao_Ke__Ma_TT_Da__3429BB53" FromRole="TT_Dat_Phong" ToRole="Sao_Ke" />
+          <NavigationProperty Name="Tai_Khoan" Relationship="Self.FK_TaiKhoanThanhToanOrHuy_TaiKhoan" FromRole="TT_Dat_Phong" ToRole="Tai_Khoan" />
+          <NavigationProperty Name="Tai_Khoan1" Relationship="Self.fk_TTDatPhong_TaiKhoan" FromRole="TT_Dat_Phong" ToRole="Tai_Khoan" />
           <NavigationProperty Name="TT_Doi_Phong" Relationship="Self.fk_TTDoiPhong_TTDatPhong" FromRole="TT_Dat_Phong" ToRole="TT_Doi_Phong" />
+          <Property Name="Thoi_Gian_ThanhToan" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Coc_Phong" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_TT__4830B400" FromRole="TT_Dat_Phong" ToRole="Coc_Phong" />
         </EntityType>
         <EntityType Name="TT_Doi_Phong">
           <Key>
@@ -722,6 +909,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Sao_Ke__Ma_Tai_K__361203C5">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sao_Ke__Ma_Tour__351DDF8C">
+          <End Role="TOUR" Type="Self.TOUR" Multiplicity="0..1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOUR">
+              <PropertyRef Name="Ma_Tour" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sao_Ke__Ma_TT_Da__3429BB53">
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="0..1" />
+          <End Role="Sao_Ke" Type="Self.Sao_Ke" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Sao_Ke">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoanThanhToanOrHuy_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TT_Dat_Phong" Type="Self.TT_Dat_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TT_Dat_Phong">
+              <PropertyRef Name="TaiKhoanThanhToanOrHuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan">
+          <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
+          <End Role="TOUR" Type="Self.TOUR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tai_Khoan">
+              <PropertyRef Name="Ma_Tai_Khoan" />
+            </Principal>
+            <Dependent Role="TOUR">
+              <PropertyRef Name="TaiKhoanThanhToanOrHuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TOUR_TAIKHOAN">
           <End Role="Tai_Khoan" Type="Self.Tai_Khoan" Multiplicity="0..1" />
           <End Role="TOUR" Type="Self.TOUR" Multiplicity="*" />
@@ -777,6 +1024,7 @@
           <EntitySet Name="Nhan_Than" EntityType="Self.Nhan_Than" />
           <EntitySet Name="Phong" EntityType="Self.Phong" />
           <EntitySet Name="Quyen" EntityType="Self.Quyen" />
+          <EntitySet Name="Sao_Ke" EntityType="Self.Sao_Ke" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tai_Khoan" EntityType="Self.Tai_Khoan" />
           <EntitySet Name="Tien_Ich" EntityType="Self.Tien_Ich" />
@@ -824,6 +1072,26 @@
             <End Role="Quyen" EntitySet="Quyen" />
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
           </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_Tai_K__361203C5" Association="Self.FK__Sao_Ke__Ma_Tai_K__361203C5">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_Tour__351DDF8C" Association="Self.FK__Sao_Ke__Ma_Tour__351DDF8C">
+            <End Role="TOUR" EntitySet="TOUR" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sao_Ke__Ma_TT_Da__3429BB53" Association="Self.FK__Sao_Ke__Ma_TT_Da__3429BB53">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Sao_Ke" EntitySet="Sao_Ke" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoanThanhToanOrHuy_TaiKhoan" Association="Self.FK_TaiKhoanThanhToanOrHuy_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan" Association="Self.FK_TaiKhoanThanhToanOrHuyTour_TaiKhoan">
+            <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
+            <End Role="TOUR" EntitySet="TOUR" />
+          </AssociationSet>
           <AssociationSet Name="FK_TOUR_TAIKHOAN" Association="Self.FK_TOUR_TAIKHOAN">
             <End Role="Tai_Khoan" EntitySet="Tai_Khoan" />
             <End Role="TOUR" EntitySet="TOUR" />
@@ -840,7 +1108,71 @@
             <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
             <End Role="TT_Doi_Phong" EntitySet="TT_Doi_Phong" />
           </AssociationSet>
+          <EntitySet Name="Coc_Phong" EntityType="SEP25Team09Model.Coc_Phong" />
+          <AssociationSet Name="FK__Coc_Phong__Ma_Ph__4924D839" Association="SEP25Team09Model.FK__Coc_Phong__Ma_Ph__4924D839">
+            <End Role="Phong" EntitySet="Phong" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coc_Phong__Ma_To__473C8FC7" Association="SEP25Team09Model.FK__Coc_Phong__Ma_To__473C8FC7">
+            <End Role="TOUR" EntitySet="TOUR" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coc_Phong__Ma_TT__4830B400" Association="SEP25Team09Model.FK__Coc_Phong__Ma_TT__4830B400">
+            <End Role="TT_Dat_Phong" EntitySet="TT_Dat_Phong" />
+            <End Role="Coc_Phong" EntitySet="Coc_Phong" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Coc_Phong">
+          <Key>
+            <PropertyRef Name="Ma_Coc_Phong" />
+          </Key>
+          <Property Name="Ma_Coc_Phong" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ma_Tour" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Ma_TT_Dat_Phong" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ma_Phong" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ngay_Bat_Dau" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ngay_Ket_Thuc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Trang_Thai" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Phong" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_Ph__4924D839" FromRole="Coc_Phong" ToRole="Phong" />
+          <NavigationProperty Name="TOUR" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_To__473C8FC7" FromRole="Coc_Phong" ToRole="TOUR" />
+          <NavigationProperty Name="TT_Dat_Phong" Relationship="SEP25Team09Model.FK__Coc_Phong__Ma_TT__4830B400" FromRole="Coc_Phong" ToRole="TT_Dat_Phong" />
+        </EntityType>
+        <Association Name="FK__Coc_Phong__Ma_Ph__4924D839">
+          <End Type="SEP25Team09Model.Phong" Role="Phong" Multiplicity="1" />
+          <End Type="SEP25Team09Model.Coc_Phong" Role="Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coc_Phong__Ma_To__473C8FC7">
+          <End Type="SEP25Team09Model.TOUR" Role="TOUR" Multiplicity="0..1" />
+          <End Type="SEP25Team09Model.Coc_Phong" Role="Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOUR">
+              <PropertyRef Name="Ma_Tour" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_Tour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coc_Phong__Ma_TT__4830B400">
+          <End Type="SEP25Team09Model.TT_Dat_Phong" Role="TT_Dat_Phong" Multiplicity="0..1" />
+          <End Type="SEP25Team09Model.Coc_Phong" Role="Coc_Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TT_Dat_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Principal>
+            <Dependent Role="Coc_Phong">
+              <PropertyRef Name="Ma_TT_Dat_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -913,6 +1245,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Sao_Ke">
+            <EntityTypeMapping TypeName="SEP25Team09Model.Sao_Ke">
+              <MappingFragment StoreEntitySet="Sao_Ke">
+                <ScalarProperty Name="Ma_Sao_Ke" ColumnName="Ma_Sao_Ke" />
+                <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
+                <ScalarProperty Name="Ma_Tour" ColumnName="Ma_Tour" />
+                <ScalarProperty Name="Ma_Tai_Khoan" ColumnName="Ma_Tai_Khoan" />
+                <ScalarProperty Name="So_Tien" ColumnName="So_Tien" />
+                <ScalarProperty Name="Ngay_Giao_Dich" ColumnName="Ngay_Giao_Dich" />
+                <ScalarProperty Name="Coc_or_ThanhToan" ColumnName="Coc_or_ThanhToan" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="SEP25Team09Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -973,12 +1319,14 @@
                 <ScalarProperty Name="Tong_Thanh_Toan" ColumnName="Tong_Thanh_Toan" />
                 <ScalarProperty Name="Trang_Thai" ColumnName="Trang_Thai" />
                 <ScalarProperty Name="Ma_Tai_Khoan" ColumnName="Ma_Tai_Khoan" />
+                <ScalarProperty Name="TaiKhoanThanhToanOrHuy" ColumnName="TaiKhoanThanhToanOrHuy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TT_Dat_Phong">
             <EntityTypeMapping TypeName="SEP25Team09Model.TT_Dat_Phong">
               <MappingFragment StoreEntitySet="TT_Dat_Phong">
+                <ScalarProperty Name="Thoi_Gian_ThanhToan" ColumnName="Thoi_Gian_ThanhToan" />
                 <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
                 <ScalarProperty Name="Ho_Ten_KH" ColumnName="Ho_Ten_KH" />
                 <ScalarProperty Name="CMND_CCCD_KH" ColumnName="CMND_CCCD_KH" />
@@ -997,6 +1345,7 @@
                 <ScalarProperty Name="Tong_Thanh_Toan" ColumnName="Tong_Thanh_Toan" />
                 <ScalarProperty Name="Tien_Coc" ColumnName="Tien_Coc" />
                 <ScalarProperty Name="Trang_Thai" ColumnName="Trang_Thai" />
+                <ScalarProperty Name="TaiKhoanThanhToanOrHuy" ColumnName="TaiKhoanThanhToanOrHuy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1020,6 +1369,19 @@
                 <ScalarProperty Name="Ma_Trang_Thai" ColumnName="Ma_Trang_Thai" />
                 <ScalarProperty Name="Ten_Trang_Thai" ColumnName="Ten_Trang_Thai" />
                 <ScalarProperty Name="Mo_Ta_Trang_Thai" ColumnName="Mo_Ta_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coc_Phong">
+            <EntityTypeMapping TypeName="SEP25Team09Model.Coc_Phong">
+              <MappingFragment StoreEntitySet="Coc_Phong">
+                <ScalarProperty Name="Trang_Thai" ColumnName="Trang_Thai" />
+                <ScalarProperty Name="Ngay_Ket_Thuc" ColumnName="Ngay_Ket_Thuc" />
+                <ScalarProperty Name="Ngay_Bat_Dau" ColumnName="Ngay_Bat_Dau" />
+                <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+                <ScalarProperty Name="Ma_TT_Dat_Phong" ColumnName="Ma_TT_Dat_Phong" />
+                <ScalarProperty Name="Ma_Tour" ColumnName="Ma_Tour" />
+                <ScalarProperty Name="Ma_Coc_Phong" ColumnName="Ma_Coc_Phong" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

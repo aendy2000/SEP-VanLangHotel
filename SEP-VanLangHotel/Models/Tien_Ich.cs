@@ -11,7 +11,7 @@ namespace SEP_VanLangHotel.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Tien_Ich
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +19,10 @@ namespace SEP_VanLangHotel.Models
         {
             this.DS_Tien_Ich = new HashSet<DS_Tien_Ich>();
         }
-    
+
         public string Ma_Tien_Ich { get; set; }
         public string Ten_Tien_Ich { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DS_Tien_Ich> DS_Tien_Ich { get; set; }
         public bool IsChecks { get; set; }
@@ -32,3 +32,4 @@ namespace SEP_VanLangHotel.Models
         public List<Tien_Ich> tienIch { get; set; }
     }
 }
+

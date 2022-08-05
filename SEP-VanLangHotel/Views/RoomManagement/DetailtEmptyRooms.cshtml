@@ -189,15 +189,9 @@
                 <form action="@Url.Action("OrderRoomsSateEmpty", "OrderRoom")" method="post">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group form-group-default">
-                                    <label>Ở từ</label>
-                                    <input name="ngayDen" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <label>Đến hết</label>
+                                    <label>Ở hết ngày</label>
                                     <input name="ngayVe" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>

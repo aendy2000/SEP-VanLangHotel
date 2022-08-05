@@ -85,7 +85,7 @@
                                                     </a>
                                                     @if (item.Quyen.Ten_Quyen.Equals("Quản lý") && !item.Ten_Dang_Nhap.Equals("admin"))
                                                     {
-                                                        <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" onclick="if (!confirm('Xóa tài khoản @item.Ma_Tai_Khoan?') { return false } else { window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })'; })">
+                                                        <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tài khoản" onclick="if (!confirm('Xóa tài khoản @item.Ten_Dang_Nhap?')) { return false; } else { window.location.href = '@Url.Action("RemoveAccount", "AccountManagement", new { id = item.Ma_Tai_Khoan })'; }">
                                                             <i class="fa fa-times"></i>
                                                         </a>
                                                     }

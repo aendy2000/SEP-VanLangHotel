@@ -42,14 +42,8 @@ namespace SEP_VanLangHotel.Controllers
                         Session["error-import-file"] = "empthy";
                         Session["thongbaoSuccess"] = "empthy";
 
-
-
-
-
-
-
                         Session["user-role"] = user.Quyen.Ten_Quyen;
-                        @Session["user-vatatar"] = user.Avatar;
+                        Session["user-vatatar"] = user.Avatar;
                         return RedirectToAction("Homepage", "Home");
                     }
                     Session["user-lock"] = true;

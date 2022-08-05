@@ -14,6 +14,13 @@ namespace SEP_VanLangHotel.Models
     
     public partial class TOUR
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TOUR()
+        {
+            this.Sao_Ke = new HashSet<Sao_Ke>();
+            this.Coc_Phong = new HashSet<Coc_Phong>();
+        }
+    
         public string Ma_Tour { get; set; }
         public string Ho_Ten_Chu_Tour { get; set; }
         public string CMND_CCCD { get; set; }
@@ -22,15 +29,21 @@ namespace SEP_VanLangHotel.Models
         public int Gioi_Tinh { get; set; }
         public string Email { get; set; }
         public string Dia_Chi { get; set; }
-        public System.DateTime Thoi_Gian_DatPhong_Coc { get; set; }
-        public System.DateTime Thoi_Gian_NhanPhong { get; set; }
-        public System.DateTime Thoi_Gian_TraPhong { get; set; }
+        public Nullable<System.DateTime> Thoi_Gian_DatPhong_Coc { get; set; }
+        public Nullable<System.DateTime> Thoi_Gian_NhanPhong { get; set; }
+        public Nullable<System.DateTime> Thoi_Gian_TraPhong { get; set; }
         public Nullable<System.DateTime> Thoi_Gian_ThanhToan_Huy { get; set; }
         public decimal So_Tien_Coc { get; set; }
         public decimal Tong_Thanh_Toan { get; set; }
         public int Trang_Thai { get; set; }
         public string Ma_Tai_Khoan { get; set; }
+        public string TaiKhoanThanhToanOrHuy { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sao_Ke> Sao_Ke { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }
+        public virtual Tai_Khoan Tai_Khoan1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coc_Phong> Coc_Phong { get; set; }
     }
 }

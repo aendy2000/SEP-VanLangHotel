@@ -18,7 +18,9 @@ namespace SEP_VanLangHotel.Models
         public TT_Dat_Phong()
         {
             this.Nhan_Than = new HashSet<Nhan_Than>();
+            this.Sao_Ke = new HashSet<Sao_Ke>();
             this.TT_Doi_Phong = new HashSet<TT_Doi_Phong>();
+            this.Coc_Phong = new HashSet<Coc_Phong>();
         }
     
         public string Ma_TT_Dat_Phong { get; set; }
@@ -39,12 +41,19 @@ namespace SEP_VanLangHotel.Models
         public decimal Tong_Thanh_Toan { get; set; }
         public decimal Tien_Coc { get; set; }
         public int Trang_Thai { get; set; }
+        public string TaiKhoanThanhToanOrHuy { get; set; }
+        public Nullable<System.DateTime> Thoi_Gian_ThanhToan { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nhan_Than> Nhan_Than { get; set; }
         public virtual Phong Phong { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sao_Ke> Sao_Ke { get; set; }
         public virtual Tai_Khoan Tai_Khoan { get; set; }
+        public virtual Tai_Khoan Tai_Khoan1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coc_Phong> Coc_Phong { get; set; }
     }
 }

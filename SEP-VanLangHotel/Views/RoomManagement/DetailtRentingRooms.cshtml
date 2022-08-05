@@ -156,30 +156,69 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                 <div class="card-body">
                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG VÀ THANH TOÁN</p>
                     <div class="row gx-3 mb-3">
-                        <div class="col-md-4">
-                            <label class="small mb-1">Thời gian đặt</label>
-                            <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"])</p>
-                            @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
-                        </div>
+
+                        @if (string.IsNullOrEmpty(ttdatPhong.Ma_Tour))
+                        {
+                            <div class="col-md-4">
+                                <label class="small mb-1">Thời gian đặt</label>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"])</p>
+                                @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                        }
+                        else
+                        {
+                            string matours = ttdatPhong.Ma_Tour;
+                            <div class="col-md-4">
+                                <label class="small mb-1">Thời gian đặt</label>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_DatPhong_Coc.Value</p>
+                                @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                        }
 
                         <div class="col-md-4">
                             <label class="small mb-1">Người lớn</label>
                             <p style="color: black; background-color: #EEEEEE" min="1" max="4" class="form-control">@Session["songuoi-lon"] người</p>
                             @*<input hidden name="soNguoiLon" value="@Session["songuoi-lon"]" style="color:black" type="number" min="1" max="4" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập số lượng người lớn tối đa 4 người')" oninput="this.setCustomValidity('')">*@
                         </div>
-                        <div class="col-md-4">
-                            <label class="small mb-1">Tổng thanh toán</label>
-                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
-                            @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
-                        </div>
+                        @if (string.IsNullOrEmpty(ttdatPhong.Ma_Tour))
+                        {
+                            <div class="col-md-4">
+                                <label class="small mb-1">Tổng thanh toán</label>
+                                <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
+                            </div>
+                        }
+                        else
+                        {
+                            string matours = ttdatPhong.Ma_Tour;
+                            <div class="col-md-4">
+                                <label class="small mb-1">Tổng thanh toán</label>
+                                <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")).Subtract(Convert.ToDateTime(models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_NhanPhong.Value.ToString("dd/MM/yyyy"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
+                            </div>
+                        }
 
                     </div>
                     <div class="row gx-3 mb-3">
-                        <div class="col-md-4">
-                            <label class="small mb-1">Trả phòng sau ngày</label>
-                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
-                            @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
-                        </div>
+
+                        @if (string.IsNullOrEmpty(ttdatPhong.Ma_Tour))
+                        {
+                            <div class="col-md-4">
+                                <label class="small mb-1">Trả phòng sau ngày</label>
+                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Convert.ToDateTime(Session["thoigian-ve"]).ToString("dd/MM/yyyy")</p>
+                                @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                        }
+                        else
+                        {
+                            string matours = ttdatPhong.Ma_Tour;
+                            <div class="col-md-4">
+                                <label class="small mb-1">Nhận phòng ngày</label>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_NhanPhong.Value.ToString("dd/MM/yyyy")</p>
+                                @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                            </div>
+                        }
+
                         <div class="col-md-4">
                             <label class="small mb-1">Trẻ em (dưới 14 tuổi)</label>
                             <p style="color: black; background-color: #EEEEEE" min="0" max="4" class="form-control">@Session["songuoi-treem"] người</p>
@@ -192,11 +231,111 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
-                        <div class="col-md-12">
-                            <label class="small mb-1">Cần thanh toán</label>
-                            <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
-                            @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
-                        </div>
+                        @if (string.IsNullOrEmpty(ttdatPhong.Ma_Tour))
+                        {
+                            if (ttdatPhong.Trang_Thai == 1)
+                            {
+                                <div class="col-md-8">
+                                    <label class="small mb-1">Thời gian trả phòng</label>
+                                    <p style="color: black;text-align:center; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                    @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Cần thanh toán</label>
+                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
+                                    @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                                </div>
+                            }
+                            else if (ttdatPhong.Trang_Thai == 0)
+                            {
+                                <div class="col-md-12">
+                                    <label class="small mb-1">Cần thanh toán</label>
+                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
+                                    @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            string matours = ttdatPhong.Ma_Tour;
+                            if (models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Trang_Thai == 0)
+                            {
+                                if (ttdatPhong.Trang_Thai == 0)
+                                {
+                                    <div class="col-md-8">
+                                        <label class="small mb-1">Trả phòng sau ngày</label>
+                                        <p style="color:black; background-color:#EEEEEE; text-align:center;" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                }
+                                else if (ttdatPhong.Trang_Thai == 1)
+                                {
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Trả phòng sau ngày</label>
+                                        <p style="color:black; background-color:#EEEEEE;" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Thời gian trả phòng</label>
+                                        <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                        @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                }
+                            }
+                            else if (models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Trang_Thai == 2)
+                            {
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Trả phòng sau ngày</label>
+                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
+                                    @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small mb-1">Thời gian hủy phòng</label>
+                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value</p>
+                                    @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                </div>
+                            }
+                            else if (models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Trang_Thai == 1)
+                            {
+                                var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
+                                var matour = ttdatPhong.Ma_Tour;
+                                var landoi = ttdatPhong.Doi_Tra;
+
+                                if (ttdatPhong.Thoi_Gian_ThanhToan.Value.CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value) == 0)
+                                {
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Trả phòng sau ngày</label>
+                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Thời gian trả phòng</label>
+                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Trả phòng sau ngày</label>
+                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@models.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1">Thời gian trả phòng</label>
+                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                        @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
+                                    </div>
+                                }
+                            }
+                            <div class="col-md-4">
+                                <label class="small mb-1">Cần thanh toán</label>
+                                <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")) &emsp; VND</p>
+                                @*<input type="text" id="testinput" value="@((Convert.ToInt64(Session["tong-coc"]).ToString("0,0")).Replace(".",","))" maxlength="@((Convert.ToDecimal(Session["tong-thanhtoan"])).ToString("0,0").Length)" style="text-align: center; font-weight: bold; color:red" class="form-control" name="tienCoc" required="required" />*@
+                            </div>
+                        }
+
                     </div>
                     <br />
                     <hr />
@@ -208,7 +347,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 <p style="font-weight:bold" class="mb-0">Đặt Phòng</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">Vào ngày: @ttdatPhong.Thoi_Gian_Dat,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                <p class="text-muted mb-0">Đặt @ttdatPhong.Phong.So_Phong vào ngày: @ttdatPhong.Thoi_Gian_Dat,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan1.Ho_Va_Ten (@ttdatPhong.Tai_Khoan1.Ten_Dang_Nhap)</p>
                             </div>
                         </div>
                         if (ttdatPhong.Doi_Tra >= 1)
@@ -217,39 +356,69 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             {
                                 var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
                                 var landoi = ttdatPhong.Doi_Tra;
-                                foreach (var item in models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList())
+                                var ttdoi = models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList();
+                                for (int i = 0; i < ttdoi.Count; i++)
                                 {
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                    if (i == 0)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdatPhong.Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @item.TG_Nhan_Phong,&emsp; Bởi Nhân viên: @item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdoi[i - 1].Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                             }
                             else if (ttdatPhong.Trang_Thai == 1)
                             {
                                 var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
                                 var landoi = ttdatPhong.Doi_Tra;
-                                foreach (var item in models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList())
+                                var ttdoi = models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList();
+                                for (int i = 0; i < ttdoi.Count; i++)
                                 {
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                    if (i == 0)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdatPhong.Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @item.TG_Nhan_Phong,&emsp; Bởi Nhân viên: @item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdoi[i - 1].Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">Vào ngày: @ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).TG_Doi_Tra,&emsp; Bởi Nhân viên: @ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ho_Va_Ten (@ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ten_Dang_Nhap)</p>
+                                        <p class="text-muted mb-0">Trả @ttdoi[ttdoi.Count - 1].Phong.So_Phong vào ngày: @ttdatPhong.Thoi_Gian_ThanhToan.Value,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
                                     </div>
                                 </div>
                             }
@@ -263,7 +432,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">Vào ngày: @ttdatPhong.Thoi_Gian_Doi_Tra,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                        <p class="text-muted mb-0">Trả @ttdatPhong.Phong.So_Phong vào ngày: @ttdatPhong.Thoi_Gian_ThanhToan.Value,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
                                     </div>
                                 </div>
                             }
@@ -276,7 +445,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 <p style="font-weight:bold" class="mb-0">Đặt Phòng theo Tour</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">Vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(ttdatPhong.Ma_Tour)).Thoi_Gian_DatPhong_Coc,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                <p class="text-muted mb-0">Đặt @ttdatPhong.Phong.So_Phong vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(ttdatPhong.Ma_Tour)).Thoi_Gian_DatPhong_Coc.Value,&emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan1.Ho_Va_Ten (@ttdatPhong.Tai_Khoan1.Ten_Dang_Nhap)</p>
                             </div>
                         </div>
                         if (ttdatPhong.Doi_Tra >= 1)
@@ -285,16 +454,31 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             {
                                 var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
                                 var landoi = ttdatPhong.Doi_Tra;
-                                foreach (var item in models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList())
+                                var ttdoi = models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList();
+                                for (int i = 0; i < ttdoi.Count; i++)
                                 {
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                    if (i == 0)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdatPhong.Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @item.TG_Nhan_Phong,&emsp; Bởi Nhân viên: @item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdoi[i - 1].Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                             }
                             else if (ttdatPhong.Trang_Thai == 1)
@@ -302,25 +486,40 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
                                 var matour = ttdatPhong.Ma_Tour;
                                 var landoi = ttdatPhong.Doi_Tra;
-                                foreach (var item in models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList())
+                                var ttdoi = models.TT_Doi_Phong.Where(t => t.Ma_TT_Dat_Phong.Equals(mattdp)).ToList();
+                                for (int i = 0; i < ttdoi.Count; i++)
                                 {
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                    if (i == 0)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdatPhong.Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @item.TG_Nhan_Phong,&emsp; Bởi Nhân viên: @item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p style="font-weight:bold" class="mb-0">Đổi Phòng</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0">Đổi từ @ttdoi[i - 1].Phong.So_Phong sang @ttdoi[i].Phong.So_Phong vào ngày: @ttdoi[i].TG_Nhan_Phong,&emsp; Bởi Nhân viên: @ttdoi[i].Tai_Khoan.Ho_Va_Ten (@ttdoi[i].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
-                                if (models.TT_Doi_Phong.FirstOrDefault(t => t.Lan_Doi == landoi).TG_Doi_Tra.CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_TraPhong) == 0)
+                                if (ttdatPhong.Thoi_Gian_ThanhToan.Value.CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value) == 0)
                                 {
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
+                                            <p style="font-weight:bold" class="mb-0">Trả Phòng theo Tour</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy, &emsp; Bởi Nhân viên: @ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ho_Va_Ten (@ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            <p class="text-muted mb-0">Trả @ttdoi[ttdoi.Count - 1].Phong.So_Phong vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value, &emsp; Bởi Nhân viên: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ho_Va_Ten (@models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ten_Dang_Nhap)</p>
                                         </div>
                                     </div>
                                 }
@@ -331,7 +530,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                             <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @models.TT_Doi_Phong.FirstOrDefault(t => t.Lan_Doi == landoi).TG_Doi_Tra, &emsp; Bởi Nhân viên: @ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ho_Va_Ten (@ttdatPhong.TT_Doi_Phong.First(t => t.Lan_Doi == landoi).Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            <p class="text-muted mb-0">Trả @ttdoi[ttdoi.Count - 1].Phong.So_Phong vào ngày: @ttdatPhong.Thoi_Gian_ThanhToan.Value, &emsp; Bởi Nhân viên: @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
                                         </div>
                                     </div>
                                 }
@@ -343,14 +542,14 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             {
                                 var mattdp = ttdatPhong.Ma_TT_Dat_Phong;
                                 var matour = ttdatPhong.Ma_Tour;
-                                if (ttdatPhong.Thoi_Gian_Doi_Tra.CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_TraPhong) == 0)
+                                if (ttdatPhong.Thoi_Gian_ThanhToan.Value.CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value) == 0)
                                 {
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
+                                            <p style="font-weight:bold" class="mb-0">Trả Phòng theo Tour</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy, &emsp; Bởi Nhân viên: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ho_Va_Ten (@models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            <p class="text-muted mb-0">Trả @ttdatPhong.Phong.So_Phong vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value, &emsp; Bởi Nhân viên: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ho_Va_Ten (@models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ten_Dang_Nhap)</p>
                                         </div>
                                     </div>
                                 }
@@ -361,7 +560,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                             <p style="font-weight:bold" class="mb-0">Trả Phòng</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @ttdatPhong.Thoi_Gian_Doi_Tra, &emsp; Bởi Nhân viên:  @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            <p class="text-muted mb-0">Trả @ttdatPhong.Phong.So_Phong vào ngày: @ttdatPhong.Thoi_Gian_ThanhToan, &emsp; Bởi Nhân viên:  @ttdatPhong.Tai_Khoan.Ho_Va_Ten (@ttdatPhong.Tai_Khoan.Ten_Dang_Nhap)</p>
                                         </div>
                                     </div>
                                 }
@@ -374,7 +573,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         <p style="font-weight:bold" class="mb-0">Hủy phòng theo Tour</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">Vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy, &emsp; Bởi Nhân viên:  @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ho_Va_Ten (@models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ten_Dang_Nhap)</p>
+                                        <p class="text-muted mb-0">Hủy @ttdatPhong.Phong.So_Phong vào ngày: @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_ThanhToan_Huy.Value, &emsp; Bởi Nhân viên:  @models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ho_Va_Ten (@models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Tai_Khoan.Ten_Dang_Nhap)</p>
                                     </div>
                                 </div>
                             }
@@ -393,45 +592,103 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 }
                                 <a href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = ttdatPhong.Ma_TT_Dat_Phong })" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-edit"></i> &ensp; Chỉnh Sửa</a>
                                 @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
-                                &emsp;
-                                <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
-                                @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
-                                &emsp;
-                                <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
-                                <script>
+
+                                @if (string.IsNullOrEmpty(ttdatPhong.Ma_Tour))
+                                {
+
+                                    <span>&emsp;</span>
+                                    <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
+                                    @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
+                                    <span>&emsp;</span>
+
+                                    <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
+
+                                    <script>
                                 function xacnhanhuybo() {
-                                    let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
-                                    cuteAlert({
+                                        let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
+                                        cuteAlert({
                                         type: "question",
                                         title: "Thông báo!",
                                         message: "Xác nhận thanh toán " + info + " VND và trả phòng?",
                                         confirmText: "Xác nhận",
                                         cancelText: "Hủy bỏ"
-                                    }).then(function (isConfirm) {
-                                        if (isConfirm) {
-                                            window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
-                                        } else {
-                                            return false;
-                                        }
-                                    });
-                                }
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
 
-                                function xacnhandoiphong() {
-                                    cuteAlert({
+                                    function xacnhandoiphong() {
+                                        cuteAlert({
                                         type: "question",
                                         title: "Thông báo!",
                                         message: "Bạn chắc chắn muốn đổi phòng?",
                                         confirmText: "Xác nhận",
                                         cancelText: "Hủy bỏ"
-                                    }).then(function (isConfirm) {
-                                        if (isConfirm) {
-                                            window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
-                                        } else {
-                                            return false;
-                                        }
-                                    });
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                    </script>
+
                                 }
-                                </script>
+                                else
+                                {
+                                    var matour = ttdatPhong.Ma_Tour;
+                                    if (Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy")).CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_NhanPhong.Value) >= 0)
+                                    {
+                                        <span>&emsp;</span>
+                                        <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>
+                                        @*<button style="text-align: center; width: 180px;" type="submit" onclick="if (!confirm('Xác nhận đặt phòng?')) { return false; }" class="btn btn-search">Chỉnh sửa</button>*@
+                                        <span>&emsp;</span>
+
+                                        <a style="color: white; width: 180px;" class="btn btn-search" onclick="xacnhanhuybo()" role="button"> <i class="fa fa-credit-card"></i> &ensp;  Trả Phòng </a>
+
+                                        <script>
+                                function xacnhanhuybo() {
+                                        let info = @Html.Raw(Json.Encode((Convert.ToDecimal(Session["tong-thanhtoan"].ToString()) - Convert.ToDecimal(Session["tong-coc"].ToString())).ToString("0,0")));
+                                        cuteAlert({
+                                        type: "question",
+                                        title: "Thông báo!",
+                                        message: "Xác nhận thanh toán " + info + " VND và trả phòng?",
+                                        confirmText: "Xác nhận",
+                                        cancelText: "Hủy bỏ"
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("CheckOutRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
+
+                                    function xacnhandoiphong() {
+                                        cuteAlert({
+                                        type: "question",
+                                        title: "Thông báo!",
+                                        message: "Bạn chắc chắn muốn đổi phòng?",
+                                        confirmText: "Xác nhận",
+                                        cancelText: "Hủy bỏ"
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = '@Url.Action("ChangeRooms", "RoomManagement", new {id = ttdatPhong.Ma_TT_Dat_Phong})';
+                                            } else {
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                        </script>
+                                    }
+
+                                }
+
                             </div>
                         </div>
                         <br />

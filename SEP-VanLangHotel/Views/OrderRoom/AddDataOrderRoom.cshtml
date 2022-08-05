@@ -282,7 +282,7 @@
 
                                                 }).then(function (isConfirm) {
                                                         if (isConfirm) {
-                                                            window.location.href = '@Url.Action("Homepage", "Home")';
+                                                            window.location.href = '@Url.Action("DetailtEmptyRooms", "RoomManagement", new {id = phong.Ma_Phong})';
                                                         } else {
                                                             return false;
                                                         }

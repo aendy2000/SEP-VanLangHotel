@@ -19,6 +19,7 @@ namespace SEP_VanLangHotel.Models
         {
             this.TT_Dat_Phong = new HashSet<TT_Dat_Phong>();
             this.TT_Doi_Phong = new HashSet<TT_Doi_Phong>();
+            this.Coc_Phong = new HashSet<Coc_Phong>();
         }
     
         public string Ma_Phong { get; set; }
@@ -35,5 +36,7 @@ namespace SEP_VanLangHotel.Models
         public virtual ICollection<TT_Dat_Phong> TT_Dat_Phong { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coc_Phong> Coc_Phong { get; set; }
     }
 }

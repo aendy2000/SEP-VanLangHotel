@@ -160,11 +160,11 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                     <div class="row gx-3 mb-3" style="margin-top:-1rem">
                                         <div class="col-md-6">
                                             <label class="small mb-1">Ở từ ngày</label>
-                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_NhanPhong.ToString("dd/MM/yyyy")</p>
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_NhanPhong.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Đến hết ngày</label>
-                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_TraPhong.ToString("dd/MM/yyyy")</p>
+                                            <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Model.Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
@@ -192,7 +192,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                             <p style="font-weight:bold" class="mb-0">Đặt Phòng</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_DatPhong_Coc,&emsp; Bởi Nhân viên: @ttdatphong[0].Tai_Khoan.Ho_Va_Ten (@ttdatphong[0].Tai_Khoan.Ten_Dang_Nhap)</p>
+                                            <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_DatPhong_Coc.Value,&emsp; Bởi Nhân viên: @ttdatphong[0].Tai_Khoan1.Ho_Va_Ten (@ttdatphong[0].Tai_Khoan1.Ten_Dang_Nhap)</p>
                                         </div>
                                     </div>
                                     @if (Model.Trang_Thai == 1)
@@ -202,7 +202,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                                 <p style="font-weight:bold" class="mb-0">Thanh Toán</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy,&emsp; Bởi Nhân viên: @Model.Tai_Khoan.Ho_Va_Ten (@Model.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy.Value,&emsp; Bởi Nhân viên: @Model.Tai_Khoan1.Ho_Va_Ten (@Model.Tai_Khoan1.Ten_Dang_Nhap)</p>
                                             </div>
                                         </div>
                                     }
@@ -213,7 +213,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                                 <p style="font-weight:bold" class="mb-0">Đã Hủy</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy,&emsp; Bởi Nhân viên: @Model.Tai_Khoan.Ho_Va_Ten (@Model.Tai_Khoan.Ten_Dang_Nhap)</p>
+                                                <p class="text-muted mb-0">Vào ngày: @Model.Thoi_Gian_ThanhToan_Huy.Value,&emsp; Bởi Nhân viên: @Model.Tai_Khoan1.Ho_Va_Ten (@Model.Tai_Khoan1.Ten_Dang_Nhap)</p>
                                             </div>
                                         </div>
                                     }

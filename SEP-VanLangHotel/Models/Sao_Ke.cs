@@ -6,23 +6,25 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
 namespace SEP_VanLangHotel.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class Nhan_Than
+    
+    public partial class Sao_Ke
     {
-        public string Ma_Nhan_Than { get; set; }
-        public string Ho_Ten { get; set; }
-        public string CMND_CCCD { get; set; }
-        public System.DateTime Sinh_Nhat { get; set; }
-        public int Gioi_Tinh { get; set; }
-        public string Gioi_Tinh_Name { get; set; }
-        public string Dia_Chi { get; set; }
-        public string Moi_Quan_He { get; set; }
+        public string Ma_Sao_Ke { get; set; }
         public string Ma_TT_Dat_Phong { get; set; }
-
+        public string Ma_Tour { get; set; }
+        public string Ma_Tai_Khoan { get; set; }
+        public decimal So_Tien { get; set; }
+        public System.DateTime Ngay_Giao_Dich { get; set; }
+        public Nullable<int> Coc_or_ThanhToan { get; set; }
+        public string Note { get; set; }
+    
+        public virtual Tai_Khoan Tai_Khoan { get; set; }
+        public virtual TOUR TOUR { get; set; }
         public virtual TT_Dat_Phong TT_Dat_Phong { get; set; }
     }
 }

@@ -17,8 +17,11 @@ namespace SEP_VanLangHotel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tai_Khoan()
         {
-            this.TOUR = new HashSet<TOUR>();
+            this.Sao_Ke = new HashSet<Sao_Ke>();
             this.TT_Dat_Phong = new HashSet<TT_Dat_Phong>();
+            this.TOUR = new HashSet<TOUR>();
+            this.TOUR1 = new HashSet<TOUR>();
+            this.TT_Dat_Phong1 = new HashSet<TT_Dat_Phong>();
             this.TT_Doi_Phong = new HashSet<TT_Doi_Phong>();
         }
     
@@ -42,9 +45,15 @@ namespace SEP_VanLangHotel.Models
         public virtual Khach_San Khach_San { get; set; }
         public virtual Quyen Quyen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TOUR> TOUR { get; set; }
+        public virtual ICollection<Sao_Ke> Sao_Ke { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Dat_Phong> TT_Dat_Phong { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TOUR> TOUR { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TOUR> TOUR1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TT_Dat_Phong> TT_Dat_Phong1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TT_Doi_Phong> TT_Doi_Phong { get; set; }
     }

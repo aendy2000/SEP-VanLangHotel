@@ -81,8 +81,8 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         <td>@item.Ma_Tour</td>
                                         <td>@item.Ho_Ten_Chu_Tour</td>
                                         <td>@item.SDT</td>
-                                        <td>@item.Thoi_Gian_NhanPhong.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.Thoi_Gian_TraPhong.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Thoi_Gian_NhanPhong.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")</td>
                                         @if (@item.Trang_Thai == 0)
                                         {
                                             <td style="text-align: center; width: 100px; background-color: #ffc107; color: white;">Đã cọc</td>
