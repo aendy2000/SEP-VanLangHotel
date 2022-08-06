@@ -396,8 +396,8 @@ namespace SEP_VanLangHotel.Controllers
 
                         //Phòng ở trạng thái trống và thuộc loại phòng của khách hàng tìm
                         string loaiPhong = TTDatPhong.Phong.Ma_Loai_Phong;
-                        DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("dd/MM/yyyy"));
-                        DateTime tgianTraPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy"));
+                        DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("yyyy-MM-dd"));
+                        DateTime tgianTraPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
                         var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                         int index = 0;
@@ -471,8 +471,8 @@ namespace SEP_VanLangHotel.Controllers
 
                         //Phòng ở trạng thái trống và thuộc loại phòng của khách hàng tìm
                         string loaiPhong = TTDatPhong.Phong.Ma_Loai_Phong;
-                        DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("dd/MM/yyyy"));
-                        DateTime tgianTraPhong = Convert.ToDateTime(TTDoiPhong.TG_Doi_Tra.ToString("dd/MM/yyyy"));
+                        DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("yyyy-MM-dd"));
+                        DateTime tgianTraPhong = Convert.ToDateTime(TTDoiPhong.TG_Doi_Tra.ToString("yyyy-MM-dd"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
                         var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                         int index = 0;

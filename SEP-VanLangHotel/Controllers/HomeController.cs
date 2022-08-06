@@ -23,7 +23,7 @@ namespace SEP_VanLangHotel.Controllers
             //Nếu Là tài khoản của nhân viên
             if (Session["user-role"].Equals("Nhân viên"))
             {
-                DateTime NGAYHN = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
+                DateTime NGAYHN = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 var checkDatCoc = model.Coc_Phong.Where(c => c.Ngay_Bat_Dau.CompareTo(NGAYHN) <= 0 && c.Trang_Thai == 0 && c.Phong.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
                 if (checkDatCoc.Count > 0)
                 {

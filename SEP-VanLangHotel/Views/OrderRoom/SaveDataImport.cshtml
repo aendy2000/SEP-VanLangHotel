@@ -90,12 +90,12 @@
                                         <div class="col-md-6">
                                             <label class="small mb-1">Ở từ ngày</label>
                                             <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")</p>
-                                            <input hidden style="text-align: center; font-weight: bold; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
+                                            <input hidden style="text-align: center; font-weight: bold; color: black" value="@Convert.ToDateTime(Session["NgayDen"]).ToString("yyyy-MM-dd")" type="text" class="form-control" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">Đến hết ngày</label>
                                             <p style="font-weight: bold; text-align: center; color: black; background-color: #EEEEEE " type="text" class="form-control">@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")</p>
-                                            <input hidden style="text-align:center;font-weight:bold; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("dd/MM/yyyy")" type="text" class="form-control" />
+                                            <input hidden style="text-align:center;font-weight:bold; color:black" value="@Convert.ToDateTime(Session["NgayVe"]).ToString("yyyy-MM-dd")" type="text" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">

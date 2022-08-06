@@ -642,7 +642,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 else
                                 {
                                     var matour = ttdatPhong.Ma_Tour;
-                                    if (Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy")).CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_NhanPhong.Value) >= 0)
+                                    if (Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")).CompareTo(models.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(matour)).Thoi_Gian_NhanPhong.Value) >= 0)
                                     {
                                         <span>&emsp;</span>
                                         <a onclick="xacnhandoiphong()" role="button" style="text-align: center; width: 180px; color:white" class="btn btn-search"> <i class="fa fa-recycle"></i> &ensp; Đổi Phòng</a>

@@ -1043,8 +1043,8 @@ namespace SEP_VanLangHotel.Controllers
                     }
 
                     //Phòng ở trạng thái trống và thuộc loại phòng của khách hàng tìm
-                    DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("dd/MM/yyyy"));
-                    DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("dd/MM/yyyy"));
+                    DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("yyyy-MM-dd"));
+                    DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("yyyy-MM-dd"));
                     List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
                     var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                     int index = 0;
@@ -1321,8 +1321,8 @@ namespace SEP_VanLangHotel.Controllers
 
 
                         //Phòng ở trạng thái trống và thuộc loại phòng của khách hàng tìm
-                        DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("dd/MM/yyyy"));
-                        DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("dd/MM/yyyy"));
+                        DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("yyyy-MM-dd"));
+                        DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("yyyy-MM-dd"));
                         bool checks = false;
                         var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maPhong) && t.Trang_Thai == 0).ToList();
                         DateTime ngaybatdauo = new DateTime();
