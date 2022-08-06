@@ -55,7 +55,7 @@ namespace SEP_VanLangHotel.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddLevelRooms(ListTienIch tienichList, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, decimal gia, string mota )
+        public ActionResult AddLevelRooms(ListTienIch tienichList, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, decimal gia, string mota)
         {
 
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
@@ -80,7 +80,7 @@ namespace SEP_VanLangHotel.Controllers
                     listTienIch.tienIch = dstienIch;
 
                     return View(listTienIch);
-                    
+
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace SEP_VanLangHotel.Controllers
                     Session["thongbaoSuccess"] = "Đã thêm loại phòng " + tenloaiphong;
                     return RedirectToAction("DetailLevelRooms", new { id = maloaiphong.Ma_Loai_Phong });
                 }
-                
+
             }
             return RedirectToAction("Home");
         }
@@ -127,7 +127,7 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
                 var loaiphong = model.Loai_Phong.FirstOrDefault(t => t.Ma_Loai_Phong.Equals(id));
-                
+
                 if (loaiphong != null)
                     return View(loaiphong);
             }
@@ -138,7 +138,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                if(id != null)
+                if (id != null)
                 {
                     var loaiphong = model.Loai_Phong.FirstOrDefault(t => t.Ma_Loai_Phong.Equals(id));
                     Session["updateLoaiPhong"] = loaiphong.Ma_Loai_Phong;
@@ -176,7 +176,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                var loaiphong = model.Loai_Phong.Where(t => t.Ten_Loai_Phong.ToLower().Equals(tenloaiphong.ToLower().Trim())).ToList();
+                var loaiphong = model.Loai_Phong.Where(t => t.Ten_Loai_Phong.ToLower().Equals(tenloaiphong.ToLower().Trim()) && !t.Ma_Loai_Phong.Equals(maloaiphong)).ToList();
                 if (loaiphong.Count >= 1)
                 {
 
@@ -184,8 +184,6 @@ namespace SEP_VanLangHotel.Controllers
                     Session["updateLoaiPhong"] = loaiphong[0].Ma_Loai_Phong;
                     ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong");
                     ViewBag.Ma_Tien_Ich = new SelectList(model.Tien_Ich, "Ma_Tien_Ich");
-
-                  
 
                     string malp = loaiphong[0].Ma_Loai_Phong;
                     var ds_tienich = model.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(malp)).ToList();
@@ -228,7 +226,7 @@ namespace SEP_VanLangHotel.Controllers
                     listTienIchCanCo.Add("TI202207070001");
 
                     model.Entry(uLoaiPhong).State = EntityState.Modified;
-                   
+
                     var ds_tienIch = model.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(maloaiphong)).ToList();
 
                     model.DS_Tien_Ich.RemoveRange(ds_tienIch);
@@ -255,7 +253,7 @@ namespace SEP_VanLangHotel.Controllers
             {
                 var loaiphong = model.Loai_Phong.FirstOrDefault(t => t.Ma_Loai_Phong.Equals(id));
                 var phong = model.Phong.FirstOrDefault(t => t.Ma_Loai_Phong.Equals(id));
-                if(loaiphong != null)
+                if (loaiphong != null)
                 {
                     string tenloaiphong = loaiphong.Ten_Loai_Phong;
                     if (phong != null)
