@@ -112,7 +112,21 @@ namespace SEP_VanLangHotel.Controllers
                             tour.Thoi_Gian_ThanhToan_Huy = tgianThanhToan;
                             tour.TaiKhoanThanhToanOrHuy = Session["user-ma"].ToString();
                             model.Entry(tour).State = EntityState.Modified;
-                            model.SaveChanges();
+
+                            var cocPhong = model.Coc_Phong.Where(c => c.Ma_Tour.Equals(id)).ToList();
+                            if (cocPhong.Count > 0)
+                            {
+                                foreach (var item in cocPhong)
+                                {
+                                    item.Trang_Thai = 1;
+                                    model.Entry(item).State = EntityState.Modified;
+                                    model.SaveChanges();
+                                }
+                            }
+                            else
+                            {
+                                model.SaveChanges();
+                            }
 
                             decimal thanhtoanT = tour.Tong_Thanh_Toan - tour.So_Tien_Coc;
 

@@ -25,14 +25,12 @@ namespace SEP_VanLangHotel.Controllers
             {
                 DateTime NGAYHN = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
                 var checkDatCoc = model.Coc_Phong.Where(c => c.Ngay_Bat_Dau.CompareTo(NGAYHN) <= 0 && c.Trang_Thai == 0 && c.Phong.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
-                if(checkDatCoc.Count > 0)
+                if (checkDatCoc.Count > 0)
                 {
                     for (int i = 0; i < checkDatCoc.Count; i++)
                     {
-                        checkDatCoc[i].Trang_Thai = 1;
                         var phong = checkDatCoc[i].Phong;
                         phong.Ma_Trang_Thai = "TT202207050002";
-                        model.Entry(checkDatCoc[i]).State = EntityState.Modified;
                         model.Entry(phong).State = EntityState.Modified;
                         model.SaveChanges();
                     }
@@ -41,7 +39,7 @@ namespace SEP_VanLangHotel.Controllers
                 List<Tien_Ich> dstienIch = new List<Tien_Ich>();
                 foreach (var item in model.Tien_Ich.ToList())
                 {
-                    if(!item.Ma_Tien_Ich.Equals("TI202207070001"))
+                    if (!item.Ma_Tien_Ich.Equals("TI202207070001"))
                     {
                         var matienIch = item.Ma_Tien_Ich;
                         var tentienIch = item.Ten_Tien_Ich;
@@ -63,9 +61,6 @@ namespace SEP_VanLangHotel.Controllers
 
             if (Session["user-role"].Equals("Quản lý"))
             {
-                //decimal thangmot = 0;
-                //var thangmot = model.TT_Dat_Phong.Where(t => t.);
-
                 for (int i = 1; i <= 12; i++)
                 {
                     int days = DateTime.DaysInMonth(DateTime.Now.Year, i);
@@ -73,27 +68,36 @@ namespace SEP_VanLangHotel.Controllers
                     string seDate = DateTime.Now.Year + "-" + i.ToString().PadLeft(2, '0') + "-" + days.ToString().PadLeft(2, '0') + " 00:00:00";
                     DateTime stD = DateTime.ParseExact(ssDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     DateTime enD = DateTime.ParseExact(seDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    var checks = model.TT_Dat_Phong.ToList();
-                    foreach (var item in checks)
+
+                    var saoke = model.Sao_Ke.Where(s => s.Ngay_Giao_Dich >= stD && s.Ngay_Giao_Dich <= enD).ToList();
+                    decimal tong = 0;
+                    decimal coc = 0;
+                    decimal thanhtoan = 0;
+
+                    if (saoke.Count > 0)
                     {
-                      
+                        foreach (var item in saoke.Where(s => s.Coc_or_ThanhToan == 0).ToList())
+                            coc += item.So_Tien;
+                        foreach (var item in saoke.Where(s => s.Coc_or_ThanhToan == 1).ToList())
+                            thanhtoan += item.So_Tien;
+                        foreach (var item in saoke)
+                            tong += item.So_Tien;
                     }
+
+                    if (i == 1) { ViewBag.CocThangMot = coc; ViewBag.ThanhToanThangMot = thanhtoan; ViewBag.TongThangMot = tong; }
+                    else if (i == 2) { ViewBag.CocThangHai = coc; ViewBag.ThanhToanThangHai = thanhtoan; ViewBag.TongThangHai = tong; }
+                    else if (i == 3) { ViewBag.CocThangBa = coc; ViewBag.ThanhToanThangBa = thanhtoan; ViewBag.TongThangBa = tong; }
+                    else if (i == 4) { ViewBag.CocThangBon = coc; ViewBag.ThanhToanThangBon = thanhtoan; ViewBag.TongThangBon = tong; }
+                    else if (i == 5) { ViewBag.CocThangNam = coc; ViewBag.ThanhToanThangNam = thanhtoan; ViewBag.TongThangNam = tong; }
+                    else if (i == 6) { ViewBag.CocThangSau = coc; ViewBag.ThanhToanThangSau = thanhtoan; ViewBag.TongThangSau = tong; }
+                    else if (i == 7) { ViewBag.CocThangBay = coc; ViewBag.ThanhToanThangBay = thanhtoan; ViewBag.TongThangBay = tong; }
+                    else if (i == 8) { ViewBag.CocThangTam = coc; ViewBag.ThanhToanThangTam = thanhtoan; ViewBag.TongThangTam = tong; }
+                    else if (i == 9) { ViewBag.CocThangChin = coc; ViewBag.ThanhToanThangChin = thanhtoan; ViewBag.TongThangChin = tong; }
+                    else if (i == 10) { ViewBag.CocThangMuoi = coc; ViewBag.ThanhToanThangMuoi = thanhtoan; ViewBag.TongThangMuoi = tong; }
+                    else if (i == 11) { ViewBag.CocThangMMot = coc; ViewBag.ThanhToanThangMot = thanhtoan; ViewBag.TongThangMMot = tong; }
+                    else if (i == 12) { ViewBag.CocThangMHai = coc; ViewBag.ThanhToanThangMHai = thanhtoan; ViewBag.TongThangMHai = tong; }
                 }
-
-                ViewBag.ThangMot = 100;
-                ViewBag.ThangHai = 100;
-                ViewBag.ThangBa = 100;
-                ViewBag.ThangBon = 100;
-                ViewBag.ThangNam = 100;
-                ViewBag.ThangSau = 100;
-                ViewBag.ThangBay = 100;
-                ViewBag.ThangTam = 100;
-                ViewBag.ThangChin = 100;
-                ViewBag.ThangMuoi = 100;
-                ViewBag.ThangMMot = 100;
-                ViewBag.ThangMHai = 100;
-
-                return View("Dashboard", Convert.ToDecimal(1000000));
+                return View();
             }
             return RedirectToAction("Homepage");
 

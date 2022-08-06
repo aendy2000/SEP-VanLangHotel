@@ -35,6 +35,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -274,6 +276,7 @@
     <Compile Include="Controllers\QuanLyTrangThaiController.cs" />
     <Compile Include="Controllers\QuanLyTienIchController.cs" />
     <Compile Include="Controllers\RoomManagementController.cs" />
+    <Compile Include="Controllers\StatisticRevenueController.cs" />
     <Compile Include="Controllers\TourManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -729,6 +732,7 @@
     <Content Include="assets\js\reviewImage.js" />
     <Content Include="assets\js\setting-demo.js" />
     <Content Include="assets\js\setting-demo2.js" />
+    <Content Include="assets\js\table2excel.js" />
     <Content Include="asset\css\bootstrap-grid.css" />
     <Content Include="asset\css\bootstrap-grid.min.css" />
     <Content Include="asset\css\bootstrap-grid.rtl.css" />
@@ -925,6 +929,7 @@
     <Content Include="Views\LevelRoomsManagement\DetailLevelRooms.cshtml" />
     <Content Include="Views\LevelRoomsManagement\UpdateLevelRooms.cshtml" />
     <Content Include="Views\HistoryOrderRooms\Home.cshtml" />
+    <Content Include="Views\StatisticRevenue\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

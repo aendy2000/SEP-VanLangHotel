@@ -516,7 +516,7 @@ namespace SEP_VanLangHotel.Controllers
                                 string maloaiPhg = listLoaiPhongDuocDeXuat[k][0];
                                 if (k == 0)
                                 {
-                                    var phong = model.Phong.Where(p => p.Ma_Trang_Thai.Equals("TT202207050001") && p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
+                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
                                     for (int phg = 0; phg < phong.Count; phg++)
                                     {
                                         bool checks = false;
@@ -561,7 +561,7 @@ namespace SEP_VanLangHotel.Controllers
                                 }
                                 else
                                 {
-                                    var phong = model.Phong.Where(p => p.Ma_Trang_Thai.Equals("TT202207050001") && p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
+                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
                                     for (int phg = 0; phg < phong.Count; phg++)
                                     {
                                         bool checks = false;
@@ -1046,7 +1046,7 @@ namespace SEP_VanLangHotel.Controllers
                     DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("dd/MM/yyyy"));
                     DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("dd/MM/yyyy"));
                     List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                    var phong = model.Phong.Where(p => p.Ma_Trang_Thai.Equals("TT202207050001") && p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
+                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                     int index = 0;
                     for (int phg = 0; phg < phong.Count; phg++)
                     {

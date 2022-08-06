@@ -39,7 +39,7 @@
                             {
                                 <div class="col-md-4">
                                     <label class="small mb-1">Thời gian đặt</label>
-                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"])</p>
+                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy hh:mm:ss tt"))</p>
                                     @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                                 </div>
                             }
@@ -48,7 +48,7 @@
                                 string matours = ttdatPhong.Ma_Tour;
                                 <div class="col-md-4">
                                     <label class="small mb-1">Thời gian đặt</label>
-                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_DatPhong_Coc.Value</p>
+                                    <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_DatPhong_Coc.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                     @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                                 </div>
                             }
@@ -62,7 +62,7 @@
                             {
                                 <div class="col-md-4">
                                     <label class="small mb-1">Tổng thanh toán</label>
-                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Session["thoigian-ve"].ToString()).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-ve"].ToString()).ToString("yyyy-MM-dd")).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                                     @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                                 </div>
                             }
@@ -71,7 +71,7 @@
                                 string matours = ttdatPhong.Ma_Tour;
                                 <div class="col-md-4">
                                     <label class="small mb-1">Tổng thanh toán</label>
-                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("dd/MM/yyyy")).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy/MM/dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
+                                    <p type="text" style="text-align: center; color: red; font-weight: bold; background-color: #EEEEEE" class="form-control"> @phong.Loai_Phong.Gia.ToString("0,0") &ensp;×&ensp; @(Convert.ToInt32(Convert.ToDateTime(modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_TraPhong.Value.ToString("yyyy-MM-dd")).Subtract(Convert.ToDateTime(Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd"))).TotalDays + 1)) &ensp;ngày&ensp; = &ensp; @(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0")) &emsp; VND</p>
                                     @*<input name="tongtien" type="text" class="hidden" hidden="hidden" value="@(Convert.ToDecimal(Session["tong-thanhtoan"].ToString()).ToString("0,0"))" />*@
                                 </div>
                             }
@@ -115,7 +115,7 @@
                                 {
                                     <div class="col-md-8">
                                         <label class="small mb-1">Thời gian trả phòng</label>
-                                        <p style="color: black;text-align:center; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                        <p style="color: black;text-align:center; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                         @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
                                     </div>
                                     <div class="col-md-4">
@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Thời gian trả phòng</label>
-                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                             @*<input hidden name="ngayVe" value="@Convert.ToDateTime(Session["thoigian-ve"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đi')" oninput="this.setCustomValidity('')">*@
                                         </div>
                                     }
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="small mb-1">Thời gian hủy phòng</label>
-                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value</p>
+                                        <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                         @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                                     </div>
                                 }
@@ -189,7 +189,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Thời gian trả phòng</label>
-                                            <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value</p>
+                                            <p style="color:black; background-color:#EEEEEE" class="form-control">@modelss.TOUR.First(t => t.Ma_Tour.Equals(matours)).Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                             @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                                         </div>
                                     }
@@ -202,7 +202,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Thời gian trả phòng</label>
-                                            <p style="color:black; background-color:#EEEEEE" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value</p>
+                                            <p style="color:black; background-color:#EEEEEE" class="form-control">@ttdatPhong.Thoi_Gian_ThanhToan.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                             @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString("yyyy-MM-dd")" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                                         </div>
                                     }

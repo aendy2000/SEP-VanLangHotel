@@ -399,7 +399,7 @@ namespace SEP_VanLangHotel.Controllers
                         DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("dd/MM/yyyy"));
                         DateTime tgianTraPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                        var phong = model.Phong.Where(p => p.Ma_Trang_Thai.Equals("TT202207050001") && p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
+                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                         int index = 0;
                         for (int phg = 0; phg < phong.Count; phg++)
                         {
@@ -474,7 +474,7 @@ namespace SEP_VanLangHotel.Controllers
                         DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("dd/MM/yyyy"));
                         DateTime tgianTraPhong = Convert.ToDateTime(TTDoiPhong.TG_Doi_Tra.ToString("dd/MM/yyyy"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                        var phong = model.Phong.Where(p => p.Ma_Trang_Thai.Equals("TT202207050001") && p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
+                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
                         int index = 0;
                         for (int phg = 0; phg < phong.Count; phg++)
                         {
