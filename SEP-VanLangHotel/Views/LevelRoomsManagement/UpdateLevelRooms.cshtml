@@ -100,12 +100,12 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <!-- Form Group (Gía phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="">Gía phòng</label>
-                            <input value="@loaiphong.Gia" name="gia" class="form-control" required="required" placeholder="000000" type="number" min="0" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
+                            <input style="font-weight:bold; color:red;" id="testinput" value="@loaiphong.Gia.ToString("0,0").Replace(".", ",")" name="gia" class="form-control" required="required" type="text" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Mô tả)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputEmailAddress">Mô tả</label>
-                            <textarea class="form-control" name="mota" placeholder="Mô tả" rows="7" maxlength="200" required="required" pattern="{200}" oninvalid="this.setCustomValidity('Hãy nhập mô tả loại phòng')" oninput="this.setCustomValidity('')">@loaiphong.Mo_Ta</textarea>
+                            <textarea class="form-control" name="mota" placeholder="Mô tả" rows="4" maxlength="200" required="required" pattern="{200}" oninvalid="this.setCustomValidity('Hãy nhập mô tả loại phòng')" oninput="this.setCustomValidity('')">@loaiphong.Mo_Ta</textarea>
                         </div>
                         <br />
                         <hr />
@@ -144,11 +144,11 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                     cuteAlert({
                                         type: "question",
                                         title: "Hủy bỏ?",
-                                        message: "Bạn có chắc chắn muốn hủy thêm loại phòng?",
-                                        confirmText: "Xác nhận", cancelText: "Hủy"
+                                        message: "Bạn có chắc chắn muốn hủy cập nhật loại phòng?",
+                                        confirmText: "Xác nhận", cancelText: "Không hủy"
                                     }).then(function (isConfirm) {
                                         if (isConfirm) {
-                                            window.location.href = '@Url.Action("Home", "LevelRoomsManagement")';
+                                            window.location.href = '@Url.Action("DetailLevelRooms", "LevelRoomsManagement", new { id = loaiphong.Ma_Loai_Phong })';
                                         } else {
                                             return false;
                                         }

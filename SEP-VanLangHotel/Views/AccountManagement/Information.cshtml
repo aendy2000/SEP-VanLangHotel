@@ -5,6 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
 
 
 <title>@ViewBag.Title</title>
@@ -34,7 +69,7 @@
             <!-- Account details card-->
             <div class="card mb-4">
                 <div class="card-header"><b>Thông tin chi tiết</b></div>
-                <div class="card-body"style="margin-top: -1.8rem">
+                <div class="card-body" style="margin-top: -1.8rem">
                     <form>
                         <!-- Form Group (username)-->
                         <div class="mb-3">

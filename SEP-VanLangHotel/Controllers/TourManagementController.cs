@@ -139,7 +139,7 @@ namespace SEP_VanLangHotel.Controllers
                             saoke.Ngay_Giao_Dich = DateTime.Now;
                             saoke.Coc_or_ThanhToan = 1;
                             saoke.Note = "Khách hàng: " + tour.Ho_Ten_Chu_Tour + " (CMND/CCCD: " + tour.CMND_CCCD + ") đã thanh toán số tiền còn lại của Tour với số tiền "
-                                + thanhtoanT.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich + ". Thực hiện bởi Nhân viên: "
+                                + thanhtoanT.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich.ToString("dd/MM/yyyy hh:mm:ss tt") + ". Thực hiện bởi Nhân viên: "
                                 + Session["user-fullname"].ToString() + " (" + Session["user-id"].ToString() + ")";
                             model.Sao_Ke.Add(saoke);
                             model.SaveChanges();

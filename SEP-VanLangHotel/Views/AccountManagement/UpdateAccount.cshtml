@@ -1,5 +1,5 @@
 ﻿@model SEP_VanLangHotel.Models.Tai_Khoan
-@{ 
+@{
     Session["datene"] = Model.Sinh_Nhat;}
 @{
     ViewBag.Title = "CẬP NHẬT THÔNG TIN TÀI KHOẢN";
@@ -94,6 +94,42 @@ else
 
 }
 
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
 <title>@ViewBag.Title</title>
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -134,7 +170,7 @@ else
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header"><b>Thông tin tài khoản</b></div>
-                    <div class="card-body"style="margin-top: -1.8rem">
+                    <div class="card-body" style="margin-top: -1.8rem">
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
                             @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
@@ -147,7 +183,7 @@ else
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Ngày sinh</label>
-                                <input name="Sinh_Nhat" type="date" class="form-control" value="@Convert.ToDateTime(Session["datene"]).ToString("yyyy-MM-dd")" placeholder = "Ngày/Tháng/Năm", pattern = "[0-9]{2}/[0-9]{2}/[0-9]{4}", required = "required", oninvalid = "this.setCustomValidity('Hãy nhập vào ngày tháng năm sinh của bạn (VD: 30/01/2022)')", oninput = "this.setCustomValidity('')" />
+                                <input name="Sinh_Nhat" type="date" class="form-control" value="@Convert.ToDateTime(Session["datene"]).ToString("yyyy-MM-dd")" placeholder="Ngày/Tháng/Năm" , pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" , required="required" , oninvalid="this.setCustomValidity('Hãy nhập vào ngày tháng năm sinh của bạn (VD: 30/01/2022)')" , oninput="this.setCustomValidity('')" />
                                 @*@Html.EditorFor(model => model.Sinh_Nhat, DateTime.Now.ToString("yyyy-MM-dd"), new { htmlAttributes = new { @type = "date", @class = "form-control", @placeholder = "Ngày/Tháng/Năm", @pattern = "[0-9]{2}/[0-9]{2}/[0-9]{4}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào ngày tháng năm sinh của bạn (VD: 30/01/2022)')", @oninput = "this.setCustomValidity('')" } })*@
                                 @Html.ValidationMessageFor(model => model.Sinh_Nhat, "", new { @class = "text-danger" })
                             </div>

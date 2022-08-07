@@ -74,32 +74,32 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <!-- Form Group (Loại phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
-                            @Html.Editor("tenloaiphong", new { htmlAttributes = new { @class = "form-control", @placeholder = "A1.001", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập tên loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                            <input name="tenloaiphong" class="form-control" placeholder="A1.001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số người lớn) -->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputNumberHuman">Số người lớn</label>
-                            @Html.Editor("songuoilon", new { htmlAttributes = new { @class = "form-control", @placeholder = "1, 2, 3, 4...", @type = "number", @required = "required", @min = "1", @max = "4", @oninvalid = "this.setCustomValidity('Hãy nhập số người lớn')", @oninput = "this.setCustomValidity('')" } })
+                            <input name="songuoilon" class="form-control" placeholder="1, 2, 3, 4..." type="number" required="required" min="1" max="4" oninvalid="this.setCustomValidity('Hãy nhập số người lớn')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số trẻ em) -->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputNumberHuman">Số trẻ em</label>
-                            @Html.Editor("sotreem", new { htmlAttributes = new { @class = "form-control", @placeholder = "0, 1, 2, 3, 4, 5...", @type = "number", @required = "required", @min = "1", @max = "4", @oninvalid = "this.setCustomValidity('Hãy nhập số trẻ em')", @oninput = "this.setCustomValidity('')" } })
+                            <input name="sotreem" class="form-control" placeholder="0, 1, 2, 3, 4, 5..." type="number" required="required" min="1" max="4" oninvalid="this.setCustomValidity('Hãy nhập số trẻ em')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số giường) -->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLocation">Số giường</label>
-                            @Html.Editor("sogiuong", new { htmlAttributes = new { @class = "form-control", @placeholder = "1, 2...", @type = "number", @required = "required", @min = "1", @max = "2", @oninvalid = "this.setCustomValidity('Hãy nhập số giường')", @oninput = "this.setCustomValidity('')" } })
+                            <input name="sogiuong" class="form-control" placeholder="1, 2..." type="number" required="required" min="1" max="2" oninvalid="this.setCustomValidity('Hãy nhập số giường')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Gía phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="">Gía phòng</label>
-                            @Html.Editor("gia", new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "000000", @type = "number", @min = "0", @oninvalid = "this.setCustomValidity('Hãy nhập giá loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                            <input style="font-weight:bold; color:red;" value="0" type="text" id="testinput" name="gia" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Mô tả)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputEmailAddress">Mô tả</label>
-                            @Html.Editor("mota", new { type = "textarea", htmlAttributes = new { @class = "form-control", @placeholder = "Mô tả", @row = "10", @maxlength = "200", @required = "required", pattern = "{200}", @oninvalid = "this.setCustomValidity('Hãy nhập mô tả loại phòng')", @oninput = "this.setCustomValidity('')" } })
+                            <textarea class="form-control" name="mota" placeholder="Mô tả" rows="4" maxlength="200" required="required" pattern="{200}" oninvalid="this.setCustomValidity('Hãy nhập mô tả loại phòng')" oninput="this.setCustomValidity('')"></textarea>
                         </div>
                         <br />
                         <hr />
@@ -138,7 +138,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         type: "question",
                                         title: "Hủy bỏ?",
                                         message: "Bạn có chắc chắn muốn hủy thêm loại phòng?",
-                                        confirmText: "Xác nhận", cancelText: "Hủy"
+                                        confirmText: "Xác nhận", cancelText: "Không hủy"
                                     }).then(function (isConfirm) {
                                         if (isConfirm) {
                                             window.location.href = '@Url.Action("Home", "LevelRoomsManagement")';
@@ -156,7 +156,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
         </div>
     </div>
 }
-
 
 <script src="~/assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="~/assets/js/core/popper.min.js"></script>
@@ -206,7 +205,6 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
             "pageLength": 5,
         });
     });</script>
-
 
 
 

@@ -31,7 +31,6 @@
     </script>
     Session["error-import-file"] = "empthy";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -130,7 +129,7 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                                 <label class="small mb-1">Ngày đặt phòng</label>
-                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString()</p>
+                                <p style="color:black; background-color:#EEEEEE" class="form-control">@Convert.ToDateTime(Session["thoigian-den"]).ToString("dd/MM/yyyy hh:mm:ss tt")</p>
                                 @*<input hidden name="ngayDen" value="@Convert.ToDateTime(Session["thoigian-den"]).ToString()" style="color:black" type="date" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy chọn ngày đến')" oninput="this.setCustomValidity('')">*@
                             </div>
                             <div class="col-md-4">

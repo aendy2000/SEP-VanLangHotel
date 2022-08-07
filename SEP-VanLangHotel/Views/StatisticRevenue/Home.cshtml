@@ -175,4 +175,48 @@
             </div>
         </div>
     </div>
+    <table hidden id="tableExport" class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Ngày GD</th>
+                <th style="width:65px">Loại DV</th>
+                <th style="width:65px">Loại GD</th>
+                <th>Số Tiền</th>
+                <th>Người TH</th>
+                <th>Thông Tin Thêm</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int j = 0;}
+            @foreach (var item in Model)
+            {
+                j = j + 1;
+                <tr>
+                    <td>@j</td>
+                    <td>@item.Ngay_Giao_Dich.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    @if (string.IsNullOrEmpty(item.Ma_Tour))
+                    {
+                        <td>Phòng Đơn</td>
+                    }
+                    else
+                    {
+                        <td>Tour</td>
+                    }
+                    @if (item.Coc_or_ThanhToan == 0)
+                    {
+                        <td>Cọc</td>
+                    }
+                    else
+                    {
+                        <td>Thanh toán</td>
+                    }
+                    <td style="font-weight:bold; color:red">@item.So_Tien.ToString("0,0")</td>
+                    <td>@item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</td>
+                    <td>@item.Note</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
 </div>

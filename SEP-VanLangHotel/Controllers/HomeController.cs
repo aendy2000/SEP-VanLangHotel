@@ -41,11 +41,18 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     if (!item.Ma_Tien_Ich.Equals("TI202207070001"))
                     {
-                        var matienIch = item.Ma_Tien_Ich;
-                        var tentienIch = item.Ten_Tien_Ich;
-                        dstienIch.Add(new Tien_Ich() { Ma_Tien_Ich = matienIch, Ten_Tien_Ich = tentienIch, IsChecks = false });
+                        string maTI = item.Ma_Tien_Ich;
+                        var loaiPhong = model.Loai_Phong.Where(l => l.DS_Tien_Ich.FirstOrDefault(ds => ds.Ma_Tien_Ich.Equals(maTI)).Ma_Tien_Ich.Equals(maTI)).ToList();
+
+                        if (loaiPhong.Count > 0)
+                        {
+                            var matienIch = item.Ma_Tien_Ich;
+                            var tentienIch = item.Ten_Tien_Ich;
+                            dstienIch.Add(new Tien_Ich() { Ma_Tien_Ich = matienIch, Ten_Tien_Ich = tentienIch, IsChecks = false });
+                        }
                     }
                 }
+
                 ListTienIch tienichList = new ListTienIch();
                 tienichList.tienIch = dstienIch;
 

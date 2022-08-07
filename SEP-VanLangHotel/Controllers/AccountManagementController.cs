@@ -287,20 +287,25 @@ namespace SEP_VanLangHotel.Controllers
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e);
+                                    Session["error-import-file"] = "Lỗi: " + e.Message;
                                 }
                             }
                         }
                         taikhoan.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
                         model.Entry(taikhoan).State = EntityState.Modified;
                         model.SaveChanges();
-                        if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"]))
+                        if (taikhoan.Ten_Dang_Nhap.Equals(Session["user-id"].ToString()))
                         {
+                            string maquyen = taikhoan.Ma_Quyen;
+                            Session["user-fullname"] = taikhoan.Ho_Va_Ten;
+                            Session["user-role"] = model.Quyen.First(q => q.Ma_Quyen.Equals(maquyen)).Ten_Quyen;
                             Session["user-vatatar"] = taikhoan.Avatar;
-                            return RedirectToAction("Information", new { id = taikhoan.Ma_Tai_Khoan });
+                            Session["thongbaoSuccess"] = "Đã cập nhật thông tin tài khoản!";
+                            return RedirectToAction("Information");
                         }
                         else
                         {
+                            Session["thongbaoSuccess"] = "Đã cập nhật thông tin tài khoản!";
                             return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
                         }
                     }

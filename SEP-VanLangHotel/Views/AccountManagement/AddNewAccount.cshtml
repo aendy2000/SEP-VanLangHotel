@@ -91,6 +91,41 @@ else
     }
 
 }
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
 
 <title>@ViewBag.Title</title>
 <div class="panel-header bg-primary-gradient">
@@ -123,11 +158,11 @@ else
             <div class="col-xl-8">
                 <div class="card mb-4">
                     <div class="card-header"><b>Thông tin tài khoản</b></div>
-                    <div class="card-body"style="margin-top: -1.8rem">
+                    <div class="card-body" style="margin-top: -1.8rem">
 
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
-                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control" , @required = "required", pattern= "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Ho_Va_Ten, "", new { @class = "text-danger" })
                         </div>
                         <div class="row gx-3 mb-3">

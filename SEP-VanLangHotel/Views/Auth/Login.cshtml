@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Đăng Nhập";
+    ViewBag.Title = "ĐĂNG NHẬP - VĂN LANG HOTEL";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -24,23 +24,27 @@
 @if (Convert.ToBoolean(Session["laylaimatkhauthanhcong"]) == true)
 {
     <body onload="thongbao()">
+        <script>
+            function thongbao() {
+                cuteAlert({
+                    type: "success",
+                    title: "Đã đặt lại mật khẩu mới!",
+                    message: "Mật khẩu của bạn đã được đặt lại thành công, hãy thực hiện đăng nhập.",
+                    buttonText: "Xác nhận"
+                })
+            }
+        </script>
     </body>
-    <script>
-        function thongbao() {
-            cuteAlert({
-                type: "success",
-                title: "Đã đặt lại mật khẩu mới!",
-                message: "Mật khẩu của bạn đã được đặt lại thành công, hãy thực hiện đăng nhập.",
-                buttonText: "Xác nhận"
-            })
-        }
-    </script>
     Session["laylaimatkhauthanhcong"] = null;
 }
 <body>
     <div class="main">
         <div class="form-login">
+
             <div class="form-login___border">
+                @*<h2>
+                    <img src="~/Content/images/logoa.jpg" alt="avatar" style="border-radius:3%; height:10%; width:10%;" class="img-room-profile mb-2">
+                </h2>*@
                 <h2>Đăng nhập</h2>
                 <br />
                 <form name="MyForm" action="@Url.Action("Login")" method="post">

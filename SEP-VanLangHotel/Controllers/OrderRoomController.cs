@@ -502,7 +502,16 @@ namespace SEP_VanLangHotel.Controllers
                                     Session["error-import-file"] = "Không có phòng nào có số giường đúng với yêu cầu của nhóm khách số " + (l + 1);
                                     return RedirectToAction("Homepage", "Home");
                                 }
+
+                                if (string.IsNullOrEmpty(listLoaiPhongDuocDeXuat[l][0]))
+                                {
+                                    Session["error-import-file"] = "Tạm thời không có loại phòng nào có danh sách tiện ích phù hợp với yêu cầu của nhóm khách hàng số " + (l + 1) + ", Hãy chọn loại phòng có những tiện ích khác!";
+                                    return RedirectToAction("Homepage", "Home");
+                                }
+
                             }
+
+
 
                             //=========================================================================================================
 
@@ -517,77 +526,18 @@ namespace SEP_VanLangHotel.Controllers
                                 if (k == 0)
                                 {
                                     var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
-                                    for (int phg = 0; phg < phong.Count; phg++)
+                                    if (phong.Count <= 0)
                                     {
-                                        bool checks = false;
-                                        string maphong = phong[phg].Ma_Phong;
-                                        var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
-                                        if (ttCoc.Count <= 0)
-                                        {
-                                            listPhongDuocDeXuat.Add(new List<string>());
-                                            listPhongDuocDeXuat[k].Add(maphong);
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            foreach (var temp in ttCoc)
-                                            {
-                                                if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
-                                                    (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
-                                                    (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
-                                                {
-                                                    checks = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (checks == true)
-                                            {
-                                                if (phg >= phong.Count - 1)
-                                                {
-                                                    Session["error-import-file"] = "Thông báo đến nhóm khách số " + (k + 1) + ": Loại phòng chứa các tiện ích mà khách hàng" +
-                                                        " mong muốn đã hết tạm thời trong khoảng thời gian từ ngày " + tgianNhanPhong.ToString("dd/MM/yyyy") +
-                                                        " đến ngày " + tgianTraPhong.ToString("dd/MM/yyyy") + ". hãy thử lại với phòng có số tiện ích khác!";
-                                                    return RedirectToAction("Homepage", "Home");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                listPhongDuocDeXuat.Add(new List<string>());
-                                                listPhongDuocDeXuat[k].Add(maphong);
-                                                break;
-                                            }
-                                        }
+                                        Session["error-import-file"] = "Tạm thời không có phòng nào phù hợp với loại phòng mà nhóm khách hàng số " + (k + 1) + " cần, Hãy chọn loại phòng khác!";
+                                        return RedirectToAction("Homepage", "Home");
                                     }
-                                }
-                                else
-                                {
-                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
-                                    for (int phg = 0; phg < phong.Count; phg++)
+                                    else
                                     {
-                                        bool checks = false;
-                                        string maphong = phong[phg].Ma_Phong;
 
-                                        bool ktraTrung = false;
-                                        for (int c = 0; c < listPhongDuocDeXuat.Count; c++)
+                                        for (int phg = 0; phg < phong.Count; phg++)
                                         {
-                                            if (listPhongDuocDeXuat[c][0].Equals(maphong))
-                                            {
-                                                ktraTrung = true;
-                                                break;
-                                            }
-                                        }
-                                        if (ktraTrung == true)
-                                        {
-                                            if (phg >= phong.Count - 1)
-                                            {
-                                                Session["error-import-file"] = "Thông báo đến nhóm khách số " + (k + 1) + ": Loại phòng chứa các tiện ích mà khách hàng" +
-                                                        " mong muốn đã hết tạm thời trong khoảng thời gian từ ngày " + tgianNhanPhong.ToString("dd/MM/yyyy") +
-                                                        " đến ngày " + tgianTraPhong.ToString("dd/MM/yyyy") + ". hãy thử lại với phòng có số tiện ích khác!";
-                                                return RedirectToAction("Homepage", "Home");
-                                            }
-                                        }
-                                        else
-                                        {
+                                            bool checks = false;
+                                            string maphong = phong[phg].Ma_Phong;
                                             var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
                                             if (ttCoc.Count <= 0)
                                             {
@@ -622,6 +572,84 @@ namespace SEP_VanLangHotel.Controllers
                                                     listPhongDuocDeXuat.Add(new List<string>());
                                                     listPhongDuocDeXuat[k].Add(maphong);
                                                     break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
+
+                                    if (phong.Count <= 0)
+                                    {
+                                        Session["error-import-file"] = "Tạm thời không có phòng nào phù hợp với loại phòng mà nhóm khách hàng số " + (k + 1) + " cần, Hãy chọn loại phòng khác!";
+                                        return RedirectToAction("Homepage", "Home");
+                                    }
+                                    else
+                                    {
+
+                                        for (int phg = 0; phg < phong.Count; phg++)
+                                        {
+                                            bool checks = false;
+                                            string maphong = phong[phg].Ma_Phong;
+
+                                            bool ktraTrung = false;
+                                            for (int c = 0; c < listPhongDuocDeXuat.Count; c++)
+                                            {
+                                                if (listPhongDuocDeXuat[c][0].Equals(maphong))
+                                                {
+                                                    ktraTrung = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (ktraTrung == true)
+                                            {
+                                                if (phg >= phong.Count - 1)
+                                                {
+                                                    Session["error-import-file"] = "Thông báo đến nhóm khách số " + (k + 1) + ": Loại phòng chứa các tiện ích mà khách hàng" +
+                                                            " mong muốn đã hết tạm thời trong khoảng thời gian từ ngày " + tgianNhanPhong.ToString("dd/MM/yyyy") +
+                                                            " đến ngày " + tgianTraPhong.ToString("dd/MM/yyyy") + ". hãy thử lại với phòng có số tiện ích khác!";
+                                                    return RedirectToAction("Homepage", "Home");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
+                                                if (ttCoc.Count <= 0)
+                                                {
+                                                    listPhongDuocDeXuat.Add(new List<string>());
+                                                    listPhongDuocDeXuat[k].Add(maphong);
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    foreach (var temp in ttCoc)
+                                                    {
+                                                        if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
+                                                            (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
+                                                            (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
+                                                        {
+                                                            checks = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (checks == true)
+                                                    {
+                                                        if (phg >= phong.Count - 1)
+                                                        {
+                                                            Session["error-import-file"] = "Thông báo đến nhóm khách số " + (k + 1) + ": Loại phòng chứa các tiện ích mà khách hàng" +
+                                                                " mong muốn đã hết tạm thời trong khoảng thời gian từ ngày " + tgianNhanPhong.ToString("dd/MM/yyyy") +
+                                                                " đến ngày " + tgianTraPhong.ToString("dd/MM/yyyy") + ". hãy thử lại với phòng có số tiện ích khác!";
+                                                            return RedirectToAction("Homepage", "Home");
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        listPhongDuocDeXuat.Add(new List<string>());
+                                                        listPhongDuocDeXuat[k].Add(maphong);
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
@@ -771,7 +799,7 @@ namespace SEP_VanLangHotel.Controllers
                     saoke.Ngay_Giao_Dich = DateTime.Now;
                     saoke.Coc_or_ThanhToan = 0;
                     saoke.Note = "Khách hàng: " + hoten.Trim() + " (CMND/CCCD: " + cmndcccd.Trim() + ") đã thanh toán cọc Tour với số tiền "
-                        + tienCoc.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich + ". Thực hiện bởi Nhân viên: "
+                        + tienCoc.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich.ToString("dd/MM/yyyy hh:mm:ss tt") + ". Thực hiện bởi Nhân viên: "
                         + Session["user-fullname"].ToString() + " (" + Session["user-id"].ToString() + ")";
                     model.Sao_Ke.Add(saoke);
                     model.SaveChanges();
@@ -1042,51 +1070,68 @@ namespace SEP_VanLangHotel.Controllers
                         return RedirectToAction("Homepage", "Home");
                     }
 
-                    //Phòng ở trạng thái trống và thuộc loại phòng của khách hàng tìm
+                    if (string.IsNullOrEmpty(loaiPhong))
+                    {
+                        Session["error-import-file"] = "Tạm thời không có loại phòng nào có danh sách tiện ích phù hợp với yêu cầu của khách hàng, Hãy chọn loại phòng có những tiện ích khác!";
+                        return RedirectToAction("Homepage", "Home");
+                    }
+
+
+                    //Phòng thuộc loại phòng của khách hàng tìm
                     DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("yyyy-MM-dd"));
                     DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("yyyy-MM-dd"));
                     List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
                     var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
-                    int index = 0;
-                    for (int phg = 0; phg < phong.Count; phg++)
+
+                    if (phong.Count <= 0)
                     {
-                        bool checks = false;
-                        string maphong = phong[phg].Ma_Phong;
-                        var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
-                        if (ttCoc.Count <= 0)
+                        Session["error-import-file"] = "Tạm thời không có phòng nào phù hợp với loại phòng mà khách hàng cần, Hãy chọn loại phòng khác!";
+                        return RedirectToAction("Homepage", "Home");
+                    }
+                    else
+                    {
+
+                        int index = 0;
+                        for (int phg = 0; phg < phong.Count; phg++)
                         {
-                            listPhongDuocDeXuat.Add(new List<string>());
-                            listPhongDuocDeXuat[index].Add(maphong);
-                            index++;
-                            continue;
-                        }
-                        else
-                        {
-                            foreach (var temp in ttCoc)
-                            {
-                                if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
-                                    (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
-                                    (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
-                                {
-                                    checks = true;
-                                    break;
-                                }
-                            }
-                            if (checks == true)
-                            {
-                                if (phg >= phong.Count - 1 && listPhongDuocDeXuat.Count == 0)
-                                {
-                                    Session["error-import-file"] = "Loại phòng chứa các tiện ích mà khách hàng" +
-                                        " mong muốn đã hết tạm thời. hãy thử lại với phòng có số tiện ích khác!";
-                                    return RedirectToAction("Homepage", "Home");
-                                }
-                            }
-                            else
+                            bool checks = false;
+                            string maphong = phong[phg].Ma_Phong;
+                            var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
+                            if (ttCoc.Count <= 0)
                             {
                                 listPhongDuocDeXuat.Add(new List<string>());
                                 listPhongDuocDeXuat[index].Add(maphong);
                                 index++;
                                 continue;
+                            }
+                            else
+                            {
+                                foreach (var temp in ttCoc)
+                                {
+                                    if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
+                                        (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
+                                        (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
+                                    {
+                                        checks = true;
+                                        break;
+                                    }
+                                }
+                                if (checks == true)
+                                {
+                                    if (phg >= phong.Count - 1 && listPhongDuocDeXuat.Count == 0)
+                                    {
+                                        Session["error-import-file"] = "Loại phòng chứa các tiện ích mà khách hàng" +
+                                            " mong muốn đã hết tạm thời. hãy thử lại với phòng có số tiện ích khác!";
+                                        return RedirectToAction("Homepage", "Home");
+                                    }
+                                }
+                                else
+                                {
+                                    listPhongDuocDeXuat.Add(new List<string>());
+                                    listPhongDuocDeXuat[index].Add(maphong);
+                                    index++;
+                                    continue;
+                                }
                             }
                         }
                     }
@@ -1233,7 +1278,7 @@ namespace SEP_VanLangHotel.Controllers
                     saoke.Ngay_Giao_Dich = DateTime.Now;
                     saoke.Coc_or_ThanhToan = 0;
                     saoke.Note = "Khách hàng: " + hoten.Trim() + " (CMND/CCCD: " + cmndcccd.Trim() + ") đã thanh toán cọc phòng với số tiền "
-                        + dtienCoc.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich + ". Thực hiện bởi Nhân viên: "
+                        + dtienCoc.ToString("0,0") + " VND vào ngày " + saoke.Ngay_Giao_Dich.ToString("dd/MM/yyyy hh:mm:ss tt") + ". Thực hiện bởi Nhân viên: "
                         + Session["user-fullname"].ToString() + " (" + Session["user-id"].ToString() + ")";
                     model.Sao_Ke.Add(saoke);
                     model.SaveChanges();
@@ -1286,7 +1331,7 @@ namespace SEP_VanLangHotel.Controllers
                     try
                     {
                         DateTime ngayDen = DateTime.Now;
-                        DateTime ngaydenTemp = Convert.ToDateTime(ngayDen.ToString("yyyy/MM/dd"));
+                        DateTime ngaydenTemp = Convert.ToDateTime(ngayDen.ToString("yyyy-MM-dd"));
                         var phong = model.Phong.FirstOrDefault(p => p.Ma_Phong.Equals(maPhong));
                         int ngaynay = (int)ngaydenTemp.Subtract(DateTime.Now).TotalDays + 1;
                         if (ngaynay < 1)

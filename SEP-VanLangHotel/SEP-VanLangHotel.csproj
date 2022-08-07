@@ -753,6 +753,7 @@
     <Content Include="asset\style.css" />
     <Content Include="asset\styleAdmin.css" />
     <Content Include="asset\styleLogin.css" />
+    <Content Include="Content\images\logoa.jpg" />
     <Content Include="Content\images\vanlanghotellogo.png" />
     <Content Include="img\logo\VanLangHotel.png" />
     <Content Include="img\logo\vanlanghotellogo.png" />

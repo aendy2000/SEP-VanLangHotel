@@ -55,7 +55,7 @@ namespace SEP_VanLangHotel.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddLevelRooms(ListTienIch tienichList, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, decimal gia, string mota)
+        public ActionResult AddLevelRooms(ListTienIch tienichList, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, string gia, string mota)
         {
 
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
@@ -89,7 +89,9 @@ namespace SEP_VanLangHotel.Controllers
                     levelRooms.So_Nguoi_Lon = songuoilon;
                     levelRooms.So_Tre_Em = sotreem;
                     levelRooms.So_Giuong = sogiuong;
-                    levelRooms.Gia = gia;
+
+                    decimal dgia = Convert.ToDecimal(gia.Trim().Replace(",", ""));
+                    levelRooms.Gia = dgia;
                     levelRooms.Mo_Ta = mota.Trim();
 
                     List<string> listTienIchCanCo = new List<string>();
@@ -172,7 +174,7 @@ namespace SEP_VanLangHotel.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateLevelRooms(ListTienIch tienichList, string maloaiphong, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, decimal gia, string mota)
+        public ActionResult UpdateLevelRooms(ListTienIch tienichList, string maloaiphong, string tenloaiphong, int songuoilon, int sotreem, int sogiuong, string gia, string mota)
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
@@ -216,7 +218,9 @@ namespace SEP_VanLangHotel.Controllers
                     uLoaiPhong.So_Nguoi_Lon = songuoilon;
                     uLoaiPhong.So_Tre_Em = sotreem;
                     uLoaiPhong.So_Giuong = sogiuong;
-                    uLoaiPhong.Gia = gia;
+
+                    decimal dgia = Convert.ToDecimal(gia.Trim().Replace(",", ""));
+                    uLoaiPhong.Gia = dgia;
                     uLoaiPhong.Mo_Ta = mota.Trim();
 
                     List<string> listTienIchCanCo = new List<string>();
