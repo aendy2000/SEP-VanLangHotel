@@ -785,21 +785,37 @@
     <script src="~/assets/js/table2excel.js"></script>
     <script type="text/javascript">
         function ExportQuestion() {
-           cuteAlert({
-               type: "question",
-               title: "Thông báo",
-               message: "Xác nhận xuất dữ liệu giao dịch tháng @ViewBag.Thang năm @ViewBag.Nam với định dạng .xls",
-               confirmText: "Xác nhận", cancelText: "Hủy"
-               }).then(function (isConfirm) {
-                   if (isConfirm) {
-                       $("#tableExport").table2excel({
-                        filename: "Thong-Ke-Doanh-Thu-Thang-@ViewBag.Thang-Nam-@ViewBag.Nam"+".xls"
+            cuteAlert({
+                type: "question",
+                title: "Thông báo",
+                message: "Xác nhận xuất dữ liệu giao dịch tháng @ViewBag.Thang năm @ViewBag.Nam với định dạng .xls",
+                confirmText: "Xác nhận", cancelText: "Hủy"
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    $("#tableExport").table2excel({
+                        filename: "Thong-Ke-Doanh-Thu-Thang-@ViewBag.Thang-Nam-@ViewBag.Nam" + ".xls"
                     });
-                   } else {
-                       return false;
-                   }
-               });
-            }
+                } else {
+                    return false;
+                }
+            });
+        }
+        function exportMau() {
+            cuteAlert({
+                type: "question",
+                title: "Xác nhận",
+                message: "Tải xuống File mẫu import với định dạng .xls",
+                confirmText: "Xác nhận", cancelText: "Hủy"
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    $("#filemauExport").table2excel({
+                        filename: "danh-sach-dat-phong.xls"
+                    });
+                } else {
+                    return false;
+                }
+            });
+        }
     </script>
 </body>
 

@@ -69,9 +69,13 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <div class="d-flex align-items-center">
                             <p style="font-weight:bold; font-size:16px; color: orangered;">ĐẶT PHÒNG KHÁCH SẠN</p>
                             <label for="import"></label>
-                            <button style="color:white;" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
-                                <i class="fas fa-file-import"></i> &ensp;
-                                Import Danh Sách
+                            <button style="color:white; font-size:13px" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
+                                <i style="color:white; font-size:16px" class="fas fa-file-import"></i> &ensp;
+                                IMPORT DANH SÁCH
+                            </button>
+                            &ensp;
+                            <button onclick="exportMau()" style="color:white; font-size:18px" class="btn btn-secondary btn-round" data-toggle="tooltip" data-original-title="Tải xuống File mẫu import. Định dạng .xls">
+                                <i class="fa fa-download"></i>
                             </button>
                         </div>
                     </div>
@@ -174,6 +178,93 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                 </div>
             </div>
         </div>
+        <table hidden id="filemauExport" class="table">
+            <thead>
+                <tr>
+                    <th colspan="10">THÔNG TIN ĐẶT PHÒNG</th>
+                    <th colspan="@Model.tienIch.Count">TIỆN ÍCH PHÒNG (CÓ: 1, KHÔNG: 0)</th>
+                    <th colspan="2">THỜI GIAN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nhóm</td>
+                    <td>STT</td>
+                    <td>Họ và Tên</td>
+                    <td>Mối quan hệ</td>
+                    <td>Số CMND/CCCD</td>
+                    <td>Số điện thoại</td>
+                    <td>
+                        Ngày sinh (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                    <td>
+                        Nam (1)
+                        Nữ (0)
+                    </td>
+                    <td>Địa chỉ</td>
+                    <td>Số giường</td>
+                    @foreach (var item in Model.tienIch)
+                    {
+                        <td>@item.Ten_Tien_Ich</td>
+                    }
+                    <td>
+                        Ngày đến (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                    <td>
+                        Ngày về (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">1</td>
+                    <td>1</td>
+                    <td>Nguyễn Văn A</td>
+                    <td></td>
+                    <td>070200000000</td>
+                    <td>0367899899</td>
+                    <td>
+                        1997-06-28
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>73 Bà Huyện Thanh Quan, Phường Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh</td>
+                    <td>1</td>
+                    @foreach (var item in Model.tienIch)
+                    {
+                        <td>0</td>
+                    }
+                    <td rowspan="2">
+                        @DateTime.Now.ToString("yyyy-MM-dd")
+                    </td>
+                    <td rowspan="2">
+                        @DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Nguyễn Văn B</td>
+                    <td>Bạn bè</td>
+                    <td>070200001111</td>
+                    <td>0909009009</td>
+                    <td>
+                        1997-04-22
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>214/78 Nguyễn Oanh, Phường 17, Quận Gò Vấp, Thành phố Hồ Chí Minh</td>
+                    <td>1</td>
+                    @foreach (var item in Model.tienIch)
+                    {
+                        <td>1</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>
 
