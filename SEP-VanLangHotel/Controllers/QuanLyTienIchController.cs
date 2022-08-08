@@ -42,14 +42,14 @@ namespace SEP_VanLangHotel.Controllers
                                 return RedirectToAction("Home");
                             }
                         }
-                            Tien_Ich newTienIch = new Tien_Ich();
-                            newTienIch.Ma_Tien_Ich = "1";
-                            newTienIch.Ten_Tien_Ich = tentienich;
-                            model.Tien_Ich.Add(newTienIch);
-                            model.SaveChanges();
-                            Session["thongbaoSuccess"] = "Thêm thành công tiện ích: " + newTienIch.Ten_Tien_Ich;
-                            return RedirectToAction("Home");
-                        
+                        Tien_Ich newTienIch = new Tien_Ich();
+                        newTienIch.Ma_Tien_Ich = "1";
+                        newTienIch.Ten_Tien_Ich = tentienich;
+                        model.Tien_Ich.Add(newTienIch);
+                        model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Thêm thành công tiện ích: " + newTienIch.Ten_Tien_Ich;
+                        return RedirectToAction("Home");
+
                     }
                     catch (Exception e)
                     {
@@ -114,11 +114,20 @@ namespace SEP_VanLangHotel.Controllers
                     var tienIch = model.Tien_Ich.First(t => t.Ma_Tien_Ich.Equals(id));
                     if (tienIch != null)
                     {
-                        string tentienIch = tienIch.Ten_Tien_Ich;
-                        model.Tien_Ich.Remove(tienIch);
-                        model.SaveChanges();
-                        Session["thongbaoSuccess"] = "Đã xóa tiện ích " + tentienIch;
-                        return RedirectToAction("Home");
+                        var dsTienIch = model.DS_Tien_Ich.Where(t => t.Ma_Tien_Ich.Equals(id)).ToList();
+                        if (dsTienIch.Count > 0)
+                        {
+                            Session["thongbao-loi"] = "Tiện ích " + tienIch.Ten_Tien_Ich + " đang được sử dụng, hãy loại bỏ những tiện ích này ở những loại phòng đang sử dụng nó trước!";
+                            return RedirectToAction("Home");
+                        }
+                        else
+                        {
+                            string tentienIch = tienIch.Ten_Tien_Ich;
+                            model.Tien_Ich.Remove(tienIch);
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Đã xóa tiện ích " + tentienIch;
+                            return RedirectToAction("Home");
+                        }
                     }
                 }
                 return RedirectToAction("Home");

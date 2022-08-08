@@ -56,8 +56,8 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         Session["thongbao-loi"] = e.Message;
                         return RedirectToAction("Home");
-                    }                  
-                }               
+                    }
+                }
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -69,7 +69,7 @@ namespace SEP_VanLangHotel.Controllers
                 if (!string.IsNullOrEmpty(matrangthai) && !string.IsNullOrEmpty(tentrangthai) && !string.IsNullOrEmpty(motatrangthai))
                 {
                     var trangThai = model.Trang_Thai.First(t => t.Ma_Trang_Thai.Equals(matrangthai));
-                        if (trangThai != null)
+                    if (trangThai != null)
                     {
                         try
                         {
@@ -100,27 +100,37 @@ namespace SEP_VanLangHotel.Controllers
                             Session["thongbao-loi"] = e.Message;
                             return RedirectToAction("Home");
                         }
-                    }  
+                    }
                 }
                 return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
-        }        
+        }
         public ActionResult DeleteStatus(string matrangthai)
         {
             if (Session["user-role"].Equals("Quản lý"))
-            {                               
+            {
                 if (!string.IsNullOrEmpty(matrangthai))
                 {
                     var trangThai = model.Trang_Thai.First(t => t.Ma_Trang_Thai.Equals(matrangthai));
-                    if(trangThai != null)
-                    {                        
-                        string tentrangThai = trangThai.Ten_Trang_Thai;
-                        model.Trang_Thai.Remove(trangThai);
-                        model.SaveChanges();
-                        Session["thongbaoSuccess"] = "Đã xóa trạng thái " + tentrangThai;
-                        return RedirectToAction("Home");
-                    }                   
+                    string tentrangThai = trangThai.Ten_Trang_Thai;
+
+                    if (trangThai != null)
+                    {
+                        var phongs = model.Phong.Where(p => p.Ma_Trang_Thai.Equals(matrangthai)).ToList();
+                        if (phongs.Count > 0)
+                        {
+                            Session["thongbao-loi"] = "Trạng thái " + tentrangThai + " đang được áp dụng cho Phòng khách sạn, không được phép xóa!. Hãy thay đổi trạng thái của phòng đang áp dụng trạng thái này thành một trạng thái khác trước!";
+                            return RedirectToAction("Home");
+                        }
+                        else
+                        {
+                            model.Trang_Thai.Remove(trangThai);
+                            model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Đã xóa trạng thái " + tentrangThai;
+                            return RedirectToAction("Home");
+                        }
+                    }
                 }
                 return RedirectToAction("Home");
             }

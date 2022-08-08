@@ -21,6 +21,41 @@
     </script>
     Session["quyen-tontai"] = null;
 }
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -42,9 +77,9 @@
                             Thêm quyền mới
                         </button>
                         @*<a style="color:white;" type="button" class="btn btn-secondary btn-round ml-auto" href="@Url.Action("AddNewAccount", "AccountManagement")">
-            <i class="fa fa-plus"></i>
-            Thêm tài khoản mới
-        </a>*@
+                                <i class="fa fa-plus"></i>
+                                Thêm tài khoản mới
+                            </a>*@
                     </div>
                 </div>
                 <div class="card-body">

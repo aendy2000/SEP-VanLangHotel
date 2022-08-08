@@ -38,9 +38,10 @@ namespace SEP_VanLangHotel.Controllers
                     quyen.Mo_Ta = motaquyenmoi.Trim();
                     model.Quyen.Add(quyen);
                     model.SaveChanges();
+                    Session["thongbaoSuccess"] = "Đã thêm quyền " + quyen.Ten_Quyen;
                     return RedirectToAction("Home");
                 }
-                Session["quyen-tontai"] = true;
+                Session["quyen-tontai"] = "Quyền " + tenquyenmoi.Trim() + " đã tồn tại, không thể thêm!";
                 return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");
@@ -50,7 +51,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].ToString().Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                var ktraquyen = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Trim().Equals(tenquyen.ToLower().Trim()));
+                var ktraquyen = model.Quyen.FirstOrDefault(q => q.Ten_Quyen.ToLower().Trim().Equals(tenquyen.ToLower().Trim()) && !q.Ma_Quyen.Equals(maquyen));
                 if (ktraquyen == null)
                 {
                     var quyen = model.Quyen.FirstOrDefault(q => q.Ma_Quyen.ToLower().Equals(maquyen));
@@ -60,6 +61,7 @@ namespace SEP_VanLangHotel.Controllers
                         quyen.Ten_Quyen = tenquyen.Trim();
                         quyen.Mo_Ta = motaquyen.Trim();
                         model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Đã cập nhật Quyền";
                         return RedirectToAction("Home");
                     }
                 }
@@ -85,11 +87,13 @@ namespace SEP_VanLangHotel.Controllers
                     }
                     if (Session["try-taikhoan-dadungquyen"] == null) //Nếu quyền chưa được áp dụng cho bất kỳ tài khoản nào
                     {
+                        Session["thongbaoSuccess"] = "Đã xóa Quyền " + quyen.Ten_Quyen;
                         model.Quyen.Remove(quyen);
                         model.SaveChanges();
                         return RedirectToAction("Home");
                     }
                 }
+                Session["quyen-tontai"] = "Đã đã được áp dụng cho tài khoản, không thể xóa!";
                 return RedirectToAction("Home");
             }
             return RedirectToAction("Homepage", "Home");

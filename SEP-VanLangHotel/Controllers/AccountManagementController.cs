@@ -164,25 +164,27 @@ namespace SEP_VanLangHotel.Controllers
                             newAccount.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : (gioiTinh.Equals("Nữ") ? 0 : 3);
                             model.Tai_Khoan.Add(newAccount);
                             model.SaveChanges();
-                            Session["addnewaccountsuccess"] = true;
+                            string cmnd = newAccount.CMND_CCCD;
+                            Session["thongbaoSuccess"] = "Đã thêm tài khoản " + newAccount.Ten_Dang_Nhap;
+                            return RedirectToAction("DetailtAccount", "AccountManagement", new { id = model.Tai_Khoan.FirstOrDefault(t => t.CMND_CCCD.Equals(cmnd)).Ma_Tai_Khoan });
                         }
                         catch (DbEntityValidationException e) //Nhận thông tin lỗi thêm tài khoản bị thất bại
                         {
+                            string log = "";
                             foreach (var eve in e.EntityValidationErrors)
                             {
-                                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                log += ("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                                     eve.Entry.Entity.GetType().Name, eve.Entry.State);
                                 foreach (var ve in eve.ValidationErrors)
                                 {
-                                    Console.WriteLine("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
+                                    log += ("- Property: \"{0}\", Value: \"{1}\", Error: \"{2}\"",
                                         ve.PropertyName,
                                         eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName),
                                         ve.ErrorMessage);
                                 }
                             }
-                            throw;
+                            Session["error-import-file"] = "Lỗi: " + log;
                         }
-                        return RedirectToAction("DetailtAccount", new { id = newAccount.Ma_Tai_Khoan });
                     }
                 } //Thêm thất bại sẽ:
                 ViewBag.Ma_Quyen = new SelectList(model.Quyen, "Ma_Quyen", "Ten_Quyen");
@@ -391,9 +393,10 @@ namespace SEP_VanLangHotel.Controllers
                     {
                         model.Tai_Khoan.Remove(taikhoan);
                         model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Đã xóa tài khoản " + taikhoan.Ten_Dang_Nhap;
                         return RedirectToAction("Home");
                     }
-                    else if (taikhoan.Ten_Dang_Nhap.Equals("Quản lý"))
+                    else if (taikhoan.Ten_Dang_Nhap.Equals("admin"))
                     {
                         //Khong duoc phep xoa tk chu khach san
                         Session["taikhoan-admintop1-deleted"] = true;
@@ -414,9 +417,15 @@ namespace SEP_VanLangHotel.Controllers
                 if (taikhoan != null)
                 {
                     if (taikhoan.Lock == 0)
+                    {
                         taikhoan.Lock = 1;
+                        Session["thongbaoSuccess"] = "Đã khóa tài khoản " + taikhoan.Ten_Dang_Nhap;
+                    }
                     else
+                    {
                         taikhoan.Lock = 0;
+                        Session["thongbaoSuccess"] = "Đã khóa mở tài khoản " + taikhoan.Ten_Dang_Nhap;
+                    }
                     model.SaveChanges();
                     return RedirectToAction("DetailtAccount", new { id = taikhoan.Ma_Tai_Khoan });
                 }
@@ -456,6 +465,7 @@ namespace SEP_VanLangHotel.Controllers
                             Session["newpass-khongtrung"] = null;
                             taikhoan.Mat_Khau = newpassword;
                             model.SaveChanges();
+                            Session["thongbaoSuccess"] = "Đã thay đổi mật khẩu";
                             return RedirectToAction("Homepage", "Home");
                         }
                         Session["newpass-khongtrung"] = true; //mật khẩu mới không trùng nhau
