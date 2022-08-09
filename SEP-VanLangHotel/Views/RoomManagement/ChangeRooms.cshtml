@@ -9,10 +9,46 @@
     var phong = ttdatPhong.Phong;
 }
 @{
-    ViewBag.Title = "ĐỔI PHÒNG";
+    ViewBag.Title = "ĐỔI PHÒNG KHÁCH SẠN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+@if (!Session["error-import-file"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+        let info = @Html.Raw(Json.Encode(Session["error-import-file"]));
+        function kiemtrafileimport() {
+            cuteAlert({
+                type: "error",
+                title: "Thông báo!",
+                message: info,
+                buttonText: "Xác nhận"
+            })
+        }
+    </script>
+    Session["error-import-file"] = "empthy";
+}
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
 <title>@ViewBag.Title</title>
 <script>
     //  document.getElementById('tries').scrollIntoView()
@@ -23,7 +59,7 @@
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">ĐỔI PHÒNG KHÁCH SẠN</h2>
+                    <h2 style="text-shadow: black 0.1em 0.1em 0.2em" class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
                 </div>
             </div>
         </div>
@@ -228,7 +264,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <div class="card-title"><b>Còn @Model.Count phòng trống phù hợp</b></div>
+                            <p style="font-weight:bold; font-size:16px; color: orangered;">CÒN @Model.Count PHÒNG TRỐNG PHÙ HỢP</p>
                         </div>
                     </div>
                     @for (var i = 0; i < Model.Count; i++)

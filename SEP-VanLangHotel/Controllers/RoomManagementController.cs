@@ -39,8 +39,11 @@ namespace SEP_VanLangHotel.Controllers
                 if (!string.IsNullOrEmpty(id))
                 {
                     ViewBag.Ma_Trang_Thai = new SelectList(model.Trang_Thai.Where(t => !t.Ma_Trang_Thai.Equals("TT202207050002")), "Ma_Trang_Thai", "Ten_Trang_Thai");
-                    var phong = model.Phong.Where(p => p.Ma_Phong.Equals(id) && (p.Ma_Trang_Thai.Equals("TT202207050001") || p.Ma_Trang_Thai.Equals("TT202207050003"))).First();
-                    return View(phong);
+                    var phong = model.Phong.FirstOrDefault(p => p.Ma_Phong.Equals(id) && !p.Ma_Trang_Thai.Equals("TT202207050002"));
+                    if(phong != null)
+                    {
+                        return View(phong);
+                    }
                 }
                 return RedirectToAction("ListOfEmptyRooms");
             }
@@ -60,6 +63,7 @@ namespace SEP_VanLangHotel.Controllers
                             model.Entry(phong).State = EntityState.Modified;
                             model.SaveChanges();
                             ViewBag.Ma_Trang_Thai = new SelectList(model.Trang_Thai.Where(t => !t.Ma_Trang_Thai.Equals("TT202207050002")), "Ma_Trang_Thai", "Ten_Trang_Thai");
+                            Session["thongbaoSuccess"] = "Đã thay đổi trạng thái phòng!";
                             return RedirectToAction("DetailtEmptyRooms", new { id = phong.Ma_Phong });
                         }
                         catch (Exception e)
@@ -69,6 +73,7 @@ namespace SEP_VanLangHotel.Controllers
                             return View(phong);
                         }
                     }
+                    Session["error-import-file"] = "Đã có lỗi xảy ra, vui lòng thử lại sau!";
                     ViewBag.Ma_Trang_Thai = new SelectList(model.Trang_Thai.Where(t => !t.Ma_Trang_Thai.Equals("TT202207050002")), "Ma_Trang_Thai", "Ten_Trang_Thai");
                     return View(phong);
                 }

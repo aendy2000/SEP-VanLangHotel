@@ -227,5 +227,109 @@ namespace SEP_VanLangHotel.Controllers
             }
             return RedirectToAction("Homepage", "Home");
         }
+        public ActionResult UpdateTour(string id)
+        {
+            if (Session["user-role"].Equals("Nhân viên"))
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var tour = model.TOUR.FirstOrDefault(t => t.Ma_Tour.Equals(id));
+                    if (tour != null)
+                    {
+                        List<string> gioitinh = new List<string>();
+                        if (tour.Gioi_Tinh == 1)
+                        {
+                            gioitinh.Add("Nam");
+                            gioitinh.Add("Nữ");
+                            gioitinh.Add("Khác");
+                        }
+                        else if (tour.Gioi_Tinh == 0)
+                        {
+                            gioitinh.Add("Nữ");
+                            gioitinh.Add("Nam");
+                            gioitinh.Add("Khác");
+                        }
+                        else
+                        {
+                            gioitinh.Add("Khác");
+                            gioitinh.Add("Nam");
+                            gioitinh.Add("Nữ");
+                        }
+
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                        return View(tour);
+
+                    }
+                }
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
+        [HttpPost]
+        public ActionResult UpdateTour(TOUR tour, string gioiTinh)
+        {
+            if (Session["user-role"].Equals("Nhân viên"))
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        tour.Gioi_Tinh = gioiTinh.Equals("Nam") ? 1 : gioiTinh.Equals("Nữ") ? 0 : 2;
+                        model.Entry(tour).State = EntityState.Modified;
+                        model.SaveChanges();
+                        Session["thongbaoSuccess"] = "Đã lưu thông tin chỉnh sửa Tour!";
+                        return RedirectToAction("DetailtTour", new { id = tour.Ma_Tour });
+                    }
+                    catch (Exception e)
+                    {
+                        Session["error-import-file"] = "Lỗi: " + e.Message;
+                        List<string> gioitinhs = new List<string>();
+                        if (tour.Gioi_Tinh == 1)
+                        {
+                            gioitinhs.Add("Nam");
+                            gioitinhs.Add("Nữ");
+                            gioitinhs.Add("Khác");
+                        }
+                        else if (tour.Gioi_Tinh == 0)
+                        {
+                            gioitinhs.Add("Nữ");
+                            gioitinhs.Add("Nam");
+                            gioitinhs.Add("Khác");
+                        }
+                        else
+                        {
+                            gioitinhs.Add("Khác");
+                            gioitinhs.Add("Nam");
+                            gioitinhs.Add("Nữ");
+                        }
+                        ViewBag.Gioi_Tinh = new SelectList(gioitinhs);
+                        return View(tour);
+                    }
+
+                }
+                Session["error-import-file"] = "Thông tin chỉnh sửa chưa đúng, vui lòng kiểm tra lại!";
+                List<string> gioitinh = new List<string>();
+                if (tour.Gioi_Tinh == 1)
+                {
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Nữ");
+                    gioitinh.Add("Khác");
+                }
+                else if (tour.Gioi_Tinh == 0)
+                {
+                    gioitinh.Add("Nữ");
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Khác");
+                }
+                else
+                {
+                    gioitinh.Add("Khác");
+                    gioitinh.Add("Nam");
+                    gioitinh.Add("Nữ");
+                }
+                ViewBag.Gioi_Tinh = new SelectList(gioitinh);
+                return View(tour);
+            }
+            return RedirectToAction("Homepage", "Home");
+        }
     }
 }

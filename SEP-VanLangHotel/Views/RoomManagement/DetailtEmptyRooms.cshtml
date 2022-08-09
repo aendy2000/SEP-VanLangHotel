@@ -8,10 +8,9 @@
     }
 }
 @{
-    ViewBag.Title = "CHI TIẾT PHÒNG TRỐNG";
+    ViewBag.Title = "THÔNG TIN PHÒNG TRỐNG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @if (!Session["error-import-file"].Equals("empthy"))
 {
     <body onload="kiemtrafileimport()">
@@ -29,13 +28,32 @@
     </script>
     Session["error-import-file"] = "empthy";
 }
+else if (!Session["thongbaoSuccess"].Equals("empthy"))
+{
+    <body onload="kiemtrafileimport()">
+    </body>
+    <script>
+    let info = @Html.Raw(Json.Encode(Session["thongbaoSuccess"]));
+    function kiemtrafileimport()
+    {
+        cuteAlert({
+            type: "Success",
+            title: "Thông báo!",
+            message: info,
+            buttonText: "Xác nhận"
+        })
+    }
+    </script>
+    Session["thongbaoSuccess"] = "empthy";
+}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">THÔNG TIN PHÒNG</h2>
+                <h2 style="text-shadow: black 0.1em 0.1em 0.2em" class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
             </div>
         </div>
     </div>
@@ -143,7 +161,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="@Url.Action("DetailtEmptyRooms", "RoomManagement")" method="post">
+                @using (Html.BeginForm("DetailtEmptyRooms", "RoomManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
                     <div class="modal-body">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default">
@@ -167,7 +186,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                }
             </div>
         </div>
     </div>

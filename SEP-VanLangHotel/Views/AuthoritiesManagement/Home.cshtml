@@ -5,16 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
-@if (Convert.ToBoolean(Session["quyen-tontai"]) == true)
+@if (Session["quyen-tontai"] != null)
 {
     <body onload="kiemtraquyen()">
     </body>
     <script>
+        let info = @Html.Raw(Json.Encode(Session["quyen-tontai"]));
         function kiemtraquyen() {
             cuteAlert({
                 type: "error",
-                title: "Quyền đã tồn tài!",
-                message: "Quyền đã tồn tại, vui lòng kiểm tra lại!",
+                title: "Thông báo!",
+                message: info,
                 buttonText: "Xác nhận"
             })
         }
@@ -60,7 +61,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
+                <h2 style="text-shadow: black 0.1em 0.1em 0.2em" class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
             </div>
         </div>
     </div>

@@ -931,6 +931,7 @@
     <Content Include="Views\LevelRoomsManagement\UpdateLevelRooms.cshtml" />
     <Content Include="Views\HistoryOrderRooms\Home.cshtml" />
     <Content Include="Views\StatisticRevenue\Home.cshtml" />
+    <Content Include="Views\TourManagement\UpdateTour.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

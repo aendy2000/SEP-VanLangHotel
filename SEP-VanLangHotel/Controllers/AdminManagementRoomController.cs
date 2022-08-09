@@ -41,7 +41,14 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].Equals("Quản lý"))
             {
                 Phong phongs = new Phong();
-                ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
+                var clients = model.Loai_Phong
+                    .Select(s => new
+                    {
+                        Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                        Value = s.Ma_Loai_Phong
+                    }).ToList();
+
+                ViewBag.Ma_Loai_Phong = new SelectList(clients, "Value", "Text");
                 return View(phongs);
             }
             return RedirectToAction("Home", "AdminManagementRoom");
@@ -49,17 +56,23 @@ namespace SEP_VanLangHotel.Controllers
         [HttpPost]
         public async Task<ActionResult> AddRoom(Phong phongs, HttpPostedFileBase file)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
                     string tenphong = phongs.So_Phong.ToLower().Trim();
                     var check = model.Phong.Where(t => t.So_Phong.ToLower().Trim().Equals(tenphong)).ToList();
-                    if(check.Count > 0)
+                    if (check.Count > 0)
                     {
                         Session["error-import-file"] = "Phòng đã tồn tại, thử lại với tên khác!";
-                        ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-                        return View(phongs);
+                        var clientsS = model.Loai_Phong
+                                            .Select(s => new
+                                            {
+                                                Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                                Value = s.Ma_Loai_Phong
+                                            }).ToList();
+
+                        ViewBag.Ma_Loai_Phong = new SelectList(clientsS, "Value", "Text"); return View(phongs);
                     }
                     FileStream stream;
                     if (file != null)
@@ -119,17 +132,29 @@ namespace SEP_VanLangHotel.Controllers
                     model.Phong.Add(phongs);
                     model.SaveChanges();
                     Session["thongbaoSuccess"] = "Thêm phòng thành công!";
-                    return RedirectToAction("Home", "AdminManagementRoom");
+                    return RedirectToAction("DetailRoom", "AdminManagementRoom", new {id = model.Phong.FirstOrDefault(p => p.So_Phong.ToLower().Trim().Equals(tenphong)).Ma_Phong });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Session["error-import-file"] = "Lỗi: " + e.Message;
-                    ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-                    return View(phongs);
+                    var clientsS = model.Loai_Phong
+                                        .Select(s => new
+                                        {
+                                            Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                            Value = s.Ma_Loai_Phong
+                                        }).ToList();
+
+                    ViewBag.Ma_Loai_Phong = new SelectList(clientsS, "Value", "Text"); return View(phongs);
                 }
             }
-            ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-            return View(phongs);
+            var clients = model.Loai_Phong
+                                .Select(s => new
+                                {
+                                    Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                    Value = s.Ma_Loai_Phong
+                                }).ToList();
+
+            ViewBag.Ma_Loai_Phong = new SelectList(clients, "Value", "Text"); return View(phongs);
         }
         public ActionResult DetailRoom(string id)
         {
@@ -145,13 +170,19 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý"))
             {
-                if(!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(id))
                 {
                     var phongs = model.Phong.FirstOrDefault(t => t.Ma_Phong.Equals(id));
-                    if(phongs != null)
+                    if (phongs != null)
                     {
-                        ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");                        
-                        return View(phongs);
+                        var clients = model.Loai_Phong
+                                            .Select(s => new
+                                            {
+                                                Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                                Value = s.Ma_Loai_Phong
+                                            }).ToList();
+
+                        ViewBag.Ma_Loai_Phong = new SelectList(clients, "Value", "Text"); return View(phongs);
                     }
                 }
             }
@@ -165,12 +196,19 @@ namespace SEP_VanLangHotel.Controllers
                 try
                 {
                     string tenphong = phongs.So_Phong.ToLower().Trim();
-                    var check = model.Phong.Where(t => t.So_Phong.ToLower().Trim().Equals(tenphong)).ToList();
+                    string mphong = phongs.Ma_Phong;
+                    var check = model.Phong.Where(t => t.So_Phong.ToLower().Trim().Equals(tenphong) && !t.Ma_Phong.Equals(mphong)).ToList();
                     if (check.Count > 0)
                     {
                         Session["error-import-file"] = "Phòng đã tồn tại, thử lại với tên khác!";
-                        ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-                        return View(phongs);
+                        var clientsS = model.Loai_Phong
+                                            .Select(s => new
+                                            {
+                                                Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                                Value = s.Ma_Loai_Phong
+                                            }).ToList();
+
+                        ViewBag.Ma_Loai_Phong = new SelectList(clientsS, "Value", "Text"); return View(phongs);
                     }
                     FileStream stream;
                     if (file != null)
@@ -219,17 +257,29 @@ namespace SEP_VanLangHotel.Controllers
                     model.Entry(phongs).State = EntityState.Modified;
                     model.SaveChanges();
                     Session["thongbaoSuccess"] = "Cập nhật phòng thành công!";
-                    return RedirectToAction("Home", "AdminManagementRoom");
+                    return RedirectToAction("DetailRoom", "AdminManagementRoom", new { id = phongs.Ma_Phong });
                 }
                 catch (Exception e)
                 {
                     Session["error-import-file"] = "Lỗi: " + e.Message;
-                    ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-                    return View(phongs);
+                    var clientsS = model.Loai_Phong
+                                        .Select(s => new
+                                        {
+                                            Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                            Value = s.Ma_Loai_Phong
+                                        }).ToList();
+
+                    ViewBag.Ma_Loai_Phong = new SelectList(clientsS, "Value", "Text"); return View(phongs);
                 }
             }
-            ViewBag.Ma_Loai_Phong = new SelectList(model.Loai_Phong, "Ma_Loai_Phong", "Ten_Loai_Phong");
-            return View(phongs);
+            var clients = model.Loai_Phong
+                                .Select(s => new
+                                {
+                                    Text = s.Ten_Loai_Phong + " - " + s.Mo_Ta,
+                                    Value = s.Ma_Loai_Phong
+                                }).ToList();
+
+            ViewBag.Ma_Loai_Phong = new SelectList(clients, "Value", "Text"); return View(phongs);
         }
 
         public ActionResult DeleteRoom(string id)
@@ -239,16 +289,16 @@ namespace SEP_VanLangHotel.Controllers
                 if (!string.IsNullOrEmpty(id))
                 {
                     var phongs = model.Phong.FirstOrDefault(t => t.Ma_Phong.Equals(id));
-                    if( phongs != null)
+                    if (phongs != null)
                     {
                         string maphong = phongs.Ma_Phong;
                         var ttdatphong = model.TT_Dat_Phong.Where(t => t.Ma_Phong.Equals(maphong)).ToList();
                         var ttdoiphong = model.TT_Doi_Phong.Where(t => t.Ma_Phong.Equals(maphong)).ToList();
-                        if(ttdatphong.Count > 0 || ttdoiphong.Count > 0)
+                        if (ttdatphong.Count > 0 || ttdoiphong.Count > 0)
                         {
                             Session["error-import-file"] = "Phòng đã được sử dụng không thể xóa!";
                             return RedirectToAction("Home", "AdminManagementRoom");
-                        } 
+                        }
                         model.Phong.Remove(phongs);
                         model.SaveChanges();
                         Session["thongbaoSuccess"] = "Xóa phòng thành công!";

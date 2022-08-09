@@ -5,7 +5,7 @@
     List<TT_Dat_Phong> ttdatphong = Session["tt-tour"] as List<TT_Dat_Phong>;
 }
 @{
-    ViewBag.Title = "THÔNG TIN TOUR";
+    ViewBag.Title = "CẬP NHẬT THÔNG TIN TOUR";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -60,98 +60,86 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
     </div>
     <div class="page-inner mt--5">
 
-        @using (Html.BeginForm("SaveDataImport", "OrderRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <div class="col-xl-12">
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-8">
-                                            <p style="font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG THEO TOUR</p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            @if (Model.Trang_Thai == 0)
-                                            {
-                                                <p class="btn btn-warning ml-auto" style="color: white; text-align:right; float: right; font-weight: bold;">Đã Cọc: @Model.Thoi_Gian_DatPhong_Coc.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
-                                            }
-                                            else if (Model.Trang_Thai == 1)
-                                            {
-                                                <p class="btn btn-success" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Thanh Toán: @Model.Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
-                                            }
-                                            else
-                                            {
-                                                <p class="btn btn-danger" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Hủy: @Model.Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
-                                            }
-                                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <div class="col-xl-12">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-8">
+                                        <p style="font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN ĐẶT PHÒNG THEO TOUR</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @if (Model.Trang_Thai == 0)
+                                        {
+                                            <p class="btn btn-warning ml-auto" style="color: white; text-align:right; float: right; font-weight: bold;">Đã Cọc: @Model.Thoi_Gian_DatPhong_Coc.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
+                                        }
+                                        else if (Model.Trang_Thai == 1)
+                                        {
+                                            <p class="btn btn-success" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Thanh Toán: @Model.Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="btn btn-danger" style="color: white; text-align: right; float: right; font-weight: bold; ">Đã Hủy: @Model.Thoi_Gian_ThanhToan_Huy.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    @using (Html.BeginForm("UpdateTour", "TourManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
                         <div class="card-body">
                             <div class="row card-item bg">
                                 <div class="col-xl-12">
                                     <p style="text-align:center; font-weight:bold; font-size:16px; color: orangered;">THÔNG TIN CÁ NHÂN</p>
+
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(Model => Model.Ma_Tour);
+                                    @Html.HiddenFor(Model => Model.Thoi_Gian_DatPhong_Coc);
+                                    @Html.HiddenFor(Model => Model.Thoi_Gian_NhanPhong);
+                                    @Html.HiddenFor(Model => Model.Thoi_Gian_TraPhong);
+                                    @Html.HiddenFor(Model => Model.Thoi_Gian_ThanhToan_Huy);
+                                    @Html.HiddenFor(Model => Model.So_Tien_Coc);
+                                    @Html.HiddenFor(Model => Model.Tong_Thanh_Toan);
+                                    @Html.HiddenFor(Model => Model.Trang_Thai);
+                                    @Html.HiddenFor(Model => Model.Ma_Tai_Khoan);
+                                    @Html.HiddenFor(Model => Model.TaiKhoanThanhToanOrHuy);
+                                    @Html.HiddenFor(Model => Model.Gioi_Tinh);
+
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
                                             <label class="small mb-1">Họ tên</label>
-                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.Ho_Ten_Chu_Tour</p>
+                                            <input value="@Model.Ho_Ten_Chu_Tour" type="text" placeholder="Nguyễn Văn A..." class="form-control" name="Ho_Ten_Chu_Tour" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào họ tên người trụ trì Tour với tối đa 30 ký tự')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">CMND/CCCD</label>
-                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.CMND_CCCD</p>
+                                            <input value="@Model.CMND_CCCD" type="text" placeholder="070200001234..." class="form-control" name="CMND_CCCD" pattern="[0-9]{9,12}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số CMND/CCCD của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Số điện thoại</label>
-                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.SDT</p>
+                                            <input value="@Model.SDT" type="text" placeholder="0987654321..." class="form-control" name="SDT" pattern="[0-9]{10}" required="required" oninvalid="this.setCustomValidity('Hãy nhập số điện thoại của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-4">
                                             <label class="small mb-1">Ngày sinh</label>
-                                            <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">@Model.Sinh_Nhat.ToString("dd/MM/yyyy")</p>
+                                            <input value="@Model.Sinh_Nhat.ToString("yyyy-MM-dd")" type="date" class="form-control" name="Sinh_Nhat" required="required" oninvalid="this.setCustomValidity('Hãy nhập ngày sinh của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Giới tính</label>
-                                            @*@if (Model.Gioi_Tinh == 1)
-                                                {
-                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNam, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                                                }
-                                                else if (Model.Gioi_Tinh == 0)
-                                                {
-                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhNu, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_TinhKhac, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
-                                                }*@
-
-                                            @if (Model.Gioi_Tinh == 1)
-                                            {
-                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Nam</p>
-                                            }
-                                            else if (Model.Gioi_Tinh == 0)
-                                            {
-                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Nữ</p>
-                                            }
-                                            else
-                                            {
-                                                <p style="color: black; background-color: #EEEEEE" type="text" class="form-control">Khác</p>
-                                            }
-
+                                            @Html.DropDownList("gioiTinh", (IEnumerable<SelectListItem>)ViewBag.Gioi_Tinh, null, new { @class = "form-control", @required = "required", @oninvalid = "this.setCustomValidity('Giới tính không được bỏ trống')", @oninput = "this.setCustomValidity('')" })
                                         </div>
                                         <div class="col-md-4">
                                             <label class="small mb-1">Email</label>
-                                            <p type="text" style="color: black; background-color: #EEEEEE" class="form-control">@Model.Email</p>
+                                            <input value="@Model.Email" type="email" placeholder="example@("@")email.com.vn..." class="form-control" name="Email" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào Email của người trụ trì Tour')" oninput="this.setCustomValidity('')" />
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1">Địa chỉ</label>
-                                        <textarea readonly style="color:black;" rows="4" placeholder="Số 17/20 Nguyễn Văn Cần, Phường 7, Q. Phú Nhuận, TP Hồ Chí Minh..." class="form-control">@Model.Dia_Chi</textarea>
+                                        <textarea rows="4" placeholder="Số 17/20 Nguyễn Văn Cần, Phường 7, Q. Phú Nhuận, TP Hồ Chí Minh..." class="form-control" name="Dia_Chi" pattern=".{1,200}" required="required" oninvalid="this.setCustomValidity('Hãy nhập vào địa chỉ của người trụ trì Tour với tối đa 200 ký tự')" oninput="this.setCustomValidity('')">@Model.Dia_Chi</textarea>
                                     </div>
                                     <br />
                                     <hr />
@@ -222,44 +210,24 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                     {
                                         <hr />
                                         <br />
-
                                         <div class="row gx-3 mb-3">
-                                            <div style="text-align:center" class="col-md-12">
-                                                <a style="text-align: center; width: 180px; color:white;" role="button" href="@Url.Action("UpdateTour", "TourManagement", new {id = Model.Ma_Tour})" class="btn btn-search">Chỉnh Sửa</a>
-                                                &emsp;
-                                                <a style="text-align: center; width: 180px; color:white;" role="button" onclick="thanhtoan()" class="btn btn-search">Thanh Toán</a>
-                                                <script>
-                                                function thanhtoan() {
-                                                    cuteAlert({
-                                                        type: "question",
-                                                        title: "Thông báo",
-                                                        message: "Xác nhận thanh toán @((Model.Tong_Thanh_Toan - Model.So_Tien_Coc).ToString("0,0")) VND và trả phòng Tour?",
-                                                        confirmText: "Xác nhận",
-                                                        cancelText: "Hủy bỏ"
-
-                                                }).then(function (isConfirm) {
-                                                    if (isConfirm) {
-                                                        window.location.href = '@Url.Action("PaymentTour", "TourManagement", new { id = Model.Ma_Tour })';
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                });
-                                            }
-                                                </script>
-                                                &emsp;
-                                                <a style="color: white; width: 180px;" class="btn btn-danger" onclick="xacnhanhuybo()" role="button"> Hủy Tour </a>
+                                            <div style="text-align:right" class="col-md-6">
+                                                <input type="submit" value=" Lưu " style="text-align: center; width: 180px; color:white;" role="button" onclick="if (!confirm('Lưu thông tin chỉnh sửa?')) { return false; }" class="btn btn-search">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a style="color: white; width: 180px;" class="btn btn-danger" onclick="xacnhanhuybo()" role="button"> Hủy </a>
                                                 <script>
                                                 function xacnhanhuybo() {
                                                     cuteAlert({
                                                     type: "question",
                                                     title: "Thông báo",
-                                                    message: "Bạn có chắc chắn muốn hủy Tour?",
+                                                    message: "Bạn có chắc chắn muốn hủy chỉnh sửa",
                                                         confirmText: "Xác nhận",
                                                     cancelText: "Không hủy"
 
                                                     }).then(function (isConfirm) {
                                                         if (isConfirm) {
-                                                            window.location.href = '@Url.Action("UnOrderTour", "TourManagement", new { id = Model.Ma_Tour })';
+                                                            window.location.href = '@Url.Action("DetailtTour", "TourManagement", new { id = Model.Ma_Tour })';
                                                         } else {
                                                             return false;
                                                             }
@@ -273,83 +241,84 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
-            <hr />
-            <br />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <p style="font-weight:bold; font-size:16px; color: orangered;">DANH SÁCH CÁC PHÒNG ĐƯỢC ĐẶT</p>
-                            </div>
+        </div>
+        <hr />
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <p style="font-weight:bold; font-size:16px; color: orangered;">DANH SÁCH CÁC PHÒNG ĐƯỢC ĐẶT</p>
                         </div>
-                        @foreach (var item in ttdatphong)
-                        {
-                            var maphong = item.Ma_Phong;
+                    </div>
+                    @foreach (var item in ttdatphong)
+                    {
+                        var maphong = item.Ma_Phong;
 
-                            <div class="card-body" onclick="window.open('@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = item.Ma_TT_Dat_Phong})', '_blank')">
-                                <div class="col-xl-12">
-                                    <div class="row card-item bg">
-                                        <!-- Form Group (Hình ảnh)-->
-                                        <div class="col-md-6 size">
-                                            <img class="img-book-room" src="@item.Phong.Hinh_Anh" alt="">
+                        <div class="card-body" onclick="window.open('@Url.Action("DetailtRentingRooms", "RoomManagement", new {id = item.Ma_TT_Dat_Phong})', '_blank')">
+                            <div class="col-xl-12">
+                                <div class="row card-item bg">
+                                    <!-- Form Group (Hình ảnh)-->
+                                    <div class="col-md-6 size">
+                                        <img class="img-book-room" src="@item.Phong.Hinh_Anh" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Form Group (Số phòng)-->
+                                        <div class="col-md-6 ml-auto mr-auto range text-center">
+                                            <label class="small-title">
+                                                <b>
+                                                    @item.Phong.So_Phong
+                                                </b>
+                                            </label>
                                         </div>
-                                        <div class="col-md-6">
-                                            <!-- Form Group (Số phòng)-->
-                                            <div class="col-md-6 ml-auto mr-auto range text-center">
-                                                <label class="small-title">
-                                                    <b>
-                                                        @item.Phong.So_Phong
-                                                    </b>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="row gx-3 mb-3">
-                                                    <div class="col-md-6">
-                                                        <label class="small-item" for="">Họ & Tên</label>
-                                                        <input class="form-control" type="text" value="@item.Ho_Ten_KH" disabled style="font-weight:bold;color:black;" />
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="small-item" for="">Số điện thoại</label>
-                                                        <input class="form-control" type="text" value="@item.SDT_KH" disabled style="font-weight:bold;color:black;" />
-                                                    </div>
+                                        <div class="col-md-12">
+                                            <div class="row gx-3 mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="small-item" for="">Họ & Tên</label>
+                                                    <input class="form-control" type="text" value="@item.Ho_Ten_KH" disabled style="font-weight:bold;color:black;" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="small-item" for="">Số điện thoại</label>
+                                                    <input class="form-control" type="text" value="@item.SDT_KH" disabled style="font-weight:bold;color:black;" />
                                                 </div>
                                             </div>
-                                            <!--Form Group(Tiện ích)-->
-                                            <div class="form-group col-md-12 text-center" style="margin-top: 2.5rem">
-                                                <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
+                                        </div>
+                                        <!--Form Group(Tiện ích)-->
+                                        <div class="form-group col-md-12 text-center" style="margin-top: 2.5rem">
+                                            <div style="overflow-x: auto; white-space: nowrap; display: inline-block; width: 490px; margin-top:-15px " class="selectgroup selectgroup-pills range">
 
-                                                    @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(item.Phong.Ma_Loai_Phong)))
-                                                    {
-                                                        <label class="selectgroup-item">
-                                                            <input type="checkbox" class="selectgroup-input" disabled>
-                                                            <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
-                                                        </label>
-                                                    }
+                                                @foreach (var ti in modelss.DS_Tien_Ich.Where(t => t.Ma_Loai_Phong.Equals(item.Phong.Ma_Loai_Phong)))
+                                                {
+                                                    <label class="selectgroup-item">
+                                                        <input type="checkbox" class="selectgroup-input" disabled>
+                                                        <span class="selectgroup-button no-active">@ti.Tien_Ich.Ten_Tien_Ich</span>
+                                                    </label>
+                                                }
 
-                                                </div>
                                             </div>
-                                            <div class="col text-center layout-footer">
+                                        </div>
+                                        <div class="col text-center layout-footer">
 
-                                                <label class="small-footer">
-                                                    @item.Phong.Loai_Phong.Gia.ToString("0,0") &emsp;×&emsp; @Session["SoNgay"] ngày &emsp;=&emsp; @((item.Phong.Loai_Phong.Gia * (Convert.ToInt32(Session["SoNgay"]))).ToString("0,0"))
-                                                </label>
+                                            <label class="small-footer">
+                                                @item.Phong.Loai_Phong.Gia.ToString("0,0") &emsp;×&emsp; @Session["SoNgay"] ngày &emsp;=&emsp; @((item.Phong.Loai_Phong.Gia * (Convert.ToInt32(Session["SoNgay"]))).ToString("0,0"))
+                                            </label>
 
-                                                &emsp;
-                                                <label class="small-footer">VND</label>
-                                            </div>
+                                            &emsp;
+                                            <label class="small-footer">VND</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
-        }
+        </div>
+
     </div>
 </div>
 

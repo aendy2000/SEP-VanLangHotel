@@ -1,9 +1,22 @@
 ﻿@model List<SEP_VanLangHotel.Models.Phong>
 @using SEP_VanLangHotel.Models;
 @{SEP25Team09Entities modelss = new SEP25Team09Entities();
-    var tienIch = modelss.Tien_Ich.ToList();
-    var tiDaCo = tienIch.Where(t => t.Ma_Tien_Ich.Equals("TI202207070001")).First();
-    tienIch.Remove(tiDaCo);
+    List<Tien_Ich> tienIch = new List<Tien_Ich>();
+    foreach (var item in modelss.Tien_Ich.ToList())
+    {
+        if (!item.Ma_Tien_Ich.Equals("TI202207070001"))
+        {
+            string maTI = item.Ma_Tien_Ich;
+            var loaiPhong = modelss.Loai_Phong.Where(l => l.DS_Tien_Ich.FirstOrDefault(ds => ds.Ma_Tien_Ich.Equals(maTI)).Ma_Tien_Ich.Equals(maTI)).ToList();
+
+            if (loaiPhong.Count > 0)
+            {
+                var matienIch = item.Ma_Tien_Ich;
+                var tentienIch = item.Ten_Tien_Ich;
+                tienIch.Add(new Tien_Ich() { Ma_Tien_Ich = matienIch, Ten_Tien_Ich = tentienIch, IsChecks = false });
+            }
+        }
+    }
 }
 @{
     ViewBag.Title = "DANH SÁCH PHÒNG ĐỀ XUẤT";
@@ -29,7 +42,7 @@
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">ĐẶT PHÒNG KHÁCH SẠN</h2>
+                    <h2 style="text-shadow: black 0.1em 0.1em 0.2em" class="text-white pb-2 fw-bold">@ViewBag.Title</h2>
                 </div>
             </div>
         </div>
@@ -41,10 +54,15 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
+                            <p style="font-weight:bold; font-size:16px; color: orangered;">ĐẶT PHÒNG KHÁCH SẠN</p>
                             <label for="import"></label>
-                            <button style="color:white;" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
-                                <i class="fas fa-file-import"></i> &ensp;
-                                Import Danh Sách
+                            <button style="color:white; font-size:13px" class="btn btn-secondary btn-round ml-auto" data-toggle="modal" data-target="#imPortModal">
+                                <i style="color:white; font-size:16px" class="fas fa-file-import"></i> &ensp;
+                                IMPORT DANH SÁCH
+                            </button>
+                            &ensp;
+                            <button onclick="exportMau()" style="color:white; font-size:18px" class="btn btn-secondary btn-round" data-toggle="tooltip" data-original-title="Tải xuống File mẫu import. Định dạng .xls">
+                                <i class="fa fa-download"></i>
                             </button>
                         </div>
                     </div>
@@ -152,7 +170,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <div class="card-title"><b>Còn @Model.Count phòng trống phù hợp</b></div>
+                            <p style="font-weight:bold; font-size:16px; color: orangered;">CÒN @Model.Count PHÒNG TRỐNG PHÙ HỢP</p>
                         </div>
                     </div>
                     @for (var i = 0; i < Model.Count; i++)
@@ -240,5 +258,91 @@
                 </div>
             </div>
         </div>
+        <table hidden id="filemauExport" class="table">
+            <thead>
+                <tr>
+                    <th colspan="10">THÔNG TIN ĐẶT PHÒNG</th>
+                    <th colspan="@tienIch.Count">TIỆN ÍCH PHÒNG (CÓ: 1, KHÔNG: 0)</th>
+                    <th colspan="2">THỜI GIAN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nhóm</td>
+                    <td>STT</td>
+                    <td>Họ và Tên</td>
+                    <td>Mối quan hệ</td>
+                    <td>Số CMND/CCCD</td>
+                    <td>Số điện thoại</td>
+                    <td>
+                        Ngày sinh (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                    <td>
+                        Nam (1)
+                        Nữ (0)
+                    </td>
+                    <td>Địa chỉ</td>
+                    <td>Số giường</td>
+                    @foreach (var item in tienIch)
+                    {
+                        <td>@item.Ten_Tien_Ich</td>
+                    }
+                    <td>
+                        Ngày đến (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                    <td>
+                        Ngày về (Năm-Tháng-Ngày)
+                        VD: 2000-02-20
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">1</td>
+                    <td>1</td>
+                    <td>Nguyễn Văn A</td>
+                    <td></td>
+                    <td>070200000000</td>
+                    <td>0367899899</td>
+                    <td>
+                        1997-06-28
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>73 Bà Huyện Thanh Quan, Phường Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh</td>
+                    <td>1</td>
+                    @foreach (var item in tienIch)
+                    {
+                        <td>0</td>
+                    }
+                    <td rowspan="2">
+                        @DateTime.Now.ToString("yyyy-MM-dd")
+                    </td>
+                    <td rowspan="2">
+                        @DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Nguyễn Văn B</td>
+                    <td>Bạn bè</td>
+                    <td>070200001111</td>
+                    <td>0909009009</td>
+                    <td>
+                        1997-04-22
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>214/78 Nguyễn Oanh, Phường 17, Quận Gò Vấp, Thành phố Hồ Chí Minh</td>
+                    <td>1</td>
+                    @foreach (var item in tienIch)
+                    {
+                        <td>1</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
