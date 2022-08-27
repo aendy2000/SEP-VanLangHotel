@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SEP_VanLangHotel;
-//using SEP_VanLangHotel.Controllers;
+using SEP_VanLangHotel.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +15,14 @@ namespace SEP_VanLangHotel.Tests.Controllers
         [TestMethod]
         public void Home()
         {
-            //// Arrange
-            //HomeController controller = new HomeController();
+            // Arrange
+            HomeController controller = new HomeController();
 
-            //// Act
-            //ViewResult result = controller.Homepage() as ViewResult;
+            // Act
+            ViewResult result = controller.Homepage() as ViewResult;
 
-            //// Assert
-            //Assert.IsNotNull(result);
+            // Assert
+            Assert.IsNotNull(result);
         }
 
     }

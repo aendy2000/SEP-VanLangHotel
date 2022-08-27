@@ -23,7 +23,7 @@ namespace SEP_VanLangHotel.Controllers
         // GET: HistoryOrderRooms
         public ActionResult Home()
         {
-            var history = model.TT_Dat_Phong.Where(t => t.Trang_Thai == 1).ToList();
+            var history = model.TT_Dat_Phong.Where(t => t.Trang_Thai != 0).ToList();
             return View(history);
         }
     }

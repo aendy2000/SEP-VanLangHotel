@@ -162,7 +162,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
 
                         <div class="mb-3">
                             <label class="small mb-1">Họ tên</label>
-                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.Ho_Va_Ten, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Nguyễn Văn A...", pattern = "[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}", @oninvalid = "this.setCustomValidity('Hãy nhập đầy đủ họ và tên')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Ho_Va_Ten, "", new { @class = "text-danger" })
                         </div>
                         <div class="row gx-3 mb-3">
@@ -179,41 +179,41 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">CMND/CCCD</label>
-                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required", @pattern = "[0-9]{9,12}", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                @Html.EditorFor(model => model.CMND_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số CMND/CCCD", @required = "required", @pattern = "[0-9]{9,12}", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số CMND/CCCD của tài khoản')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.CMND_CCCD, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Số điện thoại</label>
-                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @pattern = "[0-9]{10}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số điện thoại của bạn')", @oninput = "this.setCustomValidity('')" } })
+                                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại di động", @pattern = "[0-9]{10}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào đúng số điện thoại của tài khoản')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ Email</label>
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Địa chỉ Email", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào địa chỉ Email của bạn')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Địa chỉ Email", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào địa chỉ Email của tài khoản')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Địa chỉ nhà</label>
-                            @Html.EditorFor(model => model.Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Địa chỉ tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.Dia_Chi, new { type = "textarea", htmlAttributes = new { @class = "form-control", placeholder = "Địa chỉ nhà", @rows = "5", @maxlength = "200", @oninvalid = "this.setCustomValidity('Hãy nhập vào địa chỉ với tối đa 200 ký tự')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.Dia_Chi, "", new { @class = "text-danger" })
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputOrgName">Tên đăng nhập</label>
-                                @Html.EditorFor(model => model.Ten_Dang_Nhap, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên đăng nhập của tài khoản", @pattern = "[a-zA-Z0-9]{1,30}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập tài khoản với độ dài trong khoảng 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                                @Html.EditorFor(model => model.Ten_Dang_Nhap, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên đăng nhập của tài khoản", @pattern = "[a-zA-Z0-9]{1,30}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập đúng tên đăng nhập với độ dài trong khoảng 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.Ten_Dang_Nhap, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Mật khẩu</label>
-                                @Html.EditorFor(model => model.Mat_Khau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mật khẩu đăng nhập của tài khoản", @type = "password", @pattern = ".{3,30}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập mật khẩu với độ dài 3 - 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                                @Html.EditorFor(model => model.Mat_Khau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mật khẩu đăng nhập của tài khoản", @type = "password", @pattern = ".{3,30}", @required = "required", @oninvalid = "this.setCustomValidity('Hãy nhập vào mật khẩu với độ dài 3 - 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
                                 @Html.ValidationMessageFor(model => model.Mat_Khau, "", new { @class = "text-danger" })
                                 <p style="color:red;" id="passw"></p>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Quyền</label>
-                            @Html.DropDownList("Ma_Quyen", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Ma_Quyen, null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Ma_Quyen, "", new { @class = "text-danger" })
                         </div>
                         <br />

@@ -51,7 +51,7 @@ namespace SEP_VanLangHotel.Controllers
                                 conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
                                 break;
                             default:
-                                Session["error-import-file"] = "Hãy nhập file danh sách đặt phòng với định dạng là file Excel";
+                                Session["error-import-file"] = "Hãy nhập file danh sách đặt phòng với định dạng là file Excel (.xls, .xlsx)";
                                 break;
                         }
                         if (!Session["error-import-file"].Equals("empthy"))
@@ -83,6 +83,13 @@ namespace SEP_VanLangHotel.Controllers
                                     }
                                 }
                             }
+
+                            if (dtExcel.Columns.Count < 17)
+                            {
+                                Session["error-import-file"] = "Dữ liệu file chưa đúng định dạng, hãy kiểm tra lại!";
+                                return RedirectToAction("Homepage", "Home");
+                            }
+
                             if (!string.IsNullOrEmpty(dtExcel.Rows[1][15].ToString().Trim())
                                 && !string.IsNullOrEmpty(dtExcel.Rows[1][16].ToString().Trim()))
                             {
@@ -525,10 +532,10 @@ namespace SEP_VanLangHotel.Controllers
                                 string maloaiPhg = listLoaiPhongDuocDeXuat[k][0];
                                 if (k == 0)
                                 {
-                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
+                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
                                     if (phong.Count <= 0)
                                     {
-                                        Session["error-import-file"] = "Tạm thời không có phòng nào phù hợp với loại phòng mà nhóm khách hàng số " + (k + 1) + " cần, Hãy chọn loại phòng khác!";
+                                        Session["error-import-file"] = "Tạm thời không còn phòng nào phù hợp với loại phòng mà nhóm khách hàng số " + (k + 1) + " cần, Hãy chọn loại phòng khác!";
                                         return RedirectToAction("Homepage", "Home");
                                     }
                                     else
@@ -579,7 +586,7 @@ namespace SEP_VanLangHotel.Controllers
                                 }
                                 else
                                 {
-                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg)).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
+                                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(maloaiPhg) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList(); //Phòng ở trạng thái trống và thuộc loại cần tìm của khách hàng
 
                                     if (phong.Count <= 0)
                                     {
@@ -727,7 +734,7 @@ namespace SEP_VanLangHotel.Controllers
                     gioitinh.Add("Khác");
                     ViewBag.Gioi_Tinh = new SelectList(gioitinh);
                     ViewBag.gioiTinh = "";
-                    return View(dsDatPhongTamThoi);
+                    return View("SaveDataImport", dsDatPhongTamThoi);
                 }
             }
             return RedirectToAction("Homepage", "Home");
@@ -1081,7 +1088,7 @@ namespace SEP_VanLangHotel.Controllers
                     DateTime tgianNhanPhong = Convert.ToDateTime(ngayDen.ToString("yyyy-MM-dd"));
                     DateTime tgianTraPhong = Convert.ToDateTime(ngayVe.ToString("yyyy-MM-dd"));
                     List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
+                    var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
 
                     if (phong.Count <= 0)
                     {

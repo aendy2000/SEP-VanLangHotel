@@ -88,10 +88,10 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             <thead>
                                 <tr>
                                     <th>Tên loại phòng</th>
-                                    <th>Số người lớn</th>
-                                    <th>Số trẻ em</th>
+                                    <th>Số người</th>
                                     <th>Số giường</th>
                                     <th>Giá phòng</th>
+                                    <th>Trạng thái</th>
                                     <th style="width: 3%">Action</th>
                                 </tr>
                             </thead>
@@ -102,10 +102,17 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                     <tr>
 
                                         <td>@item.Ten_Loai_Phong</td>
-                                        <td>@item.So_Nguoi_Lon</td>
-                                        <td>@item.So_Tre_Em</td>
+                                        <td>@item.So_Nguoi_Lon người lớn, @item.So_Tre_Em trẻ em</td>
                                         <td>@item.So_Giuong</td>
-                                        <td>@item.Gia.ToString("0,0") VND</td>
+                                        <td style="color:red; font-weight:bold;">@item.Gia.ToString("0,0") VND</td>
+                                        @if (item.Phong.ToList().Count > 0)
+                                        {
+                                            <td style="background-color: #28a745; text-align: center; color: white;">Đang được sử dụng</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: #ffc107; text-align: center; color: white;">Chưa được sử dụng</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Thông tin loại phòng" href="@Url.Action("DetailLevelRooms", "LevelRoomsManagement", new { id = item.Ma_Loai_Phong })" target="_blank">

@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<SEP_VanLangHotel.Models.TT_Dat_Phong>
-
+@using SEP_VanLangHotel.Models
+@{ SEP25Team09Entities models = new SEP25Team09Entities();
+    var ttdoiphong = Session["TT_DOI_PHONG"] as List<TT_Doi_Phong>;
+}
 @{
-    ViewBag.Title = "QUẢN LÝ PHÒNG CẬN HẠN";
+    ViewBag.Title = "QUẢN LÝ PHÒNG ĐẾN HẠN";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Layouts = true;
 }
@@ -21,7 +24,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <p style="font-weight:bold; font-size:16px; color: orangered;">DANH SÁCH PHÒNG CẬN HẠN</p>
+                        <p style="font-weight:bold; font-size:16px; color: orangered;">DANH SÁCH PHÒNG ĐẾN HẠN</p>
                     </div>
                 </div>
                 <div class="card-body">
@@ -44,39 +47,152 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
+                                    var mattdatphong = item.Ma_TT_Dat_Phong;
+                                    var landoi = item.Doi_Tra;
+                                    if (item.Doi_Tra == 0 && Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) <= Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                    {
+                                        <tr>
+                                            @if (item.Doi_Tra == 0)
+                                            {
+                                                <td>@item.Phong.So_Phong</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).Phong.So_Phong</td>
+                                            }
+                                            <td>@item.Ho_Ten_KH</td>
+                                            <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
+                                            @if (item.Gioi_Tinh_KH == 1)
+                                            {
+                                                <td>Nam</td>
 
-                                    <tr>
-                                        <td>@item.Phong.So_Phong</td>
-                                        <td>@item.Ho_Ten_KH</td>
-                                        <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
-                                        @if (item.Gioi_Tinh_KH == 1)
-                                        {
-                                            <td>Nam</td>
+                                            }
+                                            else if (item.Gioi_Tinh_KH == 0)
+                                            {
+                                                <td>Nữ</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Khác</td>
+                                            }
+                                            <td>@item.SDT_KH</td>
+                                            <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
+                                            @if (item.Doi_Tra == 0)
+                                            {
+                                                if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #ffc107; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #28a745; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="background-color: #dc3545; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
 
-                                        }
-                                        else if (item.Gioi_Tinh_KH == 0)
-                                        {
-                                            <td>Nữ</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Khác</td>
-                                        }
-                                        <td>@item.SDT_KH</td>
-                                        <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
-                                        <td>
-                                            <div class="form-button-action">
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
-                                                    <i class="fa fa-info"></i>
-                                                </a>
-                                                <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            }
+                                            else
+                                            {
+                                                if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #ffc107; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #28a745; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="background-color: #dc3545; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
 
+                                            }
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
+                                                        <i class="fa fa-info"></i>
+                                                    </a>
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (item.Doi_Tra > 0 && Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) <= Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                    {
+                                        <tr>
+                                            @if (item.Doi_Tra == 0)
+                                            {
+                                                <td>@item.Phong.So_Phong</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).Phong.So_Phong</td>
+                                            }
+                                            <td>@item.Ho_Ten_KH</td>
+                                            <td>@item.Sinh_Nhat_KH.ToString("dd/MM/yyyy")</td>
+                                            @if (item.Gioi_Tinh_KH == 1)
+                                            {
+                                                <td>Nam</td>
+
+                                            }
+                                            else if (item.Gioi_Tinh_KH == 0)
+                                            {
+                                                <td>Nữ</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Khác</td>
+                                            }
+                                            <td>@item.SDT_KH</td>
+                                            <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
+                                            @if (item.Doi_Tra == 0)
+                                            {
+                                                if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #ffc107; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #28a745; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="background-color: #dc3545; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #ffc107; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                                {
+                                                    <td style="background-color: #28a745; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="background-color: #dc3545; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                                }
+
+                                            }
+                                            <td>
+                                                <div class="form-button-action">
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xem chi tiết phòng" href="@Url.Action("DetailtRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
+                                                        <i class="fa fa-info"></i>
+                                                    </a>
+                                                    <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thay đổi thông tin phòng" href="@Url.Action("UpdateRentingRooms", "RoomManagement", new { id = item.Ma_TT_Dat_Phong })">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>

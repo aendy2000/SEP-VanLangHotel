@@ -77,12 +77,35 @@
                                         <td>@item.Thoi_Gian_Dat.ToString("dd/MM/yyyy")</td>
                                         @if (item.Doi_Tra == 0)
                                         {
-                                            <td>@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                            {
+                                                <td style="background-color: #ffc107; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else if (Convert.ToDateTime(item.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                            {
+                                                <td style="background-color: #28a745; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="background-color: #dc3545; text-align: center; color: white;">@item.Thoi_Gian_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
 
                                         }
                                         else
                                         {
-                                    <td>@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) == Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                            {
+                                                <td style="background-color: #ffc107; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else if (Convert.ToDateTime(models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("yyyy-MM-dd")) > Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                                            {
+                                                <td style="background-color: #28a745; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="background-color: #dc3545; text-align: center; color: white;">@models.TT_Doi_Phong.First(t => t.Ma_TT_Dat_Phong.Equals(mattdatphong) && t.Lan_Doi == landoi).TG_Doi_Tra.ToString("dd/MM/yyyy")</td>
+                                            }
+                                           
                                         }
                                         <td>
                                             <div class="form-button-action">

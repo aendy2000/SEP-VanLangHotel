@@ -62,7 +62,7 @@
                                     <option value="@i">Năm @i</option>
                                 }
                             </select>
-                            <button onclick="if (!confirm('Xem thống kê doanh thu ở mốc thời gian được chọn?')){ return false;}" value="search" name="btnSearch" style="font-size:12px;margin-left:10px; width:150px;height: 40px" type="submit" class="btn btn-search"><i class="fa fa-chart-bar"></i>&ensp;XEM THỐNG KÊ</button>
+                            <button value="search" name="btnSearch" style="font-size:12px;margin-left:10px; width:150px;height: 40px" type="submit" class="btn btn-search"><i class="fa fa-chart-bar"></i>&ensp;XEM THỐNG KÊ</button>
                         }
                         <div class="card-tools">
                             <button onclick="ExportQuestion()" id="btnExport" value="ex" name="btnEx" type="submit" style=" width:120px;height: 40px" href="#" class="btn btn-search btn-border btn-round btn-sm mr-2">
@@ -133,12 +133,12 @@
                         <table id="multi-filter-select" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Ngày GD</th>
-                                    <th style="width:65px">Loại DV</th>
-                                    <th style="width:65px">Loại GD</th>
-                                    <th>Số Tiền</th>
-                                    <th>Người TH</th>
-                                    <th>Thông Tin Thêm</th>
+                                    <th style="min-width: 85px">Ngày Giao Dịch</th>
+                                    <th style="min-width: 75px">Loại Dịch Vụ</th>
+                                    <th style="min-width: 85px">Loại Giao Dịch</th>
+                                    <th style="min-width: 65px">Số Tiền</th>
+                                    <th style="min-width: 100px">Người Thực Hiện</th>
+                                    <th style="max-width: 350px">Thông Tin Thêm</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,11 +179,11 @@
         <thead>
             <tr>
                 <th>STT</th>
-                <th>Ngày GD</th>
-                <th style="width:65px">Loại DV</th>
-                <th style="width:65px">Loại GD</th>
-                <th>Số Tiền</th>
-                <th>Người TH</th>
+                <th>Ngày Giao Dịch</th>
+                <th>Loại Dịch Vụ</th>
+                <th>Loại Giao Dịch</th>
+                <th>Số Tiền (VNĐ)</th>
+                <th>Người Thực Hiện</th>
                 <th>Thông Tin Thêm</th>
             </tr>
         </thead>
@@ -211,7 +211,7 @@
                     {
                         <td>Thanh toán</td>
                     }
-                    <td style="font-weight:bold; color:red">@item.So_Tien.ToString("0,0")</td>
+                    <td style="font-weight:bold; color:red">@item.So_Tien.ToString("0,0").Replace(',','.')</td>
                     <td>@item.Tai_Khoan.Ho_Va_Ten (@item.Tai_Khoan.Ten_Dang_Nhap)</td>
                     <td>@item.Note</td>
                 </tr>

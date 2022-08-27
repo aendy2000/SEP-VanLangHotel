@@ -326,7 +326,7 @@
                                         </li>
                                         <li>
                                             <a href="@Url.Action("ListRoomDueToPay", "RoomManagement")">
-                                                <span class="sub-item">Phòng Cận Hạn</span>
+                                                <span class="sub-item">Phòng Đã Đến Hạn</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -567,7 +567,6 @@
 
     <!-- Multiple Bar Chart -->
     <script>
-
         var multipleBarChart = document.getElementById('multipleBarChart').getContext('2d');
         var myMultipleBarChart = new Chart(multipleBarChart, {
             type: 'bar',
@@ -611,9 +610,7 @@
                 }
             }
         });
-
     </script>
-
 
     <!-- Line Chart -->
     <script>
@@ -661,7 +658,78 @@
                 }
             }
         });
+    </script>
 
+    <script>
+        var pieChart = document.getElementById('pieChart').getContext('2d');
+        var myPieChart = new Chart(pieChart, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [@ViewBag.Trong, @ViewBag.DangThue, @ViewBag.DatTruoc],
+                    backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+                    borderWidth: 0
+                }],
+                labels: ['Còn Trống: @ViewBag.Trong', 'Đang Thuê: @ViewBag.DangThue', 'Đặt Trước: @ViewBag.DatTruoc']
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                pieceLabel: {
+                    render: 'percentage',
+                    fontColor: 'white',
+                    fontSize: 14,
+                },
+                tooltips: false,
+                layout: {
+                    padding: {
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                        bottom: 20
+                    }
+                }
+            }
+        });
+
+        var doughnutChart = document.getElementById('doughnutChart').getContext('2d');
+        var myDoughnutChart = new Chart(doughnutChart, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [@ViewBag.SapTra, @ViewBag.MoiDen, @ViewBag.SapDen],
+                    backgroundColor: ['#f3545d', '#fdaf4b', '#1d7af3']
+                }],
+
+                labels: [
+                    'Sắp Trả',
+                    'Mới Đến',
+                    'Sắp Đến'
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                },
+                layout: {
+                    padding: {
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                        bottom: 20
+                    }
+                }
+            }
+        });
     </script>
 
     <!-- Chart -->
@@ -762,16 +830,12 @@
         });
 
         var myLegendContainer = document.getElementById("myChartLegend");
-
-        // generate HTML legend
         myLegendContainer.innerHTML = statisticsChart.generateLegend();
 
-        // bind onClick event to all LI-tags of the legend
         var legendItems = myLegendContainer.getElementsByTagName('li');
         for (var i = 0; i < legendItems.length; i += 1) {
             legendItems[i].addEventListener("click", legendClickCallback, false);
         }
-
     </script>
 
     <script>

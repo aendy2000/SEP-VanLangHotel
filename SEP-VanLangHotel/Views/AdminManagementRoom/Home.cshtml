@@ -70,10 +70,11 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 <tr>
                                     <th>Hình ảnh</th>
                                     <th>Số phòng</th>
-                                    <th>Tên khách sạn</th>
-                                    <th>Loại phòng</th>
+                                    <th>Số Người</th>
+                                    <th>Giường</th>
+                                    <th>Loại Phòng</th>
                                     <th>Trạng thái</th>
-                                    <th style="width: 3%">Action</th>
+                                    <th style="width: 3%">Khác</th>
                                 </tr>
                             </thead>
 
@@ -86,9 +87,21 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                             <img style="height:100%; width:100px; margin-bottom:15px" class="img-book-room" src="@item.Hinh_Anh" alt="">
                                         </td>
                                         <td>@item.So_Phong</td>
-                                        <td>@item.Khach_San.Ten_Khach_San</td>
-                                        <td>@item.Loai_Phong.Ten_Loai_Phong</td>
-                                        <td>@item.Trang_Thai.Ten_Trang_Thai</td>
+                                        <td>@item.Loai_Phong.So_Nguoi_Lon người lớn, @item.Loai_Phong.So_Tre_Em trẻ em</td>
+                                        <td>@item.Loai_Phong.So_Giuong</td>
+                                        <td><a href="@Url.Action("DetailLevelRooms", "LevelRoomsManagement", new {id = item.Ma_Loai_Phong})" target="_blank">@item.Loai_Phong.Ten_Loai_Phong</a></td>
+                                        @if (item.Ma_Trang_Thai.Equals("TT202207050001"))
+                                        {
+                                            <td style="background-color: #28a745; text-align:center; color:white;">@item.Trang_Thai.Ten_Trang_Thai</td>
+                                        }
+                                        else if (item.Ma_Trang_Thai.Equals("TT202207050002"))
+                                        {
+                                            <td style="background-color: #ffc107; text-align: center; color: white;">@item.Trang_Thai.Ten_Trang_Thai</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: #dc3545; text-align: center; color: white;">@item.Trang_Thai.Ten_Trang_Thai</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a style="width:1px" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Thông tin phòng" href="@Url.Action("DetailRoom", "AdminManagementRoom", new { id = item.Ma_Phong })" target="_blank">

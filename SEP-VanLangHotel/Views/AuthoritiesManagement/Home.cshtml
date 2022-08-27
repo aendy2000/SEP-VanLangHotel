@@ -103,13 +103,13 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
                                                 <label>Tên quyền</label>
-                                                <input name="tenquyenmoi" type="text" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                                <input name="tenquyenmoi" type="text" pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" maxlength="30" class="form-control" required oninvalid="this.setCustomValidity('Hãy nhập đúng tên quyền với tối đa 30 kí tự')" oninput="this.setCustomValidity('')">
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
                                                 <label>Mô tả</label>
-                                                <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 ký tự')" oninput="this.setCustomValidity('')"></textarea>
+                                                <textarea rows="5" name="motaquyenmoi" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 kí tự')" oninput="this.setCustomValidity('')"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +133,8 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                 <tr>
                                     <th>Tên quyền</th>
                                     <th>Mô tả</th>
-                                    <th style="width: 3%">Action</th>
+                                    <th>Trạng thái sử dụng</th>
+                                    <th style="width: 3%">Khác</th>
                                 </tr>
                             </thead>
 
@@ -162,13 +163,13 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                                                     <div class="form-group form-group-default">
                                                                         <label>Tên quyền</label>
                                                                         <input name="maquyen" type="hidden" class="hidden" value="@item.Ma_Quyen">
-                                                                        <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" required pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào tên quyền với tối đa 30 ký tự')" oninput="this.setCustomValidity('')">
+                                                                        <input name="tenquyen" type="text" class="form-control" value="@item.Ten_Quyen" maxlength="30" required pattern="[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ]{1,30}" oninvalid="this.setCustomValidity('Hãy nhập vào đúng tên quyền với tối đa 30 kí tự')" oninput="this.setCustomValidity('')">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-12">
                                                                     <div class="form-group form-group-default">
                                                                         <label>Mô tả</label>
-                                                                        <textarea rows="5" name="motaquyen" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required>@item.Mo_Ta</textarea>
+                                                                        <textarea rows="5" name="motaquyen" type="text" class="form-control" placeholder="Nhập mô tả quyền..." maxlength="200" required oninvalid="this.setCustomValidity('Hãy nhập mô tả quyền với tối đa 200 kí tự')" oninput="this.setCustomValidity('')">@item.Mo_Ta</textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -189,6 +190,14 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                                             @item.Ten_Quyen
                                         </td>
                                         <td>@item.Mo_Ta</td>
+                                        @if (item.Tai_Khoan.ToList().Count > 0)
+                                        {
+                                            <td style="background-color: #28a745; text-align:center; color:white;">Đang được sử dụng</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: #ffc107; text-align: center; color: white;">Chưa được sử dụng</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a data-toggle="modal" data-target="#@item.Ma_Quyen" style="width:1px" role="button" title="Chỉnh sửa quyền" class="btn btn-link btn-info btn-lg" data-original-title="Sửa quyền">

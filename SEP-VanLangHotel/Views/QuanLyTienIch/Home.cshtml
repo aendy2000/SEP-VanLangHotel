@@ -130,7 +130,8 @@
                                 <tr>
                                     <th>Mã tiện ích</th>
                                     <th>Tên tiện ích</th>
-                                    <th style="width: 3%">Action</th>
+                                    <th>Trạng thái</th>
+                                    <th style="width: 3%">Khác</th>
                                 </tr>
                             </thead>
 
@@ -180,13 +181,21 @@
                                             @item.Ma_Tien_Ich
                                         </td>
                                         <td>@item.Ten_Tien_Ich</td>
+                                        @if (item.DS_Tien_Ich.ToList().Count > 0)
+                                        {
+                                            <td style="background-color: #28a745; text-align:center; color:white;">Đang được sử dụng</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: #ffc107; text-align: center; color: white;">Chưa được sử dụng</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a data-toggle="modal" data-target="#@item.Ma_Tien_Ich" style="width:1px" role="button" title="Chỉnh sửa quyền" class="btn btn-link btn-info btn-lg" data-original-title="Sửa tiện ích">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
-                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tiện ích"  onclick="if (!confirm('Bạn có muốn xóa tiện ích @item.Ten_Tien_Ich?')) { return false; } else { window.location.href = '@Url.Action("DeleteUtilities", "QuanLyTienIch", new { id = item.Ma_Tien_Ich })'; }">
+                                                <a style="width:1px" role="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger btn-lg" data-original-title="Xóa tiện ích" onclick="if (!confirm('Bạn có muốn xóa tiện ích @item.Ten_Tien_Ich?')) { return false; } else { window.location.href = '@Url.Action("DeleteUtilities", "QuanLyTienIch", new { id = item.Ma_Tien_Ich })'; }">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                             </div>

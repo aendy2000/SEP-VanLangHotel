@@ -80,7 +80,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <!-- Form Group (Loại phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
-                            <input value="@loaiphong.Ten_Loai_Phong" name="tenloaiphong" class="form-control" placeholder="A1.001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
+                            <input value="@loaiphong.Ten_Loai_Phong" name="tenloaiphong" class="form-control" placeholder="A1.0001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số người lớn) -->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
@@ -132,7 +132,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <br />
                         <div style="text-align:center;" class="mb-3">
                             <input hidden name="maloaiphong" value="@loaiphong.Ma_Loai_Phong" type="text" />
-                            <button style="width:180px" type="submit" class="btn btn-search">
+                            <button style="width:180px" type="submit" class="btn btn-search" onclick="if (!confirm('Lưu thông tin cập nhật loại phòng?')) { return false; }">
                                 Lưu
                             </button>
                             &emsp; &emsp;

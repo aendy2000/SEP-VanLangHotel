@@ -131,7 +131,8 @@
                                 <tr>
                                     <th>Tên trạng thái</th>
                                     <th>Mô tả trạng thái</th>
-                                    <th style="width: 3%">Action</th>
+                                    <th>Trạng thái sử dụng</th>
+                                    <th style="width: 3%">Khác</th>
                                 </tr>
                             </thead>
 
@@ -187,6 +188,14 @@
                                             @item.Ten_Trang_Thai
                                         </td>
                                         <td>@item.Mo_Ta_Trang_Thai</td>
+                                        @if (item.Phong.ToList().Count > 0)
+                                        {
+                                            <td style="background-color: #28a745; text-align:center; color:white;">Đang được sử dụng</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: #ffc107; text-align: center; color: white;">Chưa được sử dụng</td>
+                                        }
                                         <td>
                                             <div class="form-button-action">
                                                 <a data-toggle="modal" data-target="#@item.Ma_Trang_Thai" style="width:1px" role="button" title="Chỉnh sửa trạng thái" class="btn btn-link btn-info btn-lg" data-original-title="Sửa trạng thái">

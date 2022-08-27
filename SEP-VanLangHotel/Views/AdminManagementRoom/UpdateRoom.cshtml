@@ -80,7 +80,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <div class="mb-3">
                             <label class="small mb-1">Số phòng</label>
                             @*//ReadOnly = true*@
-                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { @class = "form-control", @pattern = ".{1,10}", @required = "required", @oninvalid = "this.setCustomValidity('Số phòng nhập tối đa 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
+                            @Html.EditorFor(model => model.So_Phong, new { htmlAttributes = new { @class = "form-control", @pattern = ".{1,30}", @required = "required", @oninvalid = "this.setCustomValidity('Số phòng nhập tối đa 30 ký tự')", @oninput = "this.setCustomValidity('')" } })
                             @Html.ValidationMessageFor(model => model.So_Phong, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">

@@ -74,7 +74,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <!-- Form Group (Loại phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="inputLoaiPhong">Tên loại phòng</label>
-                            <input name="tenloaiphong" class="form-control" placeholder="A1.001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
+                            <input name="tenloaiphong" class="form-control" placeholder="A1.0001" required="required" oninvalid="this.setCustomValidity('Hãy nhập tên loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Số người lớn) -->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
@@ -94,7 +94,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <!-- Form Group (Gía phòng)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
                             <label class="small mb-1" for="">Gía phòng</label>
-                            <input style="font-weight:bold; color:red;" value="0" type="text" id="testinput" name="gia" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
+                            <input style="font-weight:bold; color:red;" value="100,000" type="text" id="testinput" name="gia" class="form-control" required="required" oninvalid="this.setCustomValidity('Hãy nhập giá loại phòng')" oninput="this.setCustomValidity('')" />
                         </div>
                         <!-- Form Group (Mô tả)-->
                         <div class="col-md-10 mb-3 ml-auto mr-auto">
@@ -125,7 +125,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <hr>
                         <br />
                         <div style="text-align:center;" class="mb-3">
-                            <button style="width:180px" type="submit" class="btn btn-search">
+                            <button style="width:180px" type="submit" class="btn btn-search" onclick="if (!confirm('Thêm mới loại phòng?')) { return false; }">
                                 Lưu
                             </button>
                             &emsp; &emsp;

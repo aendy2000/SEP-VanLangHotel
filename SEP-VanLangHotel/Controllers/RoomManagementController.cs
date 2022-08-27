@@ -40,7 +40,7 @@ namespace SEP_VanLangHotel.Controllers
                 {
                     ViewBag.Ma_Trang_Thai = new SelectList(model.Trang_Thai.Where(t => !t.Ma_Trang_Thai.Equals("TT202207050002")), "Ma_Trang_Thai", "Ten_Trang_Thai");
                     var phong = model.Phong.FirstOrDefault(p => p.Ma_Phong.Equals(id) && !p.Ma_Trang_Thai.Equals("TT202207050002"));
-                    if(phong != null)
+                    if (phong != null)
                     {
                         return View(phong);
                     }
@@ -87,7 +87,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
-                var phongDangChoThue = model.TT_Dat_Phong.Where(p => p.Trang_Thai == 0 && p.Phong.Ma_Trang_Thai.Equals("TT202207050002")).ToList();
+                var phongDangChoThue = model.TT_Dat_Phong.Where(p => p.Trang_Thai == 0).ToList();
                 Session["TT_DOI_PHONG"] = model.TT_Doi_Phong.ToList();
                 return View(phongDangChoThue);
             }
@@ -404,47 +404,56 @@ namespace SEP_VanLangHotel.Controllers
                         DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("yyyy-MM-dd"));
                         DateTime tgianTraPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Doi_Tra.ToString("yyyy-MM-dd"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
-                        int index = 0;
-                        for (int phg = 0; phg < phong.Count; phg++)
+                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
+                        if (phong.Count <= 0)
                         {
-                            bool checks = false;
-                            string maphong = phong[phg].Ma_Phong;
-                            var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
-                            if (ttCoc.Count <= 0)
+                            Session["error-import-file"] = "Tạm thời không còn phòng nào phù hợp với loại phòng mà khách hàng đang ở cần đổi!";
+                            return RedirectToAction("Homepage", "Home");
+                        }
+                        else
+                        {
+
+                            int index = 0;
+                            for (int phg = 0; phg < phong.Count; phg++)
                             {
-                                listPhongDuocDeXuat.Add(new List<string>());
-                                listPhongDuocDeXuat[index].Add(maphong);
-                                index++;
-                                continue;
-                            }
-                            else
-                            {
-                                foreach (var temp in ttCoc)
-                                {
-                                    if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
-                                        (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
-                                        (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
-                                    {
-                                        checks = true;
-                                        break;
-                                    }
-                                }
-                                if (checks == true)
-                                {
-                                    if (phg >= phong.Count - 1 && listPhongDuocDeXuat.Count == 0)
-                                    {
-                                        Session["error-import-file"] = "Loại phòng chứa các tiện ích mà khách hàng" +
-                                            " mong muốn đã hết tạm thời. hãy thử lại với phòng có số tiện ích khác!";
-                                        return RedirectToAction("Homepage", "Home");
-                                    }
-                                }
-                                else
+                                bool checks = false;
+                                string maphong = phong[phg].Ma_Phong;
+                                var ttCoc = model.Coc_Phong.Where(t => t.Ma_Phong.Equals(maphong) && t.Trang_Thai == 0).ToList();
+                                if (ttCoc.Count <= 0)
                                 {
                                     listPhongDuocDeXuat.Add(new List<string>());
                                     listPhongDuocDeXuat[index].Add(maphong);
                                     index++;
                                     continue;
+                                }
+                                else
+                                {
+                                    foreach (var temp in ttCoc)
+                                    {
+                                        if ((tgianNhanPhong >= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc) ||
+                                            (tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong <= temp.Ngay_Ket_Thuc) ||
+                                            (tgianNhanPhong <= temp.Ngay_Bat_Dau && tgianNhanPhong <= temp.Ngay_Ket_Thuc && tgianTraPhong >= temp.Ngay_Bat_Dau && tgianTraPhong >= temp.Ngay_Ket_Thuc))
+                                        {
+                                            checks = true;
+                                            break;
+                                        }
+                                    }
+                                    if (checks == true)
+                                    {
+                                        if (phg >= phong.Count - 1 && listPhongDuocDeXuat.Count == 0)
+                                        {
+                                            Session["error-import-file"] = "Loại phòng chứa các tiện ích mà khách hàng" +
+                                                " mong muốn đã hết tạm thời. hãy thử lại với phòng có số tiện ích khác!";
+                                            return RedirectToAction("Homepage", "Home");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        listPhongDuocDeXuat.Add(new List<string>());
+                                        listPhongDuocDeXuat[index].Add(maphong);
+                                        index++;
+                                        continue;
+                                    }
                                 }
                             }
                         }
@@ -479,7 +488,7 @@ namespace SEP_VanLangHotel.Controllers
                         DateTime tgianNhanPhong = Convert.ToDateTime(TTDatPhong.Thoi_Gian_Dat.ToString("yyyy-MM-dd"));
                         DateTime tgianTraPhong = Convert.ToDateTime(TTDoiPhong.TG_Doi_Tra.ToString("yyyy-MM-dd"));
                         List<List<string>> listPhongDuocDeXuat = new List<List<string>>();
-                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong)).ToList();
+                        var phong = model.Phong.Where(p => p.Ma_Loai_Phong.Equals(loaiPhong) && p.Ma_Trang_Thai.Equals("TT202207050001")).ToList();
                         int index = 0;
                         for (int phg = 0; phg < phong.Count; phg++)
                         {
@@ -641,8 +650,8 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Nhân viên"))
             {
-                DateTime ngayhientai = DateTime.Now;
-                var phongDangChoThue = model.TT_Dat_Phong.Where(p => DateTime.Compare(p.Thoi_Gian_Doi_Tra, ngayhientai) < 0 && p.Trang_Thai == 0).ToList();
+                var phongDangChoThue = model.TT_Dat_Phong.Where(p => p.Trang_Thai == 0).ToList();
+                Session["TT_DOI_PHONG"] = model.TT_Doi_Phong.ToList();
                 return View(phongDangChoThue);
             }
             return RedirectToAction("Homepage", "Home");

@@ -13230,11 +13230,11 @@ body {
 }
 
 .bg-primary-gradient {
-    background-image: url(https://www.dungplus.com/wp-content/uploads/2019/11/hinh-nen-may-tinh-1.jpeg);
-    background-size: 100% 355px;
-    /* background: #f37820 !important;
-    background: -webkit-linear-gradient(legacy-direction(-45deg),#06418e,#1572e8) !important;
-    background: linear-gradient(-45deg,#C34A2C,#f37820) !important*/
+    background-image: url(https://banner2.cleanpng.com/20180211/idw/kisspng-rectangle-red-red-brick-pattern-background-5a7fed046b6241.2922401915183331884399.jpg);
+    background-size: 100% 150%;
+    background-position-y: center;
+    background-position-x: right;
+    filter: opacity(0.85);
 }
 
 .bg-secondary-gradient {

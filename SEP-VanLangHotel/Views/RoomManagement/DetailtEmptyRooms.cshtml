@@ -89,7 +89,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                             <p style="font-weight:bold" class="mb-0">Giá</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">@Model.Loai_Phong.Gia.ToString("0,0") VND</p>
+                            <p class="text-muted mb-0" style="color: red; font-weight: bold;">@Model.Loai_Phong.Gia.ToString("0,0") VND</p>
                         </div>
                     </div>
                     <hr>
@@ -134,7 +134,7 @@ else if (!Session["thongbaoSuccess"].Equals("empthy"))
                         <div class="row">
                             <div class="col-sm-12">
                                 <button style="width:180px;" class="btn btn-search" data-toggle="modal" data-target="#changeStateRoo">Đổi trạng thái</button>
-                                @if (!Model.Trang_Thai.Ten_Trang_Thai.Equals("Sửa chửa"))
+                                @if (Model.Trang_Thai.Ten_Trang_Thai.Equals("Trống"))
                                 {
                                     <span>&emsp;&emsp;</span>
                                     <button style="width:180px;" class="btn btn-search" data-toggle="modal" data-target="#orderrooms">Đặt Phòng</button>

@@ -49,7 +49,7 @@
                 <br />
                 <form name="MyForm" action="@Url.Action("Login")" method="post">
                     <div class="form-floating user-login">
-                        <input id="usern" type="text" class="form-control" pattern="[a-zA-Z0-9]{3,30}" name="username" placeholder="Tên tài khoản" required oninvalid="this.setCustomValidity('Tên tài khoản không được bỏ trống')" oninput="this.setCustomValidity('')">
+                        <input id="usern" type="text" class="form-control" pattern="[a-zA-Z0-9]{3,30}" name="username" placeholder="Tên tài khoản" required oninvalid="this.setCustomValidity('Hãy nhập vào tên tài khoản với độ dài từ 3 - 30 kí tự')" oninput="this.setCustomValidity('')">
                         <label for="floatingInput">Tên tài khoản</label>
                     </div>
                     @* Nếu tài khoản bị sai sẽ báo lỗi sai tk*@
@@ -85,7 +85,7 @@
                         </script>
                         Session["user-lock"] = null;
                     }
-                    <a href="@Url.Action("ForgotPassword")" target="_blank" style="text-align:right"><p>Quên mật khẩu</p></a>
+                    <a href="@Url.Action("ForgotPassword")" target="_blank" style="float:right"><p>Quên mật khẩu</p></a>
                     <br />
                     <div style="text-align: left" class="btn-login">
                         <button id="btn" type="submit">Đăng nhập</button>

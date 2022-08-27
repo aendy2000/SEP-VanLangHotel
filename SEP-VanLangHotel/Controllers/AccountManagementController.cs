@@ -31,25 +31,7 @@ namespace SEP_VanLangHotel.Controllers
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
                 var taikhoan = model.Tai_Khoan.ToList();
-                return View(taikhoan);
-            }
-            return RedirectToAction("Homepage", "Home");
-        }
-        public ActionResult SearchAccount(string keyword) //Tìm kiếm tài khoản
-        {
-            if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
-            {
-                if (keyword.Equals("") || keyword == null)
-                {
-                    var taikhoan = model.Tai_Khoan.ToList();
-                    return View("Home", taikhoan);
-                }
-                else
-                {
-                    var taikhoan = model.Tai_Khoan.Where(t => t.Ten_Dang_Nhap.ToUpper().Contains(keyword.ToUpper())).ToList();
-                    ViewBag.Keywork = keyword;
-                    return View("Home", taikhoan);
-                }
+                return View("Home", taikhoan);
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -67,7 +49,7 @@ namespace SEP_VanLangHotel.Controllers
                 gioitinh.Add("Khác");
                 ViewBag.Gioi_Tinh = new SelectList(gioitinh);
                 ViewBag.gioiTinh = "";
-                return View(newAccount);
+                return View("AddNewAccount", newAccount);
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -203,7 +185,7 @@ namespace SEP_VanLangHotel.Controllers
         {
             if (Session["user-role"].Equals("Quản lý")) //Tài khoản thuộc quyền Admin
             {
-                if (id != null)
+                if (!string.IsNullOrEmpty(id))
                 {
                     var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
                     Session["update-username"] = taikhoan.Ten_Dang_Nhap.ToLower().Trim();
@@ -235,7 +217,7 @@ namespace SEP_VanLangHotel.Controllers
                     }
 
                     ViewBag.Gioi_Tinh = new SelectList(gioitinh);
-                    return View(taikhoan);
+                    return View("UpdateAccount", taikhoan);
                 }
             }
             return RedirectToAction("Home", "AccountManagement");
@@ -368,7 +350,7 @@ namespace SEP_VanLangHotel.Controllers
             {
                 var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ma_Tai_Khoan.Equals(id));
                 if (taikhoan != null)
-                    return View(taikhoan);
+                    return View("DetailtAccount", taikhoan);
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -377,7 +359,7 @@ namespace SEP_VanLangHotel.Controllers
             string id = Session["user-id"].ToString();
             var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.Equals(id));
             if (taikhoan != null)
-                return View(taikhoan);
+                return View("Information", taikhoan);
             return RedirectToAction("Home");
         }
         public ActionResult RemoveAccount(string id)
@@ -440,7 +422,7 @@ namespace SEP_VanLangHotel.Controllers
                 var taikhoan = model.Tai_Khoan.FirstOrDefault(t => t.Ten_Dang_Nhap.Equals(id));
                 if (taikhoan != null)
                 {
-                    return View(taikhoan);
+                    return View("ChangePassword", taikhoan);
                 }
                 return RedirectToAction("Home");
             }
@@ -465,17 +447,17 @@ namespace SEP_VanLangHotel.Controllers
                             Session["newpass-khongtrung"] = null;
                             taikhoan.Mat_Khau = newpassword;
                             model.SaveChanges();
-                            Session["thongbaoSuccess"] = "Đã thay đổi mật khẩu";
-                            return RedirectToAction("Homepage", "Home");
+                            Session["thongbaoSuccess"] = "Đã thay đổi mật khẩu mới";
+                            return RedirectToAction("DetailtAccount", new { id = id });
                         }
                         Session["newpass-khongtrung"] = true; //mật khẩu mới không trùng nhau
-                        return View(taikhoan);
+                        return View("ChangePassword", taikhoan);
                     }
                     Session["newpass-trung"] = true; // trùng với mk cũ
-                    return View(taikhoan);
+                    return View("ChangePassword", taikhoan);
                 }
                 Session["passcu-false"] = true; //mk cũ sai
-                return View(taikhoan);
+                return View("ChangePassword", taikhoan);
             }
             return RedirectToAction("Homepage", "Home");
         }
@@ -504,11 +486,6 @@ namespace SEP_VanLangHotel.Controllers
             {
                 Console.WriteLine(e);
             }
-        }
-
-        public ActionResult Thu()
-        {
-            return View();
         }
     }
 
