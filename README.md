@@ -1,1 +1,1 @@
-SEP-VanLangHotel
+VanLangHotel.github.io
